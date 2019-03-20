@@ -1,0 +1,5 @@
+pyserial
+numpy
+invoke
+paramiko
+fabric3
