@@ -10,11 +10,13 @@ BUFFER_SIZE = 1024
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 while 1:
-    MESSAGE=bytes(input(),'UTF8')
+    MESSAGE=bytes(input('CMD: '),'UTF8')
     if MESSAGE==b'quit':
         break
-    s.connect((TCP_IP, TCP_PORT))
-    print('sending message')
+    errorFlag=s.connect_ex((TCP_IP, TCP_PORT))
+    if errorFlag!=0:
+        print("host not found, err#: "+str(errorFlag))
+        continue
     s.send(MESSAGE)
     data = s.recv(BUFFER_SIZE)
     s.close()
