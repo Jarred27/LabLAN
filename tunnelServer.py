@@ -2,7 +2,7 @@ import serial
 import io
 import socket
 
-TCP_IP = '192.168.1.200'
+TCP_IP = '118.138.64.240'
 TCP_PORT = 5005
 BUFFER_SIZE = 1024
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
