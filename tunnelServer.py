@@ -35,6 +35,7 @@ while 1:
                     n=0
                     break
             if line != identString:
+                conn.send(b'END_OUTPUT')
                 break
         data = conn.recv(BUFFER_SIZE)
         if not data: break

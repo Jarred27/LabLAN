@@ -18,7 +18,10 @@ while 1:
         print("host not found, err#: "+str(errorFlag))
         continue
     s.send(MESSAGE)
-    data = s.recv(BUFFER_SIZE)
+    while(1):
+        data = s.recv(BUFFER_SIZE)
+        if(data==b'END_OUTPUT'):
+            break
+        print(data)
     s.close()
 
-    print ("received data:", data)
