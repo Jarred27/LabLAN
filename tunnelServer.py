@@ -32,15 +32,14 @@ while 1:
                 n=0
             else:
                 n=n+1
-                if n>10: #if 10 blank lines are recieved assume nothing there
+                if n>3: #if 10 blank lines are recieved assume nothing there
+                    conn.send(b'END_OUTPUT')
                     break
             if line == identString:
                 conn.send(b'END_OUTPUT')
                 break
         data = conn.recv(BUFFER_SIZE)
-        if not data:
-            conn.close()
-            break
+        print('data: ',data+b'\r\n')
         if data==b'close_connection':
             conn.close()
             break
