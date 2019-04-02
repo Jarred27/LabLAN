@@ -37,7 +37,6 @@ while 1:
                 conn.send(b'END_OUTPUT')
                 break
         data = conn.recv(BUFFER_SIZE)
-        if data==b'close_connection':
-            break
+        if data==b'close_connection': break
         if n>10:
             ser.write(data+b'\r\n')

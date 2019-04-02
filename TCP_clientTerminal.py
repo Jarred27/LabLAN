@@ -24,5 +24,6 @@ while 1:
         if(data==b'END_OUTPUT'):
             break
         print(data)
-s.close()
+    s.send(b'close_connection')
+    s.close()
 
