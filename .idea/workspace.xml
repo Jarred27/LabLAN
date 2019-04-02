@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8de7c47b-e7df-4741-923a-61f8e75f1a77" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/serialmonitor_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/serialmonitor_settings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCP_clientTerminal.py" beforeDir="false" afterPath="$PROJECT_DIR$/TCP_clientTerminal.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tunnelServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/tunnelServer.py" afterDir="false" />
     </list>
@@ -49,8 +48,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TCP_clientTerminal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="25" column="13" lean-forward="true" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+            <state relative-caret-position="174">
+              <caret line="23" column="32" lean-forward="true" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -58,7 +57,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TCPtest_server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
+            <state relative-caret-position="21">
               <caret line="7" column="60" lean-forward="true" selection-start-line="7" selection-start-column="60" selection-end-line="7" selection-end-column="60" />
             </state>
           </provider>
@@ -79,8 +78,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tunnelServer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="37" column="26" selection-start-line="37" selection-start-column="26" selection-end-line="37" selection-end-column="39" />
+            <state relative-caret-position="255">
+              <caret line="39" column="37" lean-forward="true" selection-start-line="39" selection-start-column="37" selection-end-line="39" selection-end-column="37" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -153,8 +152,8 @@
         <option value="$PROJECT_DIR$/fabfile.py" />
         <option value="$PROJECT_DIR$/TCPtest_client.py" />
         <option value="$PROJECT_DIR$/TCPtest_server.py" />
-        <option value="$PROJECT_DIR$/tunnelServer.py" />
         <option value="$PROJECT_DIR$/TCP_clientTerminal.py" />
+        <option value="$PROJECT_DIR$/tunnelServer.py" />
       </list>
     </option>
   </component>
@@ -369,7 +368,7 @@
       <workItem from="1552949235382" duration="6085000" />
       <workItem from="1553057260568" duration="85000" />
       <workItem from="1553065064575" duration="98000" />
-      <workItem from="1554157118389" duration="3015000" />
+      <workItem from="1554157118389" duration="4010000" />
     </task>
     <task id="LOCAL-00001" summary="all good">
       <created>1553057338799</created>
@@ -382,7 +381,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21512000" />
+    <option name="totallyTimeSpent" value="22507000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -397,7 +396,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22844176" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.22844176" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Serial Monitor" weight="0.3289689" />
@@ -421,6 +420,31 @@
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" x="0" y="0" width="113" height="487" id="Documentation" order="5" side_tool="true" weight="0.6" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22844176" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Serial Monitor" order="0" weight="0.3289689" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Find" order="2" />
+      <window_info anchor="bottom" id="Run" order="3" weight="0.45293072" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.22202487" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" weight="0.32972974" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.3285968" />
+      <window_info anchor="bottom" id="Database Changes" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="12" weight="0.3420622" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="13" visible="true" weight="0.32569557" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" x="0" y="0" width="113" height="487" id="Documentation" order="5" side_tool="true" weight="0.6" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -533,15 +557,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TCPtest_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
+        <state relative-caret-position="21">
           <caret line="7" column="60" lean-forward="true" selection-start-line="7" selection-start-column="60" selection-end-line="7" selection-end-column="60" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tunnelServer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="37" column="26" selection-start-line="37" selection-start-column="26" selection-end-line="37" selection-end-column="39" />
+        <state relative-caret-position="255">
+          <caret line="39" column="37" lean-forward="true" selection-start-line="39" selection-start-column="37" selection-end-line="39" selection-end-column="37" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -550,8 +574,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TCP_clientTerminal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="25" column="13" lean-forward="true" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+        <state relative-caret-position="174">
+          <caret line="23" column="32" lean-forward="true" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
         </state>
       </provider>
     </entry>

@@ -32,11 +32,12 @@ while 1:
             else:
                 n=n+1
                 if n>10: #if 10 blank lines are recieved assume nothing there
-                    n=0
                     break
-            if line != identString:
+            if line == identString:
                 conn.send(b'END_OUTPUT')
                 break
         data = conn.recv(BUFFER_SIZE)
-        if not data: break
-        ser.write(data+b'\r\n')
+        if data==b'close_connection':
+            break
+        if n>10:
+            ser.write(data+b'\r\n')

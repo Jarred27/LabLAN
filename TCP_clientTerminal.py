@@ -12,6 +12,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 while 1:
     MESSAGE=bytes(input('CMD: '),'UTF8')
     if MESSAGE==b'quit':
+        s.send(b'close_connection')
         break
     errorFlag=s.connect_ex((TCP_IP, TCP_PORT))
     if errorFlag!=0:
@@ -23,5 +24,5 @@ while 1:
         if(data==b'END_OUTPUT'):
             break
         print(data)
-    s.close()
+s.close()
 
