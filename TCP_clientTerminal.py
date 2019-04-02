@@ -7,9 +7,10 @@ TCP_IP = '118.138.64.240'
 TCP_PORT = 5005
 BUFFER_SIZE = 1024
 #MESSAGE = b'Hello, World!'
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
 
 while 1:
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     MESSAGE=bytes(input('CMD: '),'UTF8')
     if MESSAGE==b'quit':
         s.send(b'close_connection')

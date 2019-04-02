@@ -18,6 +18,7 @@ identString='MSA::EDFA> '
 #print(ser.name)         # check which port was really used
 
 while 1:
+    print('waiting for connection')
     s.listen(1) #sits here and waits for conection when idle
 
     conn, addr = s.accept()
@@ -37,6 +38,10 @@ while 1:
                 conn.send(b'END_OUTPUT')
                 break
         data = conn.recv(BUFFER_SIZE)
-        if data==b'close_connection': break
-        if n>10:
-            ser.write(data+b'\r\n')
+        if not data:
+            conn.close()
+            break
+        if data==b'close_connection':
+            conn.close()
+            break
+        ser.write(data+b'\r\n')
