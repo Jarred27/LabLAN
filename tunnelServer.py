@@ -25,6 +25,12 @@ while 1:
     print ('Connection address:', addr)
     while 1:
         n=0
+        data = conn.recv(BUFFER_SIZE)
+        print('data: ', data + b'\r\n')
+        if data == b'close_connection':
+            conn.close()
+            break
+        ser.write(data + b'\r\n')
         while 1:
             line = sio.readline()
             if line != '':
@@ -38,9 +44,3 @@ while 1:
             if line == identString:
                 conn.send(b'END_OUTPUT')
                 break
-        data = conn.recv(BUFFER_SIZE)
-        print('data: ',data+b'\r\n')
-        if data==b'close_connection':
-            conn.close()
-            break
-        ser.write(data+b'\r\n')
