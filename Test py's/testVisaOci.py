@@ -1,4 +1,5 @@
 import pyvisa as visa
+
 import time
 
 instID='USB::0x0699::0x0368::C018240::INSTR'
