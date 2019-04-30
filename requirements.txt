@@ -4,3 +4,4 @@ invoke
 paramiko
 fabric3
 pyvisa
+pyvisa-py
