@@ -1,5 +1,5 @@
 img=imread('hello world.png');
-logical=img(:,:,1)==0;
+logical=img(:,:,1)'==0;
 idx=find(logical==1);
 
 array=zeros(1,60*60);
