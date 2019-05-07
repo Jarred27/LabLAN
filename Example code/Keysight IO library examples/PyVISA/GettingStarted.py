@@ -8,11 +8,11 @@
 #
 ################################################################################
 
-import visa
+import pyvisa as visa
 import sys
 
 # Change this variable to the address of your instrument
-VISA_ADDRESS = 'Your instruments VISA address goes here!'
+VISA_ADDRESS = 'TCPIP0::169.254.42.221::inst0::INSTR'
 
 try:
     # Create a connection (session) to the instrument

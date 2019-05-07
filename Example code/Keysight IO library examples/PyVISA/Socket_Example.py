@@ -8,11 +8,11 @@
 #
 ################################################################################
 
-import visa
+import pyvisa as visa
 
 
 # Change VISA_ADDRESS to a SOCKET address, e.g. 'TCPIP::169.254.104.59::5025::SOCKET'
-VISA_ADDRESS = 'Your instruments VISA address goes here!'
+VISA_ADDRESS = 'TCPIP0::WINDOWS-TF36T7V::60003::SOCKET'
 
 try:
     # Create a connection (session) to the TCP/IP socket on the instrument.

@@ -8,7 +8,7 @@
 #
 ################################################################################
 
-import visa
+import pyvisa as visa
 
 
 def find(searchString):
