@@ -1,5 +1,0 @@
-
-import py.mypython.*
-
-arr = [[2,3,4];[5,6,7]];
-arg = py.myp.transpose(arr)
