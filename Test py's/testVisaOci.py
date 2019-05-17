@@ -21,7 +21,7 @@ while 1:
     i=i+1
 
 inst=rm.open_resource(instID)
-print(inst.query('*IDN?'))
+print(inst.query('*IDN?')) #query for "Identify yourself" - responds with its name
 
 inst.write('DAT:SOU CH2')
 inst.write('DAT:ENC ASCI')
