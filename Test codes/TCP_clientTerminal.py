@@ -7,24 +7,24 @@ TCP_IP = '118.138.123.80'
 TCP_PORT = 5005
 BUFFER_SIZE = 1024
 #MESSAGE = b'Hello, World!'
-print('MSA::EDFA> ',end='')
+print('MSA::EDFA> ', end='')
 
 while 1:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    MESSAGE=bytes(input(),'UTF8')
-    if MESSAGE==b'quit':
+    MESSAGE = bytes(input(), 'UTF8')
+    if MESSAGE == b'quit':
         s.send(b'close_connection')
         break
-    errorFlag=s.connect_ex((TCP_IP, TCP_PORT))
-    if errorFlag!=0:
+    errorFlag = s.connect_ex((TCP_IP, TCP_PORT))
+    if errorFlag != 0:
         print("host not found, err#: "+str(errorFlag))
         continue
     s.send(MESSAGE)
-    while(1):
+    while 1:
         data = s.recv(BUFFER_SIZE)
-        if(data==b'END_OUTPUT'):
+        if(data == b'END_OUTPUT'):
             break
-        print(data.decode("utf-8"),end='')
+        print(data.decode("utf-8"), end='')
     s.send(b'close_connection')
     s.close()
 
