@@ -24,7 +24,7 @@ while 1:
 			break
 		if data:
 			print ("received data:", data)
-			String[] args = data.split("\\s");
+			args = data.split();
 		
 	print('left loop')
 	conn.close()
