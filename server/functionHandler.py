@@ -15,7 +15,7 @@ def runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.bind((TCP_IP, TCP_PORT))
     except:
-        print("failed to bind port")
+        print("failed to bind port, check IP settings")
         input('press enter to exit')
         return
     while 1:
@@ -38,5 +38,6 @@ def runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE):
                 print ("received data:", data)
                 args = data.decode("utf-8")
                 #print(args)
-                functionhandler(args.split())
+                functionhandler(args.split(', '))# note that this makes ',' or ' ' by themselves not split,
+                    # this is to add robustness but requires client progrm to use correct formatting
     return#will never get here
