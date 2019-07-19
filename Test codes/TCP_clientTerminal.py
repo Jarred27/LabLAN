@@ -7,10 +7,11 @@ TCP_IP = '118.139.56.0'
 TCP_PORT = 5005
 BUFFER_SIZE = 1024
 #MESSAGE = b'Hello, World!'
-print('MSA::EDFA> ', end='')
+
 
 while 1:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    print('> ', end='')
     MESSAGE = bytes(input(), 'UTF8')
     if MESSAGE == b'quit':
         s.send(b'close_connection')
@@ -22,9 +23,9 @@ while 1:
     s.send(MESSAGE)
     while 1:
         data = s.recv(BUFFER_SIZE)
-        if(data == b'END_OUTPUT'):
+        if not data:
             break
-        print(data.decode("utf-8"), end='')
-    s.send(b'close_connection')
+        print(data.decode("utf-8"))
+
     s.close()
 

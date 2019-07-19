@@ -3,6 +3,8 @@ import functionHandler
 configFile = open("config.txt", "r")
 configs= configFile.read().split('\n')
 
+
+
 # importing settings from config file
 for line in configs:
     [setting,value]=line.split()
@@ -15,7 +17,10 @@ for line in configs:
     if setting=='BUFFER_SIZE':
         BUFFER_SIZE=int(value)
         continue
+    if setting=='File_Path':
+        filePath=value
+        continue
 
 # loop forever in TCP server
-functionHandler.runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE)
+functionHandler.runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE,filePath)
 # code will never get here
