@@ -6,3 +6,4 @@ fabric3
 pyvisa
 pyvisa-py
 numpy
+#bitarray
