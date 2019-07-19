@@ -1,6 +1,6 @@
 import socket
 import pyvisa as visa
-inport numpy
+import numpy
 
 #TCP_IP = '118.138.123.80' #this stuff is defined in the config file
 #TCP_PORT = 5005
