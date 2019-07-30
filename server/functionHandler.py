@@ -1,6 +1,7 @@
 import socket
 import pyvisa as visa
 
+
 #TCP_IP = '118.138.123.80' #this stuff is defined in the config file
 #TCP_PORT = 5005
 #BUFFER_SIZE = 1024  # Normally 1024, but we want fast response
