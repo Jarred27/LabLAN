@@ -1,6 +1,5 @@
 import socket
 import pyvisa as visa
-inport numpy
 
 #TCP_IP = '118.138.123.80' #this stuff is defined in the config file
 #TCP_PORT = 5005
@@ -16,12 +15,39 @@ def functionhandler(args):
         return "pong"
     if args[0]=="visa":
         if args[1]=="listDevices":
-            return numpy.concatenate(rm.list_resources())
-        if args[1]=="read":
-            return
-        if args[1]=="write":
-            return
-    return "err: unrecognised cmd"#return null for no response
+            returnString ="visa, avaliable devices"
+            deviceArray=rm.list_resources()
+            if deviceArray=="":
+                returnString+=", null"
+            for device in deviceArray:
+                returnString+=", "
+                returnString+=device
+            return returnString
+        if args[1]=="write" or args[1]=="query":
+            try:
+                target=rm.open_resource(args[2])
+            except:
+                return "visa, writeResult, 1, device open error"
+            try:
+                target.write(args[3])
+            except:
+                return "visa, writeResult, 1, inst write error"
+            if args[1]=="write":#if query then keep target instrument open and return read result
+                target.close()
+                return "visa, writeResult, 0"
+        if args[1]=="read" or args[1]=="query":
+            if args[1]=="read":
+                try:
+                    target=rm.open_resource(args[2])
+                except:
+                    return "visa, readResult, 1, device open error"
+            try:
+                returnString="visa, readResult, 0, "+target.read()
+                target.close()
+                return returnString
+            except:
+                return "visa, readResult, 1, read error"
+    return "err, unrecognised_cmd"#return null for no response
 
 def runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE,filePath):
     try:
@@ -55,7 +81,7 @@ def runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE,filePath):
                     message = functionhandler(args.split(', '))# note that this makes ',' or ' ' by themselves not split,
                     # this is to add robustness but requires client progrm to use correct formatting
                 except:
-                    message = "err: command_error"
+                    message = "err, command_error"
                     print("here")
                 if message:#ignore if empty return
                     conn.send(bytes(message, 'UTF8'))
