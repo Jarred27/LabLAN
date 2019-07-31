@@ -1,9 +1,9 @@
-pyserial
+pyserial #version 3.4
 numpy
 invoke
 paramiko
 fabric3
-pyvisa
+pyvisa #version 1.9.1
 pyvisa-py
 numpy
 #bitarray
