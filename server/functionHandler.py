@@ -9,7 +9,7 @@ import pyvisa as visa
 # global objects
 rm = visa.ResourceManager() #visa object
 
-def functionhandler(args):
+def functionhandler(args,conn,BUFFER_SIZE,filePath):
     #print(args)
     if args[0]=="ping":
         print("ping")
@@ -48,9 +48,53 @@ def functionhandler(args):
                 return returnString
             except:
                 return "visa, readResult, 1, read error"
+    if args[0]=="file":
+        if args[1]=="txRequest":
+            destFilename=args[2]
+            #sizeMax=args[3]
+            #currentSize=0
+            #conn.settimeout(5) #if nothing is sent for 5 seconds the connection times out and the file is assumed sent
+            conn.send(bytes("file, rxReady", 'UTF8'))
+            file = open(filePath+destFilename, 'wb')
+            print("writing file: "+destFilename)
+            try:
+                line = conn.recv(BUFFER_SIZE)
+            except:
+                print("error in file rx")
+                return "file, writeResult, 1, file rx error"
+            while line:
+                try:
+                    file.write(line)
+                except:
+                    print("error in file write")
+                    return "file, writeResult, 1, file write error"
+                try:
+                    line=conn.recv(BUFFER_SIZE)
+                    #currentSize += line.__len__()
+                except:
+                    #print(line.__len__())
+                    file.write(line)
+                    #currentSize += line.__len__()
+                    break
+            #if not currentSize==sizeMax:
+            #    print("expected "+str(sizeMax)+" bytes, got "+str(currentSize)+" bytes")
+            #    return "file, writeResult, 1, byte size mismatch"
+            return "file, writeResult, 0"
+        if args[1]=="upload":#
+            targetID=args[3]
+            try:
+                target=rm.open_resource(targetID)
+            except:
+                return "file, uploadResult, 1, device open error"
+            try:
+                target.write()
+            except:
+                return "file, uploadResult, 1, inst write error"
+            target.close()
+            return "file, uploadResult, 0"
     return "err, unrecognised_cmd"#return null for no response
 
-def runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE,filePath):
+def runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE,filePath,connectionTimeout):
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # TCP object
         s.bind((TCP_IP, TCP_PORT))
@@ -63,10 +107,10 @@ def runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE,filePath):
         s.listen(1)
         try:
             conn, addr = s.accept()
+            conn.settimeout(connectionTimeout)
             print ('Connection address:', addr)
         except:
             continue
-
         while 1:
             try:
                 data = conn.recv(BUFFER_SIZE)
@@ -79,13 +123,16 @@ def runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE,filePath):
                 args = data.decode("utf-8")
                 #print(args)
                 try:
-                    message = functionhandler(args.split(', '))# note that this makes ',' or ' ' by themselves not split,
+                    message = functionhandler(args.split(', '),conn,BUFFER_SIZE,filePath)# note that this makes ',' or ' ' by themselves not split,
                     # this is to add robustness but requires client progrm to use correct formatting
                 except:
                     message = "err, command_error"
-                    print("here")
+                    #print("here")
                 if message:#ignore if empty return
-                    conn.send(bytes(message, 'UTF8'))
+                    try:
+                        conn.send(bytes(message, 'UTF8'))
+                    except:
+                        print("send response error")
                 conn.shutdown(1)
                 conn.close()
     return#will never get here

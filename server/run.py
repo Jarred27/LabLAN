@@ -7,7 +7,7 @@ configs= configFile.read().split('\n')
 
 # importing settings from config file
 for line in configs:
-    [setting,value]=line.split()
+    [setting,value]=line.split(': ')
     if setting=='TCP_IP':
         TCP_IP=value
         continue
@@ -20,7 +20,11 @@ for line in configs:
     if setting=='File_Path':
         filePath=value
         continue
+    if setting=='Connection_Timout(s)':
+        connectionTimeout=int(value)
+        continue
 
 # loop forever in TCP server
-functionHandler.runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE,filePath)
+functionHandler.runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE,filePath,connectionTimeout)
+
 # code will never get here
