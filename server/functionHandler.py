@@ -1,16 +1,10 @@
 import socket
 import pyvisa as visa
 
-
-#TCP_IP = '118.138.123.80' #this stuff is defined in the config file
-#TCP_PORT = 5005
-#BUFFER_SIZE = 1024  # Normally 1024, but we want fast response
-
 # global objects
 rm = visa.ResourceManager() #visa object
 
 def functionhandler(args,conn,BUFFER_SIZE,filePath):
-    #print(args)
     if args[0]=="ping":
         print("ping")
         return "pong"
