@@ -4,7 +4,7 @@ import sys
 
 # takes 2 input arguments, the first being the instrument address and the second the being the message to send,
 
-def write(instID,message):
+def query(instID,message):
     #load settings
     [TCP_IP,TCP_PORT,BUFFER_SIZE,connectionTimeout]=getConfigs.getConfigs().split(", ")
     TCP_PORT=int(TCP_PORT)
@@ -12,7 +12,7 @@ def write(instID,message):
     connectionTimeout = int(connectionTimeout)
 
     #define string to send
-    messageString = "visa, write, "+instID+", "+message
+    messageString = "visa, query, "+instID+", "+message
     formattedMessage=bytes(messageString, 'UTF8')
 
     #bind port
@@ -39,13 +39,18 @@ def write(instID,message):
         if len(arr)<=3:
             returnString = "err invalidResponse"
         else:
-            if arr[0] == "visa" & arr[1] == "writeResult":
-                if arr[2] == 1:  # error flag
-                    returnString = "err " + arr[3]
-                else:
-                    returnSting = arr[2]
+            if arr[2] == 1:  # error flag
+                returnString = "err " + arr[3]
             else:
-                returnString = "err unexpectedResponse"
+                i = 3
+                max = len(arr)
+                returnString = ""
+                while 1:
+                    returnString += arr[i]
+                    i += 1
+                    if i >= max:
+                        break
+                    returnString += ", "
 
     s.close()
     return returnString
@@ -64,7 +69,7 @@ if __name__=="__main__":
             if i >= max:
                 break
             message += " "
-        result = write(instID,message)
+        result = query(instID,message)
         print(result)
         sys.exit(result.split(" ")[0]=="err")
     else:

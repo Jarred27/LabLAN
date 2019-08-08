@@ -24,7 +24,18 @@ def functionhandler(args,conn,BUFFER_SIZE,filePath):
             except:
                 return "visa, writeResult, 1, device open error"
             try:
-                target.write(args[3])
+                # recombine all text after inital arguments into one string
+                max=len(args)
+                i=3
+                message=""
+                while 1:
+                    message+=args[i]
+                    i += 1
+                    if i>=max:
+                        break
+                    message += ", "
+
+                target.write(message)
             except:
                 return "visa, writeResult, 1, inst write error"
             if args[1]=="write":#if query then keep target instrument open and return read result

@@ -39,6 +39,9 @@ def read(instID):
         if len(arr)<=3:
             returnString = "err invalidResponse"
         else:
+            if arr[0] != "visa" | arr[1] != "readResult":
+                s.close()
+                return "err unexpectedResponse"
             if arr[2]==1:#server returned error flag
                 returnString = "err "+arr[3]
             else:
@@ -58,6 +61,9 @@ def read(instID):
 if __name__=="__main__":
     if len(sys.argv) == 2:
         instID = sys.argv[1]
-        print(read(instID))
+        result = read(instID)
+        print(result)
+        sys.exit(result.split(" ")[0] == "err")
     else:
         print("expected 1 argument got "+str(len(sys.argv)-1))
+        sys.exit(1)

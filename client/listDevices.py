@@ -54,4 +54,6 @@ if __name__=="__main__":
     #if len(sys.argv) == ...:
     #arg1 = sys.argv[1]...
     #else:
-    print(listDevices())
+    result = listDevices()
+    print(result)
+    sys.exit(result.split(" ")[0] == "err")

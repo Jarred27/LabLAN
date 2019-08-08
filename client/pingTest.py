@@ -20,12 +20,12 @@ def pingTest():
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     except:
-        return "socketConfigError"
+        return "err socketConfigError"
 
     #connect to server
     errorFlag = s.connect_ex((TCP_IP, TCP_PORT))
     if errorFlag != 0:
-        returnString="hostNotFoundErr#:"+str(errorFlag)
+        returnString="err hostNotFoundErr#:"+str(errorFlag)
         s.close()
         return returnString
 
@@ -33,7 +33,7 @@ def pingTest():
     s.send(formattedMessage)
     data = s.recv(BUFFER_SIZE)
     if not data:
-        returnString="noResponse"
+        returnString="err noResponse"
     else:
         returnString = data.decode("utf-8")
 
@@ -42,4 +42,6 @@ def pingTest():
 
 if __name__=="__main__":
     #arg1 = sys.argv[1]...
-    print(pingTest())
+    result = "ping23"#pingTest()
+    print(result)
+    sys.exit(result.split(" ")[0] == "ping")
