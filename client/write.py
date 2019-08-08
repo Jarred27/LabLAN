@@ -2,7 +2,7 @@ import getConfigs
 import socket
 import sys
 
-# takes 2 input arguments, the first being the instrument address and the second the being the message to send, 
+# takes 2 input arguments, the first being the instrument address and the second the being the message to send,
 
 def write(instID,message):
     #load settings
@@ -48,9 +48,17 @@ def write(instID,message):
     return returnString
 
 if __name__=="__main__":
-    if len(sys.argv) == 3:
+    if len(sys.argv) >= 3:
         instID = sys.argv[1]
-        message= sys.argv[2]
+        max=len(sys.argv)
+        i=2
+        message = ""
+        while 1:
+            message += sys.argv[i]
+            i += 1
+            if i >= max:
+                break
+            message += " "
         print(write(instID,message))
     else:
         print("expected 2 arguments got "+str(len(sys.argv)-1))
