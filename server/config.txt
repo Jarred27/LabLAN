@@ -1,5 +1,5 @@
-TCP_IP: 118.139.58.178
+#TCP_IP: 118.139.58.178
 TCP_PORT: 5005
 BUFFER_SIZE: 1024
-File_Path: C:\\Users\\anton\\OneDrive\\Desktop\\FYP dest\\
+File_Path: C:\\Users\\anton\\OneDrive\\Desktop\\FYPdest\\
 Connection_Timout(s): 2

@@ -2,9 +2,9 @@ import getConfigs
 import socket
 import sys
 
-# description here
+# takes 2 input arguments, the first being the instrument address and the second the being the message to send, 
 
-def ...():
+def write(instID,message):
     #load settings
     [TCP_IP,TCP_PORT,BUFFER_SIZE,connectionTimeout]=getConfigs.getConfigs().split(", ")
     TCP_PORT=int(TCP_PORT)
@@ -12,7 +12,7 @@ def ...():
     connectionTimeout = int(connectionTimeout)
 
     #define string to send
-    messageString = ...
+    messageString = "visa, write, "+instID+", "+message
     formattedMessage=bytes(messageString, 'UTF8')
 
     #bind port
@@ -36,12 +36,21 @@ def ...():
     else:
         response = data.decode("utf-8")
         arr = response.split(", ")
+        if len(arr)<=3:
+            returnString = "err invalidResponse"
+        else:
+            if arr[2]==1:#server returned error flag
+                returnString = "err "+arr[3]
+            else:
+                returnString=arr[2]
 
     s.close()
     return returnString
 
 if __name__=="__main__":
-    if len(sys.argv) == ...:
-        #arg1 = sys.argv[1]...
+    if len(sys.argv) == 3:
+        instID = sys.argv[1]
+        message= sys.argv[2]
+        print(write(instID,message))
     else:
-        print(...())
+        print("expected 2 arguments got "+str(len(sys.argv)-1))

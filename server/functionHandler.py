@@ -121,7 +121,7 @@ def runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE,filePath,connectionTimeout):
                     # this is to add robustness but requires client progrm to use correct formatting
                 except:
                     message = "err, command_error"
-                    #print("here")
+                    print("cmd err")
                 if message:#ignore if empty return
                     try:
                         conn.send(bytes(message, 'UTF8'))

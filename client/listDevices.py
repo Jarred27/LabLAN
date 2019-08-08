@@ -2,9 +2,9 @@ import getConfigs
 import socket
 import sys
 
-# description here
+# gets the server to return a list of avaliable instruments, no input arguments returns a string of addresses separated by ", "
 
-def ...():
+def listDevices():
     #load settings
     [TCP_IP,TCP_PORT,BUFFER_SIZE,connectionTimeout]=getConfigs.getConfigs().split(", ")
     TCP_PORT=int(TCP_PORT)
@@ -12,7 +12,7 @@ def ...():
     connectionTimeout = int(connectionTimeout)
 
     #define string to send
-    messageString = ...
+    messageString = "visa, listDevices"
     formattedMessage=bytes(messageString, 'UTF8')
 
     #bind port
@@ -35,13 +35,23 @@ def ...():
         returnString="err noResponse"
     else:
         response = data.decode("utf-8")
-        arr = response.split(", ")
-
+        arr=response.split(", ")
+        if len(arr)<=2:
+            return "err invalidResponse"
+        i=2
+        max=len(arr)
+        returnString=""
+        while 1:
+            returnString+=arr[i]
+            i+=1
+            if i>=max:
+                break
+            returnString+=", "
     s.close()
     return returnString
 
 if __name__=="__main__":
-    if len(sys.argv) == ...:
-        #arg1 = sys.argv[1]...
-    else:
-        print(...())
+    #if len(sys.argv) == ...:
+    #arg1 = sys.argv[1]...
+    #else:
+    print(listDevices())

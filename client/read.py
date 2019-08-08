@@ -2,9 +2,9 @@ import getConfigs
 import socket
 import sys
 
-# description here
+# takes an input argument of the device to be read and returns a string containing "err [...]" or devices response
 
-def ...():
+def read(instID):
     #load settings
     [TCP_IP,TCP_PORT,BUFFER_SIZE,connectionTimeout]=getConfigs.getConfigs().split(", ")
     TCP_PORT=int(TCP_PORT)
@@ -12,7 +12,7 @@ def ...():
     connectionTimeout = int(connectionTimeout)
 
     #define string to send
-    messageString = ...
+    messageString = "visa, read, "+instID
     formattedMessage=bytes(messageString, 'UTF8')
 
     #bind port
@@ -36,12 +36,28 @@ def ...():
     else:
         response = data.decode("utf-8")
         arr = response.split(", ")
+        if len(arr)<=3:
+            returnString = "err invalidResponse"
+        else:
+            if arr[2]==1:#server returned error flag
+                returnString = "err "+arr[3]
+            else:
+                i=3
+                max=len(arr)
+                returnString=""
+                while 1:
+                    returnString+=arr[i]
+                    i+=1
+                    if i>=max:
+                        break
+                    returnString+=", "
 
     s.close()
     return returnString
 
 if __name__=="__main__":
-    if len(sys.argv) == ...:
-        #arg1 = sys.argv[1]...
+    if len(sys.argv) == 2:
+        instID = sys.argv[1]
+        print(read(instID))
     else:
-        print(...())
+        print("expected 1 argument got "+str(len(sys.argv)-1))

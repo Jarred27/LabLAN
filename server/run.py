@@ -1,9 +1,14 @@
 import functionHandler
+import socket
 
 configFile = open("config.txt", "r")
 configs= configFile.read().split('\n')
 
-
+#default settings
+TCP_IP=str(socket.gethostname())
+TCP_PORT="5005"
+BUFFER_SIZE="1024"
+connectionTimeout="2"
 
 # importing settings from config file
 for line in configs:
