@@ -1,7 +1,0 @@
-- install python
-
-- change ip in .py file to match server + make IP static
-
-- allow "C:\Users\<username>\AppData\Local\Programs\Python\Python37-32\python.exe" through firewall
-
-- run server script
