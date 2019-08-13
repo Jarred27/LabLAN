@@ -44,4 +44,4 @@ if __name__=="__main__":
     #arg1 = sys.argv[1]...
     result = pingTest()
     print(result)
-    sys.exit(result.split(" ")[0] == "ping")
+    sys.exit(result.split(" ")[0] == "err")

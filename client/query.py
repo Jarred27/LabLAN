@@ -39,14 +39,14 @@ def query(instID,message):
         if len(arr)<=3:
             returnString = "err invalidResponse"
         else:
-            if arr[2] == 1:  # error flag
+            if arr[2] == "1":  # error flag
                 returnString = "err " + arr[3]
             else:
                 i = 3
                 max = len(arr)
                 returnString = ""
                 while 1:
-                    returnString += arr[i]
+                    returnString += arr[2]
                     i += 1
                     if i >= max:
                         break

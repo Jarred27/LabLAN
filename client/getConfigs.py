@@ -34,14 +34,3 @@ def getConfigs():
         #TCP_PORT=int(TCP_PORT)
         #BUFFER_SIZE=int(BUFFER_SIZE)
         #connectionTimeout=int(connectionTimeout)
-
-def getAWGaddress():#not used by
-    # default setting NA
-
-    # load settings from file
-    configFile = open("config.txt", "r")
-    configs = configFile.read().split('\n')
-    for line in configs:
-        [setting, value] = line.split(': ')
-        if setting=="AWG_address":
-            return value

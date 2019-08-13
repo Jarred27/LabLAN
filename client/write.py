@@ -40,10 +40,10 @@ def write(instID,message):
             returnString = "err invalidResponse"
         else:
             if arr[0] == "visa" & arr[1] == "writeResult":
-                if arr[2] == 1:  # error flag
+                if arr[2] == "1":  # error flag
                     returnString = "err " + arr[3]
                 else:
-                    returnSting = arr[2]
+                    returnString = arr[2]
             else:
                 returnString = "err unexpectedResponse"
 
