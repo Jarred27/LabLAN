@@ -4,7 +4,7 @@ import sys
 
 # description here
 
-def ...():
+def uploadFile(fileName):
     #load settings
     [TCP_IP,TCP_PORT,BUFFER_SIZE,connectionTimeout]=getConfigs.getConfigs().split(", ")
     TCP_PORT=int(TCP_PORT)
@@ -12,7 +12,7 @@ def ...():
     connectionTimeout = int(connectionTimeout)
 
     #define string to send
-    messageString = ...
+    messageString = "file, upload, "+fileName
     formattedMessage=bytes(messageString, 'UTF8')
 
     #bind port
@@ -36,12 +36,23 @@ def ...():
     else:
         response = data.decode("utf-8")
         arr = response.split(", ")
+        if arr[0]=="file" & arr[1]=="uploadResult":
+            if arr[2] == "1":#error flag
+                returnString="err "+arr[3]
+            else:
+                returnString = arr[2]
+        else:
+            returnString="err unexpectedResponse"
 
     s.close()
     return returnString
 
 if __name__=="__main__":
-    if len(sys.argv) == ...:
-        #arg1 = sys.argv[1]...
+    if len(sys.argv) == 2:
+        fileName = sys.argv[1]
+        result=uploadFile(fileName)
+        print(result)
+        sys.exit(result.split(" ")[0]=="err")
     else:
-        print(...())
+        print("err expected 1 argument got "+str(len(sys.argv)-1))
+        sys.exit(1)
