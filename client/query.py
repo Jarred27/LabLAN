@@ -46,7 +46,7 @@ def query(instID,message):
                 max = len(arr)
                 returnString = ""
                 while 1:
-                    returnString += arr[2]
+                    returnString += arr[i]
                     i += 1
                     if i >= max:
                         break
