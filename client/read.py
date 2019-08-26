@@ -39,7 +39,7 @@ def read(instID):
         if len(arr)<=3:
             returnString = "err invalidResponse"
         else:
-            if arr[0] != "visa" | arr[1] != "readResult":
+            if (arr[0] != "visa") | (arr[1] != "readResult"):
                 s.close()
                 return "err unexpectedResponse"
             if arr[2] == "1":#server returned error flag

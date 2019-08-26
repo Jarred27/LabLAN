@@ -33,3 +33,4 @@ for line in configs:
 functionHandler.runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE,filePath,connectionTimeout)
 
 # code will never get here
+input()

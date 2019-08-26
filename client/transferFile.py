@@ -12,14 +12,22 @@ def transferFile(filePath,destFilename):
     connectionTimeout = int(connectionTimeout)
 
     s = socket.socket()
-    s.connect((TCP_IP, TCP_PORT))
+	
+    #connect to server
+    errorFlag = s.connect_ex((TCP_IP, TCP_PORT))
+    if errorFlag != 0:
+        returnString="err hostNotFoundErr#:"+str(errorFlag)
+        s.close()
+        return returnString
+		
     s.send(bytes("file, txRequest, " + destFilename, "UTF8"))
     #print('waiting for server')
     response = s.recv(BUFFER_SIZE)
     if response != b'file, rxReady':
         #print("handshake error")
         #print(response.decode("utf-8"))
-        return 1
+        s.close
+        return "err handshake error"
     file = open(filePath, 'rb')
     #print('Sending...')
     line = file.read(BUFFER_SIZE)
@@ -34,18 +42,24 @@ def transferFile(filePath,destFilename):
         response = s.recv(BUFFER_SIZE)
         response=response.decode("utf-8")
         arr=response.split(", ")
-        print(arr)
-        errFlag=arr[2]
+        #print(arr)
+        if arr[2]!="0":
+            returnString=response#"err server returned error"
+        else:
+            returnString="success"
     except:
-        errFlag=1
+        returnString="err server response lost"
     #print("Exiting")
     s.close  # Close the socket when done
-    return errFlag
+    return returnString
 
 if __name__=="__main__":
     if len(sys.argv) == 3:
         filePath = sys.argv[1]
         destFilename = sys.argv[2]
-        print(transferFile(filePath,destFilename))#print 0 for success, 1 for error (error flag value)
+        result = transferFile(filePath,destFilename)
+        print(result)
+        sys.exit(result.split(" ")[0]=="err")
     else:
-        print("expected 2 arguments got "+str(len(sys.argv)-1))
+        print("expected 2 arguments got "+str(len(sys.argv)-1)+"\ncorrect usage: transferFile.py filePath destFilename")
+        sys.exit(1)

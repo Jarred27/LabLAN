@@ -37,7 +37,10 @@ def write(instID,message):
         response = data.decode("utf-8")
         arr = response.split(", ")
         if len(arr)<=3:
-            returnString = "err invalidResponse"
+            if arr[2] == "1":
+                returnString = "err invalidResponse"
+            else:
+                returnString=""
         else:
             if arr[0] == "visa" & arr[1] == "writeResult":
                 if arr[2] == "1":  # error flag

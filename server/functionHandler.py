@@ -86,13 +86,13 @@ def functionhandler(args,conn,BUFFER_SIZE,filePath):
             #    return "file, writeResult, 1, byte size mismatch"
             return "file, writeResult, 0"
         if args[1]=="upload":#
-            targetID=args[3]
+            targetID="TCPIP0::localhost::inst1::INSTR"
             try:
                 target=rm.open_resource(targetID)
             except:
                 return "file, uploadResult, 1, device open error"
             try:
-                target.write()
+                target.write(":TRAC" + args[3] + ":IMP 1, \""+filePath+args[2] + "\", TXT, IONLY, ON, ALEN")
             except:
                 return "file, uploadResult, 1, inst write error"
             target.close()
