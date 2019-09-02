@@ -78,7 +78,7 @@ def functionhandler(args,conn,BUFFER_SIZE,filePath):
                     #currentSize += line.__len__()
                 except:
                     #print(line.__len__())
-                    file.write(line)
+                    #file.write(line)
                     #currentSize += line.__len__()
                     break
             #if not currentSize==sizeMax:
