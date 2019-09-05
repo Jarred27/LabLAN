@@ -1,4 +1,4 @@
-import functionHandler
+import __main__
 import socket
 
 configFile = open("config.txt", "r")
