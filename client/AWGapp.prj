@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="601333076" file="C:\Users\anton\Documents\FYPrepository\Remotomation\client\AWGapp.prj" location="C:\Users\anton\Documents\FYPrepository\Remotomation\client" name="AWGapp" target="target.mlapps" target-name="Package App">
+  <configuration build-checksum="1531944342" file="C:\Users\anton\Documents\FYPrepository\Remotomation\client\AWGapp.prj" location="C:\Users\anton\Documents\FYPrepository\Remotomation\client" name="AWGapp" target="target.mlapps" target-name="Package App">
     <param.appname>AWGapp</param.appname>
     <param.authnamewatermark>Anthony Baudinette &amp; Jarred Paola</param.authnamewatermark>
     <param.email>ajbau1@student.monash.edu.au</param.email>
@@ -8,8 +8,8 @@
     <param.icons />
     <param.summary>Matlab app for remote control of Keysight M8195A Arbitrary Waveform Generator</param.summary>
     <param.description />
-    <param.screenshot>C:\Users\anton\AppData\Local\Temp\tp57247448_671a_4045_9a24_258eef3f6093.png</param.screenshot>
-    <param.version>1.0</param.version>
+    <param.screenshot>C:\Users\anton\AppData\Local\Temp\tpb24ee2b2_2617_4f7e_8569_da62c57a73a4.png</param.screenshot>
+    <param.version>1.1</param.version>
     <param.products.name />
     <param.products.id />
     <param.products.version />
@@ -20,7 +20,6 @@
       <param.icon />
       <param.icons />
       <param.description />
-      <param.version />
       <param.products.name />
       <param.products.id />
       <param.products.version />
