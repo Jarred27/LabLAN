@@ -1,5 +1,5 @@
-function AWGrefClockSet(frequency)
-%AWGREFCLOCKSET Summary of this function goes here
+function OSCsampleRateSet()
+%OSCRUN Summary of this function goes here
 %   Detailed explanation goes here
 outputArg1 = inputArg1;
 outputArg2 = inputArg2;
