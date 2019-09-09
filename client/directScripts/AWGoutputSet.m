@@ -1,7 +1,10 @@
-function AWGoutputSet(channel,state)
+function AWGoutputSet(channel,ONorOFF)
 %AWGOUTPUTSET Summary of this function goes here
+%channel is which channel you want 
+%ONorOFF is either 1 or 0
+
 AWGadd = "TCPIP0::localhost::inst1::INSTR "
-Command = "___"
+Command = ":OUTP" + string(channel) + " " + string(ONorOFF)
 
 % in the form of ">python (python_command) (device) (device_command)"
 cmdStr = "cd .. & " + "python write.py " + AWGadd + Command;

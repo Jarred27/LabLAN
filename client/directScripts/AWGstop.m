@@ -1,7 +1,7 @@
 function AWGstop()
-%AWGSTOP Summary of this function goes here
+%AWGSTOP sets stop
 AWGadd = "TCPIP0::localhost::inst1::INSTR "
-Command = "___"
+Command = ":ABOR"
 
 % in the form of ">python (python_command) (device) (device_command)"
 cmdStr = "cd .. & " + "python write.py " + AWGadd + Command;

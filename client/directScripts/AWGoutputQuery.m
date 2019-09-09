@@ -1,8 +1,10 @@
 function outputState = AWGoutputQuery(channel)
 %AWGOUTPUTQUERY Summary of this function goes here
+%channel is which channel you want 
+
 
 AWGadd = "TCPIP0::localhost::inst1::INSTR "
-Command = "___"
+Command = ":OUTP" + string(channel) + "?"
 
 % in the form of ">python (python_command) (device) (device_command)"
 cmdStr = "cd .. & " + "python write.py " + AWGadd + Command;

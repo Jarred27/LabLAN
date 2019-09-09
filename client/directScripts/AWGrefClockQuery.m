@@ -1,5 +1,7 @@
 function frequency = AWGrefClockQuery()
 %AWGREFCLOCKQUERY Summary of this function goes here
+
+
 AWGadd = "TCPIP0::localhost::inst1::INSTR "
 Command = ":ROSC:FREQ?"
 
@@ -9,4 +11,8 @@ cmdStr = "cd .. & " + "python write.py " + AWGadd + Command;
 [status,cmdOut] = system(cmdStr);
 if status==2
     warning("file note found")
+elseif status==0
+	frequency = str2num(cmdOut)
+end
+return frequency
 end

@@ -1,7 +1,9 @@
 function AWGrefClockSet(frequency)
 %AWGREFCLOCKSET Summary of this function goes here
+%frequency - should be in Hz
+
 AWGadd = "TCPIP0::localhost::inst1::INSTR "
-Command = "___"
+Command = ":ROSC:FREQ " + string(frequency)
 
 % in the form of ">python (python_command) (device) (device_command)"
 cmdStr = "cd .. & " + "python write.py " + AWGadd + Command;
