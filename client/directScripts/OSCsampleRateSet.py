@@ -1,7 +1,9 @@
 def function OSCsampleRateSet()
-	#OSCsampleRateSet Summary of this function goes here
-	#   Detailed explanation goes here
-	outputArg1 = inputArg1;
-	outputArg2 = inputArg2;
-	return
-
+	# OSCsampleRateSet Summary of this function goes here
+	# Detailed explanation goes here
+	import write.py
+	
+	OSCadd = "___"
+	Command = "___"
+	
+	return = write(OSCadd,Command)

@@ -1,7 +1,9 @@
 def function AWGrefClockQuery()
-	#AWGrefClockQuery Summary of this function goes here
-	#   Detailed explanation goes here
-	outputArg1 = inputArg1;
-	outputArg2 = inputArg2;
-	return
-
+	# AWGrefClockQuery Summary of this function goes here
+	# Detailed explanation goes here
+	import write.py
+	
+	AWGadd = "TCPIP0::localhost::inst1::INSTR"
+	Command = ":ROSC:FREQ?"
+	
+	return = write(AWGadd,Command)
