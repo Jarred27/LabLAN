@@ -14,7 +14,7 @@ def pingTest():
 
     #define string to send
     messageString = "ping"
-    formattedMessage=bytes(messageString, 'UTF8')
+    formattedMessage=messageString.encode('UTF8')
 
     #bind port
     try:

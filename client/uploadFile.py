@@ -13,7 +13,7 @@ def uploadFile(fileName,channelNum):
 
     #define string to send
     messageString = "file, upload, " + fileName + ", " + channelNum
-    formattedMessage=bytes(messageString, 'UTF8')
+    formattedMessage=messageString.encode('UTF8')
 
     #bind port
     try:

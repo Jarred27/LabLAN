@@ -13,7 +13,7 @@ def write(instID,message):
 
     #define string to send
     messageString = "visa, write, "+instID+", "+message
-    formattedMessage=bytes(messageString, 'UTF8')
+    formattedMessage=messageString.encode('UTF8')
 
     #bind port
     try:

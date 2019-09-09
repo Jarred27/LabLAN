@@ -13,7 +13,7 @@ def query(instID,message):
 
     #define string to send
     messageString = "visa, query, "+instID+", "+message
-    formattedMessage=bytes(messageString, 'UTF8')
+    formattedMessage=messageString.encode('UTF8')
 
     #bind port
     try:

@@ -13,7 +13,7 @@ def listDevices():
 
     #define string to send
     messageString = "visa, listDevices"
-    formattedMessage=bytes(messageString, 'UTF8')
+    formattedMessage=messageString.encode('UTF8')
 
     #bind port
     try:
