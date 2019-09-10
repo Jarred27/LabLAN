@@ -1,9 +1,9 @@
-def function AWGvoltageQuery()
+def function AWGvoltageQuery(channel)
 	# AWGvoltageQuery Summary of this function goes here
 	# Detailed explanation goes here
-	import write.py
+	import query.py
 	
 	AWGadd = "TCPIP0::localhost::inst1::INSTR"
-	Command = "___"
+	Command = "VOLT" + str(channel) + "?"
 	
-	return = write(AWGadd,Command)
+	return = query(AWGadd,Command)

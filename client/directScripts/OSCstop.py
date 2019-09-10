@@ -3,7 +3,7 @@ def function OSCrun()
 	# Detailed explanation goes here
 	import write.py
 	
-	OSCadd = "___"
-	Command = "___"
+	OSCadd = "USB0::0x0957::0x9013::MY50270101::0::INSTR"
+	Command = ":INIT:IMM"
 	
 	return = write(OSCadd,Command)

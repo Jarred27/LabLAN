@@ -1,9 +1,9 @@
 def function AWGsampleRateQuery()
 	# AWGsampleRateQuery Summary of this function goes here
 	# Detailed explanation goes here
-	import write.py
+	import query.py
 	
 	AWGadd = "TCPIP0::localhost::inst1::INSTR"
-	Command = "___"
+	Command = ":FREQ:RAST?"
 	
-	return = write(AWGadd,Command)
+	return = query(AWGadd,Command)

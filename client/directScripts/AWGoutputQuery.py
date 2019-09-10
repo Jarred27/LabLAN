@@ -1,9 +1,9 @@
-def function AWGoutputQuery()
+def function AWGoutputQuery(channel)
 	# AWGoutputQuery Summary of this function goes here
-	# Detailed explanation goes here
-	import write.py
+	# Channel is which you want
+	import query.py
 	
 	AWGadd = "TCPIP0::localhost::inst1::INSTR"
-	Command = "___"
+	Command = ":OUTP" + str(channel) + "?"
 	
-	return = write(AWGadd,Command)
+	return = query(AWGadd,Command)

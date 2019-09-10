@@ -4,6 +4,6 @@ def function AWGrefClockSet(frequency)
 	import write.py
 	
 	AWGadd = "TCPIP0::localhost::inst1::INSTR"
-	Command = :ROSC:FREQ " + num2str(frequency)
+	Command = ":ROSC:FREQ " + str(frequency)
 	
 	return = write(AWGadd,Command)

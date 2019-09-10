@@ -1,6 +1,6 @@
 def function AWGrun()
-	# AWGRUN Summary of this function goes here
-	# Detailed explanation goes here
+	# AWGrun sets the run state
+	
 	import write.py
 	
 	AWGadd = "TCPIP0::localhost::inst1::INSTR"

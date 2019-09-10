@@ -4,6 +4,6 @@ def function AWGstop()
 	import write.py
 	
 	AWGadd = "TCPIP0::localhost::inst1::INSTR"
-	Command = "___"
+	Command = ":ABOR"
 	
 	return = write(AWGadd,Command)

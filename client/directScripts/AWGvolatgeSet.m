@@ -3,11 +3,11 @@ function AWGvoltageSet(channel,voltage)
 %channel
 %voltage 
 
-AWGadd = "TCPIP0::localhost::inst1::INSTR "
-Command = "VOLT" + string(channel) + " " + string(voltage)
+AWGadd = "TCPIP0::localhost::inst1::INSTR"
+Command = "VOLT" + num2str(channel) + " " + num2str(voltage)
 
 % in the form of ">python (python_command) (device) (device_command)"
-cmdStr = "cd .. & " + "python write.py " + AWGadd + Command;
+cmdStr = "cd .. & " + "python write.py " + AWGadd + " " + Command;
 
 [status,cmdOut] = system(cmdStr);
 if status==2

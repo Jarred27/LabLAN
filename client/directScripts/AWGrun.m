@@ -1,10 +1,13 @@
 function AWGrun()
 %AWGrun sets the run state
-AWGadd = "TCPIP0::localhost::inst1::INSTR "
+
+
+
+AWGadd = "TCPIP0::localhost::inst1::INSTR"
 Command = ":INIT:IMM"
 
 % in the form of ">python (python_command) (device) (device_command)"
-cmdStr = "cd .. & " + "python write.py " + AWGadd + Command;
+cmdStr = "cd .. & " + "python write.py " + AWGadd + " " + Command;
 
 [status,cmdOut] = system(cmdStr);
 if status==2
