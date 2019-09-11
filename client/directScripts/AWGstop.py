@@ -12,7 +12,7 @@ def stop():
 
 if __name__ == "__main__":
 	if len(sys.argv) == 1:		# stop
-		result = run()
+		result = stop()
 		print(result)
 	else:
 		print("err expected 1 or 2 arguments, got "+str(len(sys.argv)-1)+".")
