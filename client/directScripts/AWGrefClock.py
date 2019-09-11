@@ -3,7 +3,8 @@ import query
 import sys
 AWGadd = "TCPIP0::localhost::inst1::INSTR"
 
-def ask()
+
+def ask():
 	# AWGrefClock.ask		- ask frequency of reference clock
 	Command = ":ROSC:FREQ?"
 	return query.query(AWGadd,Command)
