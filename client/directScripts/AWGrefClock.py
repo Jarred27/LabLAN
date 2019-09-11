@@ -16,14 +16,12 @@ def set(frequency):
 
 	
 if __name__ == "__main__":
-	if len(sys.argv) == 2:		# ask
-		CHAN = sys.argv[1]
-		result = ask(CHAN)
+	if len(sys.argv) == 1:		# ask
+		result = ask()
 		print(result)
-	elif len(sys.argv) == 3:	# set
-		CHAN = sys.argv[1]
-		ONorOFF = sys.argv[2]
-		result = set(CHAN,ONorOFF)
+	elif len(sys.argv) == 2:	# set
+		FREQ = sys.argv[1]
+		result = set(FREQ)
 		print(result)
 	else:
 		print("err expected 1 or 2 arguments, got "+str(len(sys.argv)-1)+".")
