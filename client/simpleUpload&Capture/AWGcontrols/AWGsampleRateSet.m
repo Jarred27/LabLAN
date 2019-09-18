@@ -3,8 +3,8 @@ function AWGsampleRateSet(frequency)
 %frequency 
 
 
-AWGadd = "TCPIP0::localhost::inst1::INSTR"
-Command = ":FREQ:RAST " + num2str(frequency)
+AWGadd = "TCPIP0::localhost::inst1::INSTR";
+Command = ":FREQ:RAST " + num2str(frequency);
 
 % in the form of ">python (python_command) (device) (device_command)"
 cmdStr = "python write.py " + AWGadd + " " + Command;

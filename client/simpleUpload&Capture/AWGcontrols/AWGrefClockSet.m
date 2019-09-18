@@ -1,10 +1,10 @@
-function AWGsampleRateSet(frequency)
-%AWGSAMPLERATESET Summary of this function goes here
-%frequency 
+function AWGrefClockSet(frequency)
+%AWGREFCLOCKSET Summary of this function goes here
+%frequency - should be in Hz
 
 
-AWGadd = "TCPIP0::localhost::inst1::INSTR"
-Command = ":FREQ:RAST " + num2str(frequency)
+AWGadd = "TCPIP0::localhost::inst1::INSTR";
+Command = ":ROSC:FREQ " + num2str(frequency);
 
 % in the form of ">python (python_command) (device) (device_command)"
 cmdStr = "python write.py " + AWGadd + " " + Command;

@@ -7,7 +7,7 @@ AWGadd = "TCPIP0::localhost::inst1::INSTR"
 Command = ":ROSC:FREQ?"
 
 % in the form of ">python (python_command) (device) (device_command)"
-cmdStr = "cd .. & " + "python query.py " + AWGadd + " " + Command;
+cmdStr = "python query.py " + AWGadd + " " + Command;
 
 [status,cmdOut] = system(cmdStr);
 if status==2

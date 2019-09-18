@@ -1,10 +1,10 @@
-function frequency = AWGsampleRateQuery()
-%AWGsampleRateQuery Summary of this function goes here
-
+function voltage = AWGvoltageQuery(channel)
+%AWGVOLTAGEQUERY Summary of this function goes here
+%channel 
 
 
 AWGadd = "TCPIP0::localhost::inst1::INSTR"
-Command = ":FREQ:RAST?"
+Command = "VOLT" + num2str(channel) + "?"
 
 % in the form of ">python (python_command) (device) (device_command)"
 cmdStr = "python query.py " + AWGadd + " " + Command;
@@ -13,7 +13,7 @@ cmdStr = "python query.py " + AWGadd + " " + Command;
 if status==2
     warning("file note found")
 elseif status==0
-	frequency = str2num(cmdOut)
+	voltage = str2num(cmdOut)
 end
-return frequency
+return voltage
 end

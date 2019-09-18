@@ -1,10 +1,10 @@
-function AWGsampleRateSet(frequency)
-%AWGSAMPLERATESET Summary of this function goes here
-%frequency 
+function AWGrun()
+%AWGrun sets the run state
 
 
-AWGadd = "TCPIP0::localhost::inst1::INSTR"
-Command = ":FREQ:RAST " + num2str(frequency)
+
+AWGadd = "TCPIP0::localhost::inst1::INSTR";
+Command = ":INIT:IMM";
 
 % in the form of ">python (python_command) (device) (device_command)"
 cmdStr = "python write.py " + AWGadd + " " + Command;

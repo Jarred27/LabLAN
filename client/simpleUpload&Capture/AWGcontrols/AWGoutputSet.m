@@ -3,8 +3,8 @@ function AWGoutputSet(channel,ONorOFF)
 %channel is which channel you want 
 %ONorOFF is either 1 or 0
 
-AWGadd = "TCPIP0::localhost::inst1::INSTR"
-Command = ":OUTP" + num2str(channel) + " " + num2str(ONorOFF)
+AWGadd = "TCPIP0::localhost::inst1::INSTR";
+Command = ":OUTP" + num2str(channel) + " " + num2str(ONorOFF);
 
 % in the form of ">python (python_command) (device) (device_command)"
 cmdStr = "python write.py " + AWGadd + " " + Command;
