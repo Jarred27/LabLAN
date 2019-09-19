@@ -1,6 +1,11 @@
 function frequency = AWGrefClockQuery()
-%AWGREFCLOCKQUERY Summary of this function goes here
-
+% AWGrefClockQuery() returns the external refrence clock setting of the AWG
+% Usage:
+%	frequency = AWGrefClockQuery();
+% Inputs:
+%	none
+% Outputs:
+%	frequency - Hz
 
 
 AWGadd = "TCPIP0::localhost::inst1::INSTR";
@@ -10,9 +15,9 @@ Command = ":ROSC:FREQ?";
 cmdStr = "python query.py " + AWGadd + " " + Command;
 
 [status,cmdOut] = system(cmdStr);
-if status==2
-    warning("file note found")
-elseif status==0
-	frequency = str2num(cmdOut);
+if status~=0
+    warning("syetem error: "+cmdOut)
+	frequency=nan;%not a number
 end
+frequency = str2num(cmdOut);
 end

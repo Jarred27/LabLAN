@@ -1,5 +1,11 @@
 function frequency = AWGsampleRateQuery()
-%AWGsampleRateQuery Summary of this function goes here
+% reads and returns the current sample rate setting on the AWG
+% Usage:
+%	AWGsampleRateQuery();
+% Inputs:
+%	none
+% Outputs:
+%	frequency - current sample rate setting (Hz)
 
 
 
@@ -10,9 +16,10 @@ Command = ":FREQ:RAST?";
 cmdStr = "python query.py " + AWGadd + " " + Command;
 
 [status,cmdOut] = system(cmdStr);
-if status==2
-    warning("file note found")
-elseif status==0
+if status~=0
+    warning("syetem error: "+cmdOut)
+	frequency=nan;%not a number
+else
 	frequency = str2num(cmdOut);
 end
 end

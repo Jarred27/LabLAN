@@ -1,5 +1,11 @@
 function AWGstop()
-%AWGSTOP sets stop
+% stops signal output of AWG
+% Usage:
+%	AWGstop();
+% Inputs:
+%	none
+% Outputs:
+%	none
 
 
 
@@ -10,6 +16,7 @@ Command = ":ABOR";
 cmdStr = "python write.py " + AWGadd + " " + Command;
 
 [status,cmdOut] = system(cmdStr);
-if status==2
-    warning("file note found")
+if status~=0
+    warning("syetem error: "+cmdOut)
+end
 end

@@ -19,7 +19,7 @@ def transferFile(filePath,destFilename):
         returnString="err hostNotFoundErr#:"+str(errorFlag)
         s.close()
         return returnString
-	message="file, txRequest, " + destFilename, "UTF8"
+    message="file, txRequest, "+destFilename
     s.send(message.encode('UTF8'))
     #print('waiting for server')
     response = s.recv(BUFFER_SIZE)

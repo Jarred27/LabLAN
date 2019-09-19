@@ -1,4 +1,4 @@
-function [errCode,errorDescription] = pingTest()
+function errCode,errorDescription = pingTest()
 % checks python version and file/server avaliability
 % Usage:
 %	[errorCode,errorDescription]=pingTest();
@@ -44,6 +44,6 @@ if status
 	errorDescription=cmdOut;
 else
     errCode = 0;
-	errorDescription=cmdOut;
+	errorDescription="";
 end
 end

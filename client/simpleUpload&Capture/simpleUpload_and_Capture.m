@@ -12,10 +12,10 @@ files=["tmp_real_X.txt","tmp_imag_X.txt","tmp_real_y.txt","tmp_imag_y.txt"]; % f
 
 %% send AWG data
 cd AWGcontrols % entering folder where python scripts call from
-AWG_link_status=pingTest();
+[AWG_link_status,AWG_link_error]=pingTest();
 if AWG_link_status
 	cd ..
-	error(["error in contacting AWG, errCode: ",AWG_link_status])
+	error("error in contacting AWG, errCode: "+AWG_link_status+AWG_link_error)
 end
 % clear error log
 while(1)

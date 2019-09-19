@@ -1,6 +1,11 @@
 function AWGrefClockSet(frequency)
-%AWGREFCLOCKSET Summary of this function goes here
-%frequency - should be in Hz
+% AWGrefClockSet(frequency) applies the frequency provided to the AWG external referenc clock setting
+% Usage:
+%	AWGrefClockSet(frequency); e.g. AWGrefClockSet(100e9);%set referenc clock 100 GHz
+% Inputs:
+%	frequency - Hz
+% Outputs:
+%	none
 
 
 AWGadd = "TCPIP0::localhost::inst1::INSTR";
@@ -10,6 +15,7 @@ Command = ":ROSC:FREQ " + num2str(frequency);
 cmdStr = "python write.py " + AWGadd + " " + Command;
 
 [status,cmdOut] = system(cmdStr);
-if status==2
-    warning("file note found")
+if status~=0
+    warning("syetem error: "+cmdOut)
+end
 end
