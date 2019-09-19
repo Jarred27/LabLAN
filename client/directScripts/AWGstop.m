@@ -16,7 +16,7 @@ Command = ":ABOR";
 cmdStr = "python write.py " + AWGadd + " " + Command;
 
 [status,cmdOut] = system(cmdStr);
-if status!=0
+if status~=0
     warning("syetem error: "+cmdOut)
 end
 end

@@ -15,7 +15,7 @@ Command = ":FREQ:RAST " + num2str(frequency);
 cmdStr = "python write.py " + AWGadd + " " + Command;
 
 [status,cmdOut] = system(cmdStr);
-if status!=0
+if status~=0
     warning("syetem error: "+cmdOut)
 end
 end

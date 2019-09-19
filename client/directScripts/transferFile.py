@@ -4,9 +4,9 @@ import sys
 
 #  moves file into dedicated folder on server, needs to be pushed onto AWG with uploadFile.py
 
-def transferFile(filePath,destFilename):
+def transferFile(filePath,destFilename):#note that file path includes the local filename
     #load settings
-    [TCP_IP,TCP_PORT,BUFFER_SIZE,connectionTimeout]=getConfigs.getConfigs().split(", ")
+    [TCP_IP,TCP_PORT,BUFFER_SIZE,connectionTimeout,AWG_address]=getConfigs.getConfigs().split(", ")
     TCP_PORT=int(TCP_PORT)
     BUFFER_SIZE=int(BUFFER_SIZE)
     connectionTimeout = int(connectionTimeout)

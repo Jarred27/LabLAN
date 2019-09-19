@@ -1,5 +1,5 @@
 TCP_IP: 192.168.0.1
-TCP_PORT: 5005
+TCP_PORT: 5006
 BUFFER_SIZE: 1024
 Connection_Timout(s): 2
-AWG_address: TCPIP0::localhost::inst1::INSTR
+AWG_address: TCPIP0::localhost::inst0::INSTR

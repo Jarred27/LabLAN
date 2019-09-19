@@ -8,7 +8,7 @@ function AWGrefClockSet(frequency)
 %	none
 
 
-AWGadd = "TCPIP0::localhost::inst1::INSTR";
+AWGadd = "AWG";
 Command = ":ROSC:FREQ " + num2str(frequency);
 
 % in the form of ">python (python_command) (device) (device_command)"

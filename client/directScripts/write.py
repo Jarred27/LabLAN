@@ -6,10 +6,13 @@ import sys
 
 def write(instID,message):
     #load settings
-    [TCP_IP,TCP_PORT,BUFFER_SIZE,connectionTimeout]=getConfigs.getConfigs().split(", ")
+    [TCP_IP,TCP_PORT,BUFFER_SIZE,connectionTimeout,AWG_address]=getConfigs.getConfigs().split(", ")
     TCP_PORT=int(TCP_PORT)
     BUFFER_SIZE=int(BUFFER_SIZE)
     connectionTimeout = int(connectionTimeout)
+
+	if instID="AWG"
+		instID=AWG_address
 
     #define string to send
     messageString = "visa, write, "+instID+", "+message

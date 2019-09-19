@@ -9,7 +9,7 @@ function AWGstop()
 
 
 
-AWGadd = "TCPIP0::localhost::inst1::INSTR";
+AWGadd = "AWG";
 Command = ":ABOR";
 
 % in the form of ">python (python_command) (device) (device_command)"

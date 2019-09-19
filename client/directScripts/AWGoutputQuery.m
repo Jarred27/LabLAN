@@ -16,7 +16,7 @@ Command = ":OUTP" + num2str(channel) + "?";
 cmdStr = "python query.py " + AWGadd + " " + Command;
 
 [status,cmdOut] = system(cmdStr);
-if status!=0
+if status~=0
     warning("syetem error: "+cmdOut)
 	outputState=nan;%not a number
 else

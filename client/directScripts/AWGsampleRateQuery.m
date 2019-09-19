@@ -16,7 +16,7 @@ Command = ":FREQ:RAST?";
 cmdStr = "python query.py " + AWGadd + " " + Command;
 
 [status,cmdOut] = system(cmdStr);
-if status!=0
+if status~=0
     warning("syetem error: "+cmdOut)
 	frequency=nan;%not a number
 else

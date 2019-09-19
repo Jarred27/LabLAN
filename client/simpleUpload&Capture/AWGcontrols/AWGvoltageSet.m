@@ -8,7 +8,7 @@ function AWGvoltageSet(channel,voltage)
 % Outputs:
 %	none
 
-AWGadd = "TCPIP0::localhost::inst1::INSTR";
+AWGadd = "AWG";
 Command = "VOLT" + num2str(channel) + " " + num2str(voltage);
 
 % in the form of ">python (python_command) (device) (device_command)"

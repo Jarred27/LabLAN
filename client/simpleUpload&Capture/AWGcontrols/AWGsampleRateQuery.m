@@ -9,7 +9,7 @@ function frequency = AWGsampleRateQuery()
 
 
 
-AWGadd = "TCPIP0::localhost::inst1::INSTR";
+AWGadd = "AWG";
 Command = ":FREQ:RAST?";
 
 % in the form of ">python (python_command) (device) (device_command)"
