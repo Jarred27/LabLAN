@@ -1,4 +1,4 @@
-import __main__
+import main
 import socket
 
 configFile = open("config.txt", "r")
@@ -9,6 +9,7 @@ TCP_IP=str(socket.gethostname())
 TCP_PORT="5005"
 BUFFER_SIZE="1024"
 connectionTimeout="2"
+filePath=""
 
 # importing settings from config file
 for line in configs:
@@ -30,7 +31,7 @@ for line in configs:
         continue
 
 # loop forever in TCP server
-functionHandler.runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE,filePath,connectionTimeout)
+main.runTCP(TCP_IP,TCP_PORT,BUFFER_SIZE,filePath,connectionTimeout)
 
 # code will never get here
 input()

@@ -6,7 +6,7 @@ def getConfigs():
     TCP_PORT="5005"
     BUFFER_SIZE="1024"
     connectionTimeout="2"
-	AWG_address="TCPIP0::localhost::inst1::INSTR"
+    AWG_address="TCPIP0::localhost::inst1::INSTR"
 
     #load settings from file
     configFile = open("config.txt", "r")
@@ -25,11 +25,11 @@ def getConfigs():
         if setting == 'Connection_Timout(s)':
             connectionTimeout = value
             continue
-		if setting == 'AWG_address':
-			AWG_address=TCPIP0::localhost::inst1::INSTR
-			continue
+        if setting == 'AWG_address':
+            AWG_address=value #TCPIP0::localhost::inst1::INSTR
+            continue
     #put settings in a string to return
-    returnString=TCP_IP+", "+TCP_PORT+", "+BUFFER_SIZE+", "+connectionTimeout+", "AWG_address
+    returnString=TCP_IP+", "+TCP_PORT+", "+BUFFER_SIZE+", "+connectionTimeout+", "+AWG_address
     return returnString
         #to use in other finctions use:
         #import getConfigs

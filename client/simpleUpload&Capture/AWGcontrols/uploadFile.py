@@ -11,8 +11,8 @@ def uploadFile(fileName,channelNum,instID):
     BUFFER_SIZE=int(BUFFER_SIZE)
     connectionTimeout = int(connectionTimeout)
 
-	if instID="AWG"
-		instID=AWG_address
+    if instID=="AWG":
+        instID=AWG_address
 
     #define string to send
     messageString = "file, upload, " + fileName + ", " + channelNum + ", " + instID
@@ -54,7 +54,7 @@ if __name__=="__main__":
     if len(sys.argv) == 4:
         fileName = sys.argv[1]
         channelNum = sys.argv[2]
-		instID= sys.argv[3]
+        instID= sys.argv[3]
         result=uploadFile(fileName,channelNum,instID)
         print(result)
         sys.exit(result.split(" ")[0]=="err")
