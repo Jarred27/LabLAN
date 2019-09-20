@@ -8,7 +8,7 @@ function voltage = AWGvoltageQuery(channel)
 %	voltage - double of peak to peak voltage in Volts
 
 
-AWGadd = "TCPIP0::localhost::inst1::INSTR";
+AWGadd = "AWG";
 Command = "VOLT" + num2str(channel) + "?";
 
 % in the form of ">python (python_command) (device) (device_command)"

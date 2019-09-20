@@ -9,7 +9,7 @@ function outputState = AWGoutputQuery(channel)
 %	outputState - returned enable state of channel
 
 
-AWGadd = "TCPIP0::localhost::inst1::INSTR";
+AWGadd = "AWG";
 Command = ":OUTP" + num2str(channel) + "?";
 
 % in the form of ">python (python_command) (device) (device_command)"

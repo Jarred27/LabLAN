@@ -16,7 +16,7 @@ if status
 	error(cmdOut)
 end
 
-cmdStr = "python uploadFile.py " + fileName + " " + channelNumber;
+cmdStr = "python uploadFile.py " + fileName + " " + channelNumber + " AWG";
 [status,cmdOut] = system(cmdStr);
 if status
 	error(cmdOut)

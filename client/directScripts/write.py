@@ -11,8 +11,8 @@ def write(instID,message):
     BUFFER_SIZE=int(BUFFER_SIZE)
     connectionTimeout = int(connectionTimeout)
 
-	if instID="AWG"
-		instID=AWG_address
+    if instID=="AWG":
+        instID=AWG_address
 
     #define string to send
     messageString = "visa, write, "+instID+", "+message

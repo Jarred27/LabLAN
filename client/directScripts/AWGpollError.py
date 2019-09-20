@@ -1,7 +1,7 @@
 import write
 import query
 import sys
-AWGadd = "TCPIP0::localhost::inst1::INSTR"
+AWGadd = "AWG"
 
 
 def err():

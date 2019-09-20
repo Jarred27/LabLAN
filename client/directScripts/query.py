@@ -11,9 +11,9 @@ def query(instID,message):
     BUFFER_SIZE=int(BUFFER_SIZE)
     connectionTimeout = int(connectionTimeout)
 
-	if instID="AWG"
-		instID=AWG_address
-		
+    if instID=="AWG":
+        instID=AWG_address
+	
     #define string to send
     messageString = "visa, query, "+instID+", "+message
     formattedMessage=messageString.encode('UTF8')

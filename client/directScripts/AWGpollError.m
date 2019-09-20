@@ -11,7 +11,7 @@ function errString = AWGpollError()
 
 
 
-AWGadd = "TCPIP0::localhost::inst1::INSTR";
+AWGadd = "AWG";
 Command = ":SYST:ERR?";
 
 % in the form of ">python (python_command) (device) (device_command)"

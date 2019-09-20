@@ -8,7 +8,7 @@ function AWGrun()
 %	none
 
 
-AWGadd = "TCPIP0::localhost::inst1::INSTR";
+AWGadd = "AWG";
 Command = ":INIT:IMM";
 
 % in the form of ">python (python_command) (device) (device_command)"

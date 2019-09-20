@@ -8,7 +8,7 @@ function AWGoutputSet(channel,ONorOFF)
 % Outputs:
 %	none
 
-AWGadd = "TCPIP0::localhost::inst1::INSTR";
+AWGadd = "AWG";
 Command = ":OUTP" + num2str(channel) + " " + num2str(ONorOFF);
 
 % in the form of ">python (python_command) (device) (device_command)"
