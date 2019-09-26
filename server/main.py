@@ -86,7 +86,10 @@ def functionhandler(args,conn,BUFFER_SIZE,filePath):
             #    return "file, writeResult, 1, byte size mismatch"
             return "file, writeResult, 0"
         if args[1]=="upload":#
-            targetID=args[4]#"TCPIP0::localhost::inst1::INSTR"
+            try:
+                targetID=args[4]
+            except:
+                targetID="TCPIP0::localhost::inst1::INSTR"#if arg 4 doesnt exist
             try:
                 target=rm.open_resource(targetID)
             except:
