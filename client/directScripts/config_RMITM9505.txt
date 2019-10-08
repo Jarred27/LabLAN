@@ -1,4 +1,4 @@
-TCP_IP: 192.168.1.6
+TCP_IP: 192.168.0.1
 TCP_PORT: 5007
 BUFFER_SIZE: 1024
 Connection_Timout(s): 2
