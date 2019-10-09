@@ -35,7 +35,7 @@ def pingTest():
     if not data:
         returnString="err noResponse"
     else:
-        returnString = data.decode("utf-8")
+        returnString = data.decode("utf-8")#convert binary variable type into string
 
     s.close()
     return returnString

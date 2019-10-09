@@ -80,7 +80,7 @@ AWGvoltageSet(1,AWGvoltagePeaktoPeak);
 AWGvoltageSet(2,AWGvoltagePeaktoPeak);
 AWGvoltageSet(3,AWGvoltagePeaktoPeak);
 AWGvoltageSet(4,AWGvoltagePeaktoPeak);
-AWGrun();
+%AWGrun();
 
 cd .. % returning to parent folder
 
