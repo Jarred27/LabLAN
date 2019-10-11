@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Resources &mdash; PyVISA 1.11.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PyVISA Shell" href="shell.html" />
+    <link rel="prev" title="Reading and Writing values" href="rvalues.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PyVISA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring.html">Configuring the backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="communication.html">Communicating with your instrument</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example.html">A more complex example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rvalues.html">Reading and Writing values</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Resources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#attributes-resource">Attributes Resource</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#session">session</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timeout">timeout</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#attributes-of-messagebase-resources">Attributes of MessageBase resources</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#chunk-length">Chunk length</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#termination-characters">Termination characters</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#query-delay-and-send-end"><cite>query_delay</cite> and <cite>send_end</cite></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html">PyVISA Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="names.html">VISA resource names</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/index.html">Advanced topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PyVISA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">User guide</a> &raquo;</li>
+        
+      <li>Resources</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/introduction/resources.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="resources">
+<span id="intro-resources"></span><h1>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h1>
+<p>A resource represents an instrument, e.g. a measurement device. There are
+multiple classes derived from resources representing the different available
+types of resources (eg. GPIB, Serial). Each contains the particular set of
+attributes an methods that are available by the underlying device.</p>
+<p>You do not create this objects directly but they are returned by the
+<a class="reference internal" href="../api/resourcemanager.html#pyvisa.highlevel.ResourceManager.open_resource" title="pyvisa.highlevel.ResourceManager.open_resource"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_resource()</span></code></a> method of a <a class="reference internal" href="../api/resourcemanager.html#pyvisa.highlevel.ResourceManager" title="pyvisa.highlevel.ResourceManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceManager</span></code></a>. In general terms, there
+are two main groups derived from <a class="reference internal" href="../api/resources.html#pyvisa.resources.Resource" title="pyvisa.resources.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">Resource</span></code></a>, <a class="reference internal" href="../api/resources.html#pyvisa.resources.MessageBasedResource" title="pyvisa.resources.MessageBasedResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">MessageBasedResource</span></code></a> and
+<a class="reference internal" href="../api/resources.html#pyvisa.resources.RegisterBasedResource" title="pyvisa.resources.RegisterBasedResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegisterBasedResource</span></code></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The resource Python class to use is selected automatically from the
+resource name. However, you can force a Resource Python class:</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyvisa.resources</span> <span class="k">import</span> <span class="n">MessageBasedResource</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ASRL1::INSTR&#39;</span><span class="p">,</span> <span class="n">resource_pyclass</span><span class="o">=</span><span class="n">MessageBasedResource</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The following sections explore the most common attributes of <code class="docutils literal notranslate"><span class="pre">Resource</span></code> and
+<code class="docutils literal notranslate"><span class="pre">MessageBased</span></code> (Serial, GPIB, etc) which are the ones you will encounter more
+often. For more information, refer to the <a class="reference internal" href="../api/index.html#api"><span class="std std-ref">API</span></a>.</p>
+<div class="section" id="attributes-resource">
+<h2>Attributes Resource<a class="headerlink" href="#attributes-resource" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="session">
+<h3>session<a class="headerlink" href="#session" title="Permalink to this headline">¶</a></h3>
+<p>Each communication channel to an instrument has a session handle which is
+unique. You can get this value:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_device</span><span class="o">.</span><span class="n">session</span>
+<span class="go">10442240</span>
+</pre></div>
+</div>
+<p>If the resource is closed, an exception will be raised:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span><span class="o">.</span><span class="n">session</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">pyvisa.errors.InvalidSession</span>: <span class="n">Invalid session handle. The resource might be closed.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="timeout">
+<h3>timeout<a class="headerlink" href="#timeout" title="Permalink to this headline">¶</a></h3>
+<p>Very most VISA I/O operations may be performed with a timeout. If a timeout is
+set, every operation that takes longer than the timeout is aborted and an
+exception is raised.  Timeouts are given per instrument in <strong>milliseconds</strong>.</p>
+<p>For all PyVISA objects, a timeout is set with</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_device</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="mi">25000</span>
+</pre></div>
+</div>
+<p>Here, <code class="docutils literal notranslate"><span class="pre">my_device</span></code> may be a device, an interface or whatever, and its timeout
+is set to 25 seconds. To set an <strong>infinite</strong> timeout, set it to <code class="docutils literal notranslate"><span class="pre">None</span></code> or
+<code class="docutils literal notranslate"><span class="pre">float('+inf')</span></code> or:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">my_device</span><span class="o">.</span><span class="n">timeout</span>
+</pre></div>
+</div>
+<p>To set it to <strong>immediate</strong>, set it to <cite>0</cite> or a negative value. (Actually, any
+value smaller than 1 is considered immediate)</p>
+<p>Now every operation of the resource takes as long as it takes, even
+indefinitely if necessary.</p>
+</div>
+</div>
+<div class="section" id="attributes-of-messagebase-resources">
+<h2>Attributes of MessageBase resources<a class="headerlink" href="#attributes-of-messagebase-resources" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="chunk-length">
+<span id="sec-chunk-length"></span><h3>Chunk length<a class="headerlink" href="#chunk-length" title="Permalink to this headline">¶</a></h3>
+<p>If you read data from a device, you must store it somewhere.  Unfortunately,
+PyVISA must make space for the data <em>before</em> it starts reading, which  means
+that it must know how much data the device will send.  However, it  doesn’t
+know a priori.</p>
+<p>Therefore, PyVISA reads from the device in <em>chunks</em>.  Each chunk is
+20 kilobytes long by default.  If there’s still data to be read, PyVISA repeats
+the procedure and eventually concatenates the results and returns it to you.
+Those 20 kilobytes are large enough so that mostly one read cycle is
+sufficient.</p>
+<p>The whole thing happens automatically, as you can see.  Normally
+you needn’t  worry about it.  However, some devices don’t like to send data in
+chunks.  So  if you have trouble with a certain device and expect data lengths
+larger than  the default chunk length, you should increase its value by saying
+e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_instrument</span><span class="o">.</span><span class="n">chunk_size</span> <span class="o">=</span> <span class="mi">102400</span>
+</pre></div>
+</div>
+<p>This example sets it to 100 kilobytes.</p>
+</div>
+</div>
+<div class="section" id="termination-characters">
+<span id="sec-termchars"></span><h2>Termination characters<a class="headerlink" href="#termination-characters" title="Permalink to this headline">¶</a></h2>
+<p>Somehow the computer must detect when the device is finished with sending a
+message.  It does so by using different methods, depending on the bus system.
+In most cases you don’t need to worry about termination characters because the
+defaults are very good.  However, if you have trouble, you may influence
+termination characters with PyVISA.</p>
+<p>Termination characters may be one character or a sequence of characters.
+Whenever this character or sequence
+occurs in the input stream, the read  operation is terminated and the read
+message is given to the calling  application.  The next read operation
+continues with the input stream  immediately after the last termination
+sequence.  In PyVISA, the termination  characters are stripped off the message
+before it is given to you.</p>
+<p>You may set termination characters for each instrument, e.g.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_instrument</span><span class="o">.</span><span class="n">read_termination</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+<p>(‘r’ is carriage return, usually appearing in the manuals as CR)</p>
+<p>Alternatively you can give it when creating your instrument object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_instrument</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">open_resource</span><span class="p">(</span><span class="s2">&quot;GPIB::10&quot;</span><span class="p">,</span> <span class="n">read_termination</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The default value depends on the bus system.  Generally, the sequence is empty,
+in particular for GPIB. For RS232 it’s <code class="docutils literal notranslate"><span class="pre">\r</span></code>.</p>
+<p>You can specify the character to add to each outgoing message using the
+<code class="docutils literal notranslate"><span class="pre">write_termination</span></code> attribute.</p>
+<div class="section" id="query-delay-and-send-end">
+<h3><cite>query_delay</cite> and <cite>send_end</cite><a class="headerlink" href="#query-delay-and-send-end" title="Permalink to this headline">¶</a></h3>
+<p id="index-0">There are two further options related to message termination, namely
+<code class="docutils literal notranslate"><span class="pre">send_end</span></code> and <code class="docutils literal notranslate"><span class="pre">query_delay</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">send_end</span></code> is a boolean.  If it’s <code class="docutils literal notranslate"><span class="pre">True</span></code> (the default), the EOI line is
+asserted after each write operation, signalling the end of the operation.  EOI
+is GPIB-specific but similar action is taken for other interfaces.</p>
+<p>The argument <code class="docutils literal notranslate"><span class="pre">query_delay</span></code> is the time in seconds to wait after
+each write operation when performing a query.  So you could write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_instrument</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">open_resource</span><span class="p">(</span><span class="s2">&quot;GPIB::10&quot;</span><span class="p">,</span> <span class="n">send_end</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p id="index-1">This will set the delay to 1.2 seconds, and the EOI line is omitted.  By the
+way, omitting EOI is <em>not</em> recommended, so if you omit it nevertheless, you
+should know what you’re doing.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="shell.html" class="btn btn-neutral float-right" title="PyVISA Shell" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rvalues.html" class="btn btn-neutral" title="Reading and Writing values" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PyVISA Authors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

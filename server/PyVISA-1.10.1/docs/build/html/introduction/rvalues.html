@@ -1,0 +1,391 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Reading and Writing values &mdash; PyVISA 1.11.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Resources" href="resources.html" />
+    <link rel="prev" title="A more complex example" href="example.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PyVISA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring.html">Configuring the backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="communication.html">Communicating with your instrument</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example.html">A more complex example</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Reading and Writing values</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#reading-ascii-values">Reading ASCII values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reading-binary-values">Reading binary values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#writing-ascii-values">Writing ASCII values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#writing-binary-values">Writing binary values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#when-things-are-not-what-they-should-be">When things are not what they should be</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html">Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html">PyVISA Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="names.html">VISA resource names</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/index.html">Advanced topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PyVISA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">User guide</a> &raquo;</li>
+        
+      <li>Reading and Writing values</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/introduction/rvalues.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="reading-and-writing-values">
+<span id="intro-rvalues"></span><h1>Reading and Writing values<a class="headerlink" href="#reading-and-writing-values" title="Permalink to this headline">¶</a></h1>
+<p>Some instruments allow to transfer to and from the computer larger datasets
+with a single query. A typical example is an oscilloscope, which you can query
+for the whole voltage trace. Or an arbitrary wave generator to which you
+have to transfer the function you want to generate.</p>
+<p>Basically, data like this can be transferred in two ways: in ASCII form (slow,
+but human readable) and binary (fast, but more difficult to debug).</p>
+<p>PyVISA Message Based Resources have different methods for this
+called <a class="reference internal" href="../api/resources.html#pyvisa.resources.MessageBasedResource.read_ascii_values" title="pyvisa.resources.MessageBasedResource.read_ascii_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">read_ascii_values()</span></code></a>, <a class="reference internal" href="../api/resources.html#pyvisa.resources.MessageBasedResource.query_ascii_values" title="pyvisa.resources.MessageBasedResource.query_ascii_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">query_ascii_values()</span></code></a> and <a class="reference internal" href="../api/resources.html#pyvisa.resources.MessageBasedResource.read_binary_values" title="pyvisa.resources.MessageBasedResource.read_binary_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">read_binary_values()</span></code></a>,
+<a class="reference internal" href="../api/resources.html#pyvisa.resources.MessageBasedResource.query_binary_values" title="pyvisa.resources.MessageBasedResource.query_binary_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">query_binary_values()</span></code></a>.</p>
+<div class="section" id="reading-ascii-values">
+<h2>Reading ASCII values<a class="headerlink" href="#reading-ascii-values" title="Permalink to this headline">¶</a></h2>
+<p>If your oscilloscope (open in the variable <code class="docutils literal notranslate"><span class="pre">inst</span></code>) has been configured to
+transfer data in <strong>ASCII</strong> when the <code class="docutils literal notranslate"><span class="pre">CURV?</span></code> command is issued, you can just
+query the values like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">values</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="n">query_ascii_values</span><span class="p">(</span><span class="s1">&#39;CURV?&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">values</span></code> will be <code class="docutils literal notranslate"><span class="pre">list</span></code> containing the values from the device.</p>
+<p>In many cases you do not want a <code class="docutils literal notranslate"><span class="pre">list</span></code> but rather a different container type
+such as a <code class="docutils literal notranslate"><span class="pre">numpy.array</span></code>. You can of course cast the data afterwards like
+this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">query_ascii_values</span><span class="p">(</span><span class="s1">&#39;CURV?&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>but sometimes it is much more efficient to avoid the intermediate list, and in
+this case you can just specify the container type in the query:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">values</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="n">query_ascii_values</span><span class="p">(</span><span class="s1">&#39;CURV?&#39;</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">container</span></code>, you can have any callable/type that takes an iterable.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When using numpy.array or numpy.ndarray, PyVISA will use numpy routines to
+optimize the conversion by avoiding the use of an intermediate
+representation.</p>
+</div>
+<p>Some devices transfer data in ASCII but not as decimal numbers but rather hex
+or oct. Or you might want to receive an array of strings. In that case you can
+specify a <code class="docutils literal notranslate"><span class="pre">converter</span></code>. For example, if you expect to receive integers as hex:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">values</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="n">query_ascii_values</span><span class="p">(</span><span class="s1">&#39;CURV?&#39;</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">converter</span></code> can be one of the Python <a class="reference external" href="https://docs.python.org/3/library/string.html#formatspec" title="(in Python v3.7)"><span class="xref std std-ref">string formatting codes</span></a>.
+But you can also specify a callable that takes a single argument if needed.
+The default converter is <code class="docutils literal notranslate"><span class="pre">'f'</span></code>.</p>
+<p>Finally, some devices might return the values separated in an uncommon way. For
+example if the returned values are separated by a <code class="docutils literal notranslate"><span class="pre">'$'</span></code> you can do the
+following call:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">values</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="n">query_ascii_values</span><span class="p">(</span><span class="s1">&#39;CURV?&#39;</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">&#39;$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can provide a function to takes a string and returns an iterable.
+Default value for the separator is <code class="docutils literal notranslate"><span class="pre">','</span></code> (comma)</p>
+</div>
+<div class="section" id="reading-binary-values">
+<span id="sec-reading-binary-data"></span><h2>Reading binary values<a class="headerlink" href="#reading-binary-values" title="Permalink to this headline">¶</a></h2>
+<p>If your oscilloscope (open in the variable <code class="docutils literal notranslate"><span class="pre">inst</span></code>) has been configured to
+transfer data in <strong>BINARY</strong> when the <code class="docutils literal notranslate"><span class="pre">CURV?</span></code> command is issued, you need to
+know which type datatype (e.g. uint8, int8, single, double, etc) is being
+used. PyVISA use the same naming convention as the
+<a class="reference external" href="https://docs.python.org/3/library/struct.html#format-characters" title="(in Python v3.7)"><span class="xref std std-ref">struct module</span></a>.</p>
+<p>You also need to know the <em>endianness</em>. PyVISA assumes little-endian as default.
+If you have doubles <cite>d</cite> in big endian the call will be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">values</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="n">query_binary_values</span><span class="p">(</span><span class="s1">&#39;CURV?&#39;</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">is_big_endian</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also specify the output container type, just as it was shown before.</p>
+<p>By default, PyVISA will assume that the data block is formatted according to
+the IEEE convention. If your instrument uses HP data block you can pass
+<code class="docutils literal notranslate"><span class="pre">header_fmt='hp'</span></code> to <code class="docutils literal notranslate"><span class="pre">read_binary_values</span></code>. If your instrument does not use
+any header for the data simply <code class="docutils literal notranslate"><span class="pre">header_fmt='empty'</span></code>.</p>
+<p>By default PyVISA assumes, that the instrument will add the termination
+character at the end of the data block and actually makes sure it reads it to
+avoid issues. This behavior fits well a number of devices. However some devices
+omit the termination character, in which cases the operation will timeout.
+In this situation, first makes sure you can actually read from the instrument
+by reading the answer using the <code class="docutils literal notranslate"><span class="pre">read_raw</span></code> function (you may need to call it
+multiple time), and check that the advertized length of the block match what
+you get from your instrument (plus the header). If it is so, then you can
+safely pass <code class="docutils literal notranslate"><span class="pre">expect_termination=False</span></code>, and PyVISA will not look for a
+termination character at the end of the message.</p>
+<p>If you can read without any problem from your instrument, but cannot retrieve
+the full message when using this method (VI_ERROR_CONN_LOST,
+VI_ERROR_INV_SETUP, or Python simply crashes), try passing different values for
+<code class="docutils literal notranslate"><span class="pre">chunk_size``(the</span> <span class="pre">default</span> <span class="pre">is</span> <span class="pre">20*1024).</span> <span class="pre">The</span> <span class="pre">underlying</span> <span class="pre">mechanism</span> <span class="pre">for</span> <span class="pre">this</span> <span class="pre">issue</span>
+<span class="pre">is</span> <span class="pre">not</span> <span class="pre">clear</span> <span class="pre">but</span> <span class="pre">changing</span> <span class="pre">``chunk_size</span></code> has been used to work around it. Note
+that using  larger chunk sizes for large transfer may result in a speed up of
+the transfer.</p>
+<p>In some cases, the instrument may use a protocol that does not indicate how
+many bytes will be transferred. The Keithley 2000 for example always return the
+full buffer whose size is reported by the ‘trace:points?’ command. Since a
+binary block may contain the termination character, PyVISA need to know how
+many bytes to expect. For those case, you can pass the expected number of
+points using the <code class="docutils literal notranslate"><span class="pre">data_points</span></code> keyword argument. The number of bytes will be
+inferred from the datatype of the block.</p>
+</div>
+<div class="section" id="writing-ascii-values">
+<h2>Writing ASCII values<a class="headerlink" href="#writing-ascii-values" title="Permalink to this headline">¶</a></h2>
+<p>To upload a function shape to arbitrary wave generator, the command might be
+<code class="docutils literal notranslate"><span class="pre">WLISt:WAVeform:DATA</span> <span class="pre">&lt;waveform</span> <span class="pre">name&gt;,&lt;function</span> <span class="pre">data&gt;</span></code> where
+<code class="docutils literal notranslate"><span class="pre">&lt;waveform</span> <span class="pre">name&gt;</span></code> tells the device under which name to store the data.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span><span class="o">.</span><span class="n">write_ascii_values</span><span class="p">(</span><span class="s1">&#39;WLISt:WAVeform:DATA somename,&#39;</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Again, you can specify the converter code.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span><span class="o">.</span><span class="n">write_ascii_values</span><span class="p">(</span><span class="s1">&#39;WLISt:WAVeform:DATA somename,&#39;</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">converter</span></code> can be one of the Python <a class="reference external" href="https://docs.python.org/3/library/string.html#formatspec" title="(in Python v3.7)"><span class="xref std std-ref">string formatting codes</span></a>.
+But you can also specify a callable that takes a single argument if needed.
+The default converter is <code class="docutils literal notranslate"><span class="pre">'f'</span></code>.</p>
+<p>The separator can also be specified just like in <code class="docutils literal notranslate"><span class="pre">query_ascii_values</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span><span class="o">.</span><span class="n">write_ascii_values</span><span class="p">(</span><span class="s1">&#39;WLISt:WAVeform:DATA somename,&#39;</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">&#39;$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can provide a function to takes a iterable and returns an string.
+Default value for the separator is <code class="docutils literal notranslate"><span class="pre">','</span></code> (comma)</p>
+</div>
+<div class="section" id="writing-binary-values">
+<h2>Writing binary values<a class="headerlink" href="#writing-binary-values" title="Permalink to this headline">¶</a></h2>
+<p>To upload a function shape to arbitrary wave generator, the command might be
+<code class="docutils literal notranslate"><span class="pre">WLISt:WAVeform:DATA</span> <span class="pre">&lt;waveform</span> <span class="pre">name&gt;,&lt;function</span> <span class="pre">data&gt;</span></code> where
+<code class="docutils literal notranslate"><span class="pre">&lt;waveform</span> <span class="pre">name&gt;</span></code> tells the device under which name to store the data.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span><span class="o">.</span><span class="n">write_binary_values</span><span class="p">(</span><span class="s1">&#39;WLISt:WAVeform:DATA somename,&#39;</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Again you can specify the <code class="docutils literal notranslate"><span class="pre">datatype</span></code> and <code class="docutils literal notranslate"><span class="pre">endianness</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span><span class="o">.</span><span class="n">write_binary_values</span><span class="p">(</span><span class="s1">&#39;WLISt:WAVeform:DATA somename,&#39;</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">is_big_endian</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="when-things-are-not-what-they-should-be">
+<h2>When things are not what they should be<a class="headerlink" href="#when-things-are-not-what-they-should-be" title="Permalink to this headline">¶</a></h2>
+<p>PyVISA provides an easy way to transfer data from and to the device. The
+methods described above work fine for 99% of the cases but there is always a
+particular device that do not follow any of the standard protocols and is so
+different that cannot be adapted with the arguments provided above.</p>
+<p>In those cases, you need to get the data:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;CURV?&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="n">read_raw</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>and then you need to implement the logic to parse it.</p>
+<p>Alternatively if the <cite>read_raw</cite> call fails you can try to read just a few bytes
+using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;CURV?&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If this call fails it may mean that your instrument did not answer, either
+because it needs more time or because your first instruction was not
+understood.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="resources.html" class="btn btn-neutral float-right" title="Resources" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="example.html" class="btn btn-neutral" title="A more complex example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PyVISA Authors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

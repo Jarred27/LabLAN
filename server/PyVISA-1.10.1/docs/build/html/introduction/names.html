@@ -1,0 +1,451 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>VISA resource names &mdash; PyVISA 1.11.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Advanced topics" href="../advanced/index.html" />
+    <link rel="prev" title="PyVISA Shell" href="shell.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PyVISA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring.html">Configuring the backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="communication.html">Communicating with your instrument</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example.html">A more complex example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rvalues.html">Reading and Writing values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html">Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html">PyVISA Shell</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">VISA resource names</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#visa-resource-syntax-and-examples">VISA Resource Syntax and Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/index.html">Advanced topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PyVISA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">User guide</a> &raquo;</li>
+        
+      <li>VISA resource names</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/introduction/names.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="visa-resource-names">
+<span id="intro-resource-names"></span><h1>VISA resource names<a class="headerlink" href="#visa-resource-names" title="Permalink to this headline">¶</a></h1>
+<p>If you use the method <a class="reference internal" href="../api/resourcemanager.html#pyvisa.highlevel.ResourceManager.open_resource" title="pyvisa.highlevel.ResourceManager.open_resource"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_resource()</span></code></a>, you must tell this
+function the <em>VISA resource name</em> of the instrument you want to
+connect to.  Generally, it starts with the bus type, followed by a
+double colon <code class="docutils literal notranslate"><span class="pre">&quot;::&quot;</span></code>, followed by the number within the bus.  For
+example,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>GPIB::10
+</pre></div>
+</div>
+<p>denotes the GPIB instrument with the number 10.  If you have two GPIB
+boards and the instrument is connected to board number 1, you must
+write</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>GPIB1::10
+</pre></div>
+</div>
+<p>As for the bus, things like <code class="docutils literal notranslate"><span class="pre">&quot;GPIB&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;USB&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;ASRL&quot;</span></code> (for
+serial/parallel interface) are possible.  So for connecting to an
+instrument at COM2, the resource name is</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ASRL2
+</pre></div>
+</div>
+<p>(Since only one instrument can be connected with one serial interface,
+there is no double colon parameter.)  However, most VISA systems allow
+aliases such as <code class="docutils literal notranslate"><span class="pre">&quot;COM2&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;LPT1&quot;</span></code>.  You may also add your own
+aliases.</p>
+<p>The resource name is case-insensitive.  It doesn’t matter whether you
+say <code class="docutils literal notranslate"><span class="pre">&quot;ASRL2&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;asrl2&quot;</span></code>.  For further information, I have to refer
+you to a comprehensive VISA description like
+<a class="reference external" href="http://www.ni.com/pdf/manuals/370423a.pdf">http://www.ni.com/pdf/manuals/370423a.pdf</a>.</p>
+<div class="section" id="visa-resource-syntax-and-examples">
+<h2>VISA Resource Syntax and Examples<a class="headerlink" href="#visa-resource-syntax-and-examples" title="Permalink to this headline">¶</a></h2>
+<p>(This is adapted from the VISA manual)</p>
+<p>The following table shows the grammar for the address string. Optional string segments are shown in square brackets ([ ]).</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Interface</th>
+<th class="head">Syntax</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ENET-Serial INSTR</td>
+<td>ASRL[0]::host address::serial port::INSTR</td>
+</tr>
+<tr class="row-odd"><td>GPIB INSTR</td>
+<td>GPIB[board]::primary address[::secondary address][::INSTR]</td>
+</tr>
+<tr class="row-even"><td>GPIB INTFC</td>
+<td>GPIB[board]::INTFC</td>
+</tr>
+<tr class="row-odd"><td>PXI BACKPLANE</td>
+<td>PXI[interface]::chassis number::BACKPLANE</td>
+</tr>
+<tr class="row-even"><td>PXI INSTR</td>
+<td>PXI[bus]::device[::function][::INSTR]</td>
+</tr>
+<tr class="row-odd"><td>PXI INSTR</td>
+<td>PXI[interface]::bus-device[.function][::INSTR]</td>
+</tr>
+<tr class="row-even"><td>PXI INSTR</td>
+<td>PXI[interface]::CHASSISchassis number::SLOTslot number[::FUNCfunction][::INSTR]</td>
+</tr>
+<tr class="row-odd"><td>PXI MEMACC</td>
+<td>PXI[interface]::MEMACC</td>
+</tr>
+<tr class="row-even"><td>Remote NI-VISA</td>
+<td>visa://host address[:server port]/remote resource</td>
+</tr>
+<tr class="row-odd"><td>Serial INSTR</td>
+<td>ASRLboard[::INSTR]</td>
+</tr>
+<tr class="row-even"><td>TCPIP INSTR</td>
+<td>TCPIP[board]::host address[::LAN device name][::INSTR]</td>
+</tr>
+<tr class="row-odd"><td>TCPIP SOCKET</td>
+<td>TCPIP[board]::host address::port::SOCKET</td>
+</tr>
+<tr class="row-even"><td>USB INSTR</td>
+<td>USB[board]::manufacturer ID::model code::serial number[::USB interface number][::INSTR]</td>
+</tr>
+<tr class="row-odd"><td>USB RAW</td>
+<td>USB[board]::manufacturer ID::model code::serial number[::USB interface number]::RAW</td>
+</tr>
+<tr class="row-even"><td>VXI BACKPLANE</td>
+<td>VXI[board][::VXI logical address]::BACKPLANE</td>
+</tr>
+<tr class="row-odd"><td>VXI INSTR</td>
+<td>VXI[board]::VXI logical address[::INSTR]</td>
+</tr>
+<tr class="row-even"><td>VXI MEMACC</td>
+<td>VXI[board]::MEMACC</td>
+</tr>
+<tr class="row-odd"><td>VXI SERVANT</td>
+<td>VXI[board]::SERVANT</td>
+</tr>
+</tbody>
+</table>
+<p>Use the GPIB keyword to establish communication with GPIB resources. Use the VXI keyword for VXI resources via embedded, MXIbus, or 1394 controllers. Use the ASRL keyword to establish communication with an asynchronous serial (such as RS-232 or RS-485) device. Use the PXI keyword for PXI and PCI resources. Use the TCPIP keyword for Ethernet communication.</p>
+<p>The following table shows the default value for optional string segments.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="41%" />
+<col width="59%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Optional String Segments</th>
+<th class="head">Default Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>board</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>GPIB secondary address</td>
+<td>none</td>
+</tr>
+<tr class="row-even"><td>LAN device name</td>
+<td>inst0</td>
+</tr>
+<tr class="row-odd"><td>PXI bus</td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td>PXI function</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>USB interface number</td>
+<td>lowest numbered relevant interface</td>
+</tr>
+</tbody>
+</table>
+<p>The following table shows examples of address strings:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Address String</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ASRL::1.2.3.4::2::INSTR</td>
+<td>A serial device attached to port 2 of the
+ENET Serial controller at address 1.2.3.4.</td>
+</tr>
+<tr class="row-odd"><td>ASRL1::INSTR</td>
+<td>A serial device attached to interface ASRL1.</td>
+</tr>
+<tr class="row-even"><td>GPIB::1::0::INSTR</td>
+<td>A GPIB device at primary address 1 and
+secondary address 0 in GPIB interface 0.</td>
+</tr>
+<tr class="row-odd"><td>GPIB2::INTFC</td>
+<td>Interface or raw board resource for GPIB
+interface 2.</td>
+</tr>
+<tr class="row-even"><td>PXI::15::INSTR</td>
+<td>PXI device number 15 on bus 0 with implied
+function 0.</td>
+</tr>
+<tr class="row-odd"><td>PXI::2::BACKPLANE</td>
+<td>Backplane resource for chassis 2 on the
+default PXI system, which is interface 0.</td>
+</tr>
+<tr class="row-even"><td>PXI::CHASSIS1::SLOT3</td>
+<td>PXI device in slot number 3 of the PXI chassis
+configured as chassis 1.</td>
+</tr>
+<tr class="row-odd"><td>PXI0::2-12.1::INSTR</td>
+<td>PXI bus number 2, device 12 with function 1.</td>
+</tr>
+<tr class="row-even"><td>PXI0::MEMACC</td>
+<td>PXI MEMACC session.</td>
+</tr>
+<tr class="row-odd"><td>TCPIP::dev.company.com::INSTR</td>
+<td>A TCP/IP device using VXI-11 or LXI located at
+the specified address. This uses the default
+LAN Device Name of inst0.</td>
+</tr>
+<tr class="row-even"><td>TCPIP0::1.2.3.4::999::SOCKET</td>
+<td>Raw TCP/IP access to port 999 at the specified
+IP address.</td>
+</tr>
+<tr class="row-odd"><td>USB::0x1234::125::A22-5::INSTR</td>
+<td>A USB Test &amp; Measurement class device with
+manufacturer ID 0x1234, model code 125, and
+serial number A22-5. This uses the device’s
+first available USBTMC interface. This is
+usually number 0.</td>
+</tr>
+<tr class="row-even"><td>USB::0x5678::0x33::SN999::1::RAW</td>
+<td>A raw USB nonclass device with manufacturer
+ID 0x5678, model code 0x33, and serial number
+SN999. This uses the device’s interface number 1.</td>
+</tr>
+<tr class="row-odd"><td>visa://hostname/ASRL1::INSTR</td>
+<td>The resource ASRL1::INSTR on the specified
+remote system.</td>
+</tr>
+<tr class="row-even"><td>VXI::1::BACKPLANE</td>
+<td>Mainframe resource for chassis 1 on the default
+VXI system, which is interface 0.</td>
+</tr>
+<tr class="row-odd"><td>VXI::MEMACC</td>
+<td>Board-level register access to the VXI interface.</td>
+</tr>
+<tr class="row-even"><td>VXI0::1::INSTR</td>
+<td>A VXI device at logical address 1 in VXI
+interface VXI0.</td>
+</tr>
+<tr class="row-odd"><td>VXI0::SERVANT</td>
+<td>Servant/device-side resource for VXI interface 0.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../advanced/index.html" class="btn btn-neutral float-right" title="Advanced topics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="shell.html" class="btn btn-neutral" title="PyVISA Shell" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PyVISA Authors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

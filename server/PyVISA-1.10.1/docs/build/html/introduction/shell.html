@@ -1,0 +1,416 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PyVISA Shell &mdash; PyVISA 1.11.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="VISA resource names" href="names.html" />
+    <link rel="prev" title="Resources" href="resources.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PyVISA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring.html">Configuring the backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="communication.html">Communicating with your instrument</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example.html">A more complex example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rvalues.html">Reading and Writing values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html">Resources</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">PyVISA Shell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pyvisa-shell-backends">PyVisa Shell Backends</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pyvisa-info">PyVisa Info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="names.html">VISA resource names</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/index.html">Advanced topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PyVISA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">User guide</a> &raquo;</li>
+        
+      <li>PyVISA Shell</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/introduction/shell.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pyvisa-shell">
+<span id="intro-shell"></span><h1>PyVISA Shell<a class="headerlink" href="#pyvisa-shell" title="Permalink to this headline">¶</a></h1>
+<p>The shell, moved into PyVISA from the <a class="reference external" href="https://lantz.readthedocs.org">Lantz</a> Project is a text based user
+interface to interact with instruments. You can invoke it from the
+command-line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pyvisa</span><span class="o">-</span><span class="n">shell</span>
+</pre></div>
+</div>
+<p>that will show something the following prompt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Welcome to the VISA shell. Type help or ? to list commands.
+
+(visa)
+</pre></div>
+</div>
+<p>At any time, you can type <code class="docutils literal notranslate"><span class="pre">?</span></code> or <code class="docutils literal notranslate"><span class="pre">help</span></code> to get a list of valid commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">visa</span><span class="p">)</span> <span class="n">help</span>
+
+<span class="n">Documented</span> <span class="n">commands</span> <span class="p">(</span><span class="nb">type</span> <span class="n">help</span> <span class="o">&lt;</span><span class="n">topic</span><span class="o">&gt;</span><span class="p">):</span>
+<span class="o">========================================</span>
+<span class="n">EOF</span>  <span class="n">attr</span>  <span class="n">close</span>  <span class="n">exit</span>  <span class="n">help</span>  <span class="nb">list</span>  <span class="nb">open</span>  <span class="n">query</span>  <span class="n">read</span>  <span class="n">timeout</span> <span class="n">write</span>
+
+<span class="p">(</span><span class="n">visa</span><span class="p">)</span> <span class="n">help</span> <span class="nb">list</span>
+<span class="n">List</span> <span class="nb">all</span> <span class="n">connected</span> <span class="n">resources</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Tab completion is also supported.</p>
+<p>The most basic task is listing all connected devices:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">visa</span><span class="p">)</span> <span class="nb">list</span>
+<span class="p">(</span> <span class="mi">0</span><span class="p">)</span> <span class="n">ASRL1</span><span class="p">::</span><span class="n">INSTR</span>
+<span class="p">(</span> <span class="mi">1</span><span class="p">)</span> <span class="n">ASRL2</span><span class="p">::</span><span class="n">INSTR</span>
+<span class="p">(</span> <span class="mi">2</span><span class="p">)</span> <span class="n">USB0</span><span class="p">::</span><span class="mh">0x1AB1</span><span class="p">::</span><span class="mh">0x0588</span><span class="p">::</span><span class="n">DS1K00005888</span><span class="p">::</span><span class="n">INSTR</span>
+</pre></div>
+</div>
+<p>Each device/port is assigned a number that you can use for subsequent commands.
+Let’s open comport 1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(visa) open 0
+ASRL1::INSTR has been opened.
+You can talk to the device using &quot;write&quot;, &quot;read&quot; or &quot;query.
+The default end of message is added to each message
+(open) query *IDN?
+Some Instrument, Some Company.
+</pre></div>
+</div>
+<p>You can print timeout that is set for query/read operation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">open</span><span class="p">)</span> <span class="n">timeout</span>
+<span class="n">Timeout</span><span class="p">:</span> <span class="mi">2000</span><span class="n">ms</span>
+</pre></div>
+</div>
+<p>Then also to change the timeout for example to 1500ms (1.5 sec):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">open</span><span class="p">)</span> <span class="n">timeout</span> <span class="mi">1500</span>
+<span class="n">Done</span>
+</pre></div>
+</div>
+<p>We can also get a list of all visa attributes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">open</span><span class="p">)</span> <span class="n">attr</span>
+<span class="o">+-----------------------------+------------+----------------------------+-------------------------------------+</span>
+<span class="o">|</span>          <span class="n">VISA</span> <span class="n">name</span>          <span class="o">|</span>  <span class="n">Constant</span>  <span class="o">|</span>        <span class="n">Python</span> <span class="n">name</span>         <span class="o">|</span>                 <span class="n">val</span>                 <span class="o">|</span>
+<span class="o">+-----------------------------+------------+----------------------------+-------------------------------------+</span>
+<span class="o">|</span> <span class="n">VI_ATTR_ASRL_ALLOW_TRANSMIT</span> <span class="o">|</span> <span class="mi">1073676734</span> <span class="o">|</span>       <span class="n">allow_transmit</span>       <span class="o">|</span>                  <span class="mi">1</span>                  <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_ASRL_AVAIL_NUM</span>   <span class="o">|</span> <span class="mi">1073676460</span> <span class="o">|</span>      <span class="n">bytes_in_buffer</span>       <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>      <span class="n">VI_ATTR_ASRL_BAUD</span>      <span class="o">|</span> <span class="mi">1073676321</span> <span class="o">|</span>         <span class="n">baud_rate</span>          <span class="o">|</span>                 <span class="mi">9600</span>                <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_ASRL_BREAK_LEN</span>   <span class="o">|</span> <span class="mi">1073676733</span> <span class="o">|</span>        <span class="n">break_length</span>        <span class="o">|</span>                 <span class="mi">250</span>                 <span class="o">|</span>
+<span class="o">|</span>   <span class="n">VI_ATTR_ASRL_BREAK_STATE</span>  <span class="o">|</span> <span class="mi">1073676732</span> <span class="o">|</span>        <span class="n">break_state</span>         <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_ASRL_CONNECTED</span>   <span class="o">|</span> <span class="mi">1073676731</span> <span class="o">|</span>                            <span class="o">|</span>          <span class="n">VI_ERROR_NSUP_ATTR</span>         <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_ASRL_CTS_STATE</span>   <span class="o">|</span> <span class="mi">1073676462</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_ASRL_DATA_BITS</span>   <span class="o">|</span> <span class="mi">1073676322</span> <span class="o">|</span>         <span class="n">data_bits</span>          <span class="o">|</span>                  <span class="mi">8</span>                  <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_ASRL_DCD_STATE</span>   <span class="o">|</span> <span class="mi">1073676463</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>  <span class="n">VI_ATTR_ASRL_DISCARD_NULL</span>  <span class="o">|</span> <span class="mi">1073676464</span> <span class="o">|</span>        <span class="n">discard_null</span>        <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_ASRL_DSR_STATE</span>   <span class="o">|</span> <span class="mi">1073676465</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_ASRL_DTR_STATE</span>   <span class="o">|</span> <span class="mi">1073676466</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">1</span>                  <span class="o">|</span>
+<span class="o">|</span>     <span class="n">VI_ATTR_ASRL_END_IN</span>     <span class="o">|</span> <span class="mi">1073676467</span> <span class="o">|</span>         <span class="n">end_input</span>          <span class="o">|</span>                  <span class="mi">2</span>                  <span class="o">|</span>
+<span class="o">|</span>     <span class="n">VI_ATTR_ASRL_END_OUT</span>    <span class="o">|</span> <span class="mi">1073676468</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>   <span class="n">VI_ATTR_ASRL_FLOW_CNTRL</span>   <span class="o">|</span> <span class="mi">1073676325</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>     <span class="n">VI_ATTR_ASRL_PARITY</span>     <span class="o">|</span> <span class="mi">1073676323</span> <span class="o">|</span>           <span class="n">parity</span>           <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>  <span class="n">VI_ATTR_ASRL_REPLACE_CHAR</span>  <span class="o">|</span> <span class="mi">1073676478</span> <span class="o">|</span>        <span class="n">replace_char</span>        <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_ASRL_RI_STATE</span>    <span class="o">|</span> <span class="mi">1073676479</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_ASRL_RTS_STATE</span>   <span class="o">|</span> <span class="mi">1073676480</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">1</span>                  <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_ASRL_STOP_BITS</span>   <span class="o">|</span> <span class="mi">1073676324</span> <span class="o">|</span>         <span class="n">stop_bits</span>          <span class="o">|</span>                  <span class="mi">10</span>                 <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_ASRL_WIRE_MODE</span>   <span class="o">|</span> <span class="mi">1073676735</span> <span class="o">|</span>                            <span class="o">|</span>                 <span class="mi">128</span>                 <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_ASRL_XOFF_CHAR</span>   <span class="o">|</span> <span class="mi">1073676482</span> <span class="o">|</span>         <span class="n">xoff_char</span>          <span class="o">|</span>                  <span class="mi">19</span>                 <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_ASRL_XON_CHAR</span>    <span class="o">|</span> <span class="mi">1073676481</span> <span class="o">|</span>          <span class="n">xon_char</span>          <span class="o">|</span>                  <span class="mi">17</span>                 <span class="o">|</span>
+<span class="o">|</span>     <span class="n">VI_ATTR_DMA_ALLOW_EN</span>    <span class="o">|</span> <span class="mi">1073676318</span> <span class="o">|</span>         <span class="n">allow_dma</span>          <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_FILE_APPEND_EN</span>   <span class="o">|</span> <span class="mi">1073676690</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_INTF_INST_NAME</span>   <span class="o">|</span> <span class="mi">3221160169</span> <span class="o">|</span>                            <span class="o">|</span> <span class="n">ASRL1</span>  <span class="p">(</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">cu</span><span class="o">.</span><span class="n">Bluetooth</span><span class="o">-</span><span class="n">PDA</span><span class="o">-</span><span class="n">Sync</span><span class="p">)</span> <span class="o">|</span>
+<span class="o">|</span>       <span class="n">VI_ATTR_INTF_NUM</span>      <span class="o">|</span> <span class="mi">1073676662</span> <span class="o">|</span>      <span class="n">interface_number</span>      <span class="o">|</span>                  <span class="mi">1</span>                  <span class="o">|</span>
+<span class="o">|</span>      <span class="n">VI_ATTR_INTF_TYPE</span>      <span class="o">|</span> <span class="mi">1073676657</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">4</span>                  <span class="o">|</span>
+<span class="o">|</span>       <span class="n">VI_ATTR_IO_PROT</span>       <span class="o">|</span> <span class="mi">1073676316</span> <span class="o">|</span>        <span class="n">io_protocol</span>         <span class="o">|</span>                  <span class="mi">1</span>                  <span class="o">|</span>
+<span class="o">|</span>   <span class="n">VI_ATTR_MAX_QUEUE_LENGTH</span>  <span class="o">|</span> <span class="mi">1073676293</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">50</span>                 <span class="o">|</span>
+<span class="o">|</span>   <span class="n">VI_ATTR_RD_BUF_OPER_MODE</span>  <span class="o">|</span> <span class="mi">1073676330</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">3</span>                  <span class="o">|</span>
+<span class="o">|</span>     <span class="n">VI_ATTR_RD_BUF_SIZE</span>     <span class="o">|</span> <span class="mi">1073676331</span> <span class="o">|</span>                            <span class="o">|</span>                 <span class="mi">4096</span>                <span class="o">|</span>
+<span class="o">|</span>      <span class="n">VI_ATTR_RM_SESSION</span>     <span class="o">|</span> <span class="mi">1073676484</span> <span class="o">|</span>                            <span class="o">|</span>               <span class="mi">3160976</span>               <span class="o">|</span>
+<span class="o">|</span>      <span class="n">VI_ATTR_RSRC_CLASS</span>     <span class="o">|</span> <span class="mi">3221159937</span> <span class="o">|</span>       <span class="n">resource_class</span>       <span class="o">|</span>                <span class="n">INSTR</span>                <span class="o">|</span>
+<span class="o">|</span>  <span class="n">VI_ATTR_RSRC_IMPL_VERSION</span>  <span class="o">|</span> <span class="mi">1073676291</span> <span class="o">|</span>   <span class="n">implementation_version</span>   <span class="o">|</span>               <span class="mi">5243392</span>               <span class="o">|</span>
+<span class="o">|</span>   <span class="n">VI_ATTR_RSRC_LOCK_STATE</span>   <span class="o">|</span> <span class="mi">1073676292</span> <span class="o">|</span>         <span class="n">lock_state</span>         <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>     <span class="n">VI_ATTR_RSRC_MANF_ID</span>    <span class="o">|</span> <span class="mi">1073676661</span> <span class="o">|</span>                            <span class="o">|</span>                 <span class="mi">4086</span>                <span class="o">|</span>
+<span class="o">|</span>    <span class="n">VI_ATTR_RSRC_MANF_NAME</span>   <span class="o">|</span> <span class="mi">3221160308</span> <span class="o">|</span> <span class="n">resource_manufacturer_name</span> <span class="o">|</span>         <span class="n">National</span> <span class="n">Instruments</span>        <span class="o">|</span>
+<span class="o">|</span>      <span class="n">VI_ATTR_RSRC_NAME</span>      <span class="o">|</span> <span class="mi">3221159938</span> <span class="o">|</span>       <span class="n">resource_name</span>        <span class="o">|</span>             <span class="n">ASRL1</span><span class="p">::</span><span class="n">INSTR</span>            <span class="o">|</span>
+<span class="o">|</span>  <span class="n">VI_ATTR_RSRC_SPEC_VERSION</span>  <span class="o">|</span> <span class="mi">1073676656</span> <span class="o">|</span>        <span class="n">spec_version</span>        <span class="o">|</span>               <span class="mi">5243136</span>               <span class="o">|</span>
+<span class="o">|</span>     <span class="n">VI_ATTR_SEND_END_EN</span>     <span class="o">|</span> <span class="mi">1073676310</span> <span class="o">|</span>          <span class="n">send_end</span>          <span class="o">|</span>                  <span class="mi">1</span>                  <span class="o">|</span>
+<span class="o">|</span>   <span class="n">VI_ATTR_SUPPRESS_END_EN</span>   <span class="o">|</span> <span class="mi">1073676342</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>       <span class="n">VI_ATTR_TERMCHAR</span>      <span class="o">|</span> <span class="mi">1073676312</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">10</span>                 <span class="o">|</span>
+<span class="o">|</span>     <span class="n">VI_ATTR_TERMCHAR_EN</span>     <span class="o">|</span> <span class="mi">1073676344</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">0</span>                  <span class="o">|</span>
+<span class="o">|</span>      <span class="n">VI_ATTR_TMO_VALUE</span>      <span class="o">|</span> <span class="mi">1073676314</span> <span class="o">|</span>                            <span class="o">|</span>                 <span class="mi">2000</span>                <span class="o">|</span>
+<span class="o">|</span>       <span class="n">VI_ATTR_TRIG_ID</span>       <span class="o">|</span> <span class="mi">1073676663</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="o">-</span><span class="mi">1</span>                 <span class="o">|</span>
+<span class="o">|</span>   <span class="n">VI_ATTR_WR_BUF_OPER_MODE</span>  <span class="o">|</span> <span class="mi">1073676333</span> <span class="o">|</span>                            <span class="o">|</span>                  <span class="mi">2</span>                  <span class="o">|</span>
+<span class="o">|</span>     <span class="n">VI_ATTR_WR_BUF_SIZE</span>     <span class="o">|</span> <span class="mi">1073676334</span> <span class="o">|</span>                            <span class="o">|</span>                 <span class="mi">4096</span>                <span class="o">|</span>
+<span class="o">+-----------------------------+------------+----------------------------+-------------------------------------+</span>
+</pre></div>
+</div>
+<p>To simplify the handling of VI_ATTR_TERMCHAR and VI_ATTR_TERMCHAR_EN, the
+command ‘termchar’ can be used. If only one character provided, it sets both
+read and write termination character to the same character. If two characters
+are provided, it sets read and write termination characters independently.</p>
+<p>To setup termchar to ‘r’ (CR or ascii code 10):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">open</span><span class="p">)</span> <span class="n">termchar</span> <span class="n">CR</span>
+<span class="n">Done</span>
+</pre></div>
+</div>
+<p>To read what termchar is defined:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">open</span><span class="p">)</span> <span class="n">termchar</span>
+<span class="n">Termchar</span> <span class="n">read</span><span class="p">:</span> <span class="n">CR</span> <span class="n">write</span><span class="p">:</span> <span class="n">CR</span>
+</pre></div>
+</div>
+<p>To setup read termchar to ‘n’ and write termchar to ‘rn’:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">open</span><span class="p">)</span> <span class="n">termchar</span> <span class="n">LF</span> <span class="n">CRLF</span>
+<span class="n">Done</span>
+</pre></div>
+</div>
+<p>Supported termchar values are: CR (‘r’), LF (‘n’), CRLF (‘rn’) ,
+NUL (‘0’), None. None is used to disable termchar.</p>
+<p>Finally, you can close the device:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">open</span><span class="p">)</span> <span class="n">close</span>
+</pre></div>
+</div>
+<div class="section" id="pyvisa-shell-backends">
+<h2>PyVisa Shell Backends<a class="headerlink" href="#pyvisa-shell-backends" title="Permalink to this headline">¶</a></h2>
+<p>Based on available backend (see bellow for <code class="docutils literal notranslate"><span class="pre">info</span></code> command), it is possible to
+switch shell to use non-default backend via <code class="docutils literal notranslate"><span class="pre">-b</span> <span class="pre">BACKEND</span></code> or
+<code class="docutils literal notranslate"><span class="pre">--backend</span> <span class="pre">BACKEND</span></code>.</p>
+<p>You can invoke:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pyvisa</span><span class="o">-</span><span class="n">shell</span> <span class="o">-</span><span class="n">b</span> <span class="n">sim</span>
+</pre></div>
+</div>
+<p>to use python-sim as backend instead of ni backend.
+This can be used for example for testing of python-sim configuration.</p>
+<p>You can invoke:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pyvisa</span><span class="o">-</span><span class="n">shell</span> <span class="o">-</span><span class="n">b</span> <span class="n">py</span>
+</pre></div>
+</div>
+<p>uses python-py as backend instead of ni backend, for situation when ni not
+installed.</p>
+</div>
+<div class="section" id="pyvisa-info">
+<h2>PyVisa Info<a class="headerlink" href="#pyvisa-info" title="Permalink to this headline">¶</a></h2>
+<p>You can invoke it from the command-line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pyvisa</span><span class="o">-</span><span class="n">info</span>
+</pre></div>
+</div>
+<p>that will  print information to diagnose PyVISA, info about Machine, Python,
+backends, etc</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Machine</span> <span class="n">Details</span><span class="p">:</span>
+   <span class="n">Platform</span> <span class="n">ID</span><span class="p">:</span>    <span class="n">Windows</span>
+   <span class="n">Processor</span><span class="p">:</span>      <span class="n">Intel64</span> <span class="n">Family</span> <span class="mi">6</span>
+   <span class="o">...</span>
+<span class="n">PyVISA</span> <span class="n">Version</span><span class="p">:</span> <span class="o">...</span>
+
+<span class="n">Backends</span><span class="p">:</span>
+   <span class="n">ni</span><span class="p">:</span>
+      <span class="n">Version</span><span class="p">:</span> <span class="mf">1.8</span> <span class="p">(</span><span class="n">bundled</span> <span class="k">with</span> <span class="n">PyVISA</span><span class="p">)</span>
+      <span class="o">...</span>
+   <span class="n">py</span><span class="p">:</span>
+      <span class="n">Version</span><span class="p">:</span> <span class="mf">0.2</span>
+      <span class="o">...</span>
+  <span class="n">sim</span><span class="p">:</span>
+     <span class="n">Version</span><span class="p">:</span> <span class="mf">0.3</span>
+     <span class="n">Spec</span> <span class="n">version</span><span class="p">:</span> <span class="mf">1.1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Cool, right? It will be great to have a GUI similar to NI-MAX, but we leave
+that to be developed outside PyVISA. Want to help? Let us know!</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="names.html" class="btn btn-neutral float-right" title="VISA resource names" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="resources.html" class="btn btn-neutral" title="Resources" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PyVISA Authors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

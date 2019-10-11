@@ -1,0 +1,1088 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Constants module &mdash; PyVISA 1.11.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Resource classes" href="resources.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PyVISA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/index.html">Advanced topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">FAQ</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="visalibrarybase.html">Visa Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resourcemanager.html">Resource Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html">Resource classes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Constants module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PyVISA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">API</a> &raquo;</li>
+        
+      <li>Constants module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/constants.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pyvisa.constants">
+<span id="constants-module"></span><span id="api-constants"></span><h1>Constants module<a class="headerlink" href="#module-pyvisa.constants" title="Permalink to this headline">¶</a></h1>
+<p>Provides user-friendly naming to values used in different functions.</p>
+<dl class="class">
+<dt id="pyvisa.constants.AccessModes">
+<em class="property">class </em><code class="descclassname">pyvisa.constants.</code><code class="descname">AccessModes</code><a class="reference internal" href="../_modules/pyvisa/constants.html#AccessModes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyvisa.constants.AccessModes" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="attribute">
+<dt id="pyvisa.constants.AccessModes.exclusive_lock">
+<code class="descname">exclusive_lock</code><em class="property"> = 1</em><a class="headerlink" href="#pyvisa.constants.AccessModes.exclusive_lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtains a exclusive lock on the VISA resource.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.AccessModes.no_lock">
+<code class="descname">no_lock</code><em class="property"> = 0</em><a class="headerlink" href="#pyvisa.constants.AccessModes.no_lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does not obtain any lock on the VISA resource.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.AccessModes.shared_lock">
+<code class="descname">shared_lock</code><em class="property"> = 2</em><a class="headerlink" href="#pyvisa.constants.AccessModes.shared_lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtains a lock on the VISA resouce which may be shared
+between multiple VISA sessions.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyvisa.constants.StopBits">
+<em class="property">class </em><code class="descclassname">pyvisa.constants.</code><code class="descname">StopBits</code><a class="reference internal" href="../_modules/pyvisa/constants.html#StopBits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyvisa.constants.StopBits" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of stop bits that indicate the end of a frame.</p>
+<dl class="attribute">
+<dt id="pyvisa.constants.StopBits.one">
+<code class="descname">one</code><em class="property"> = 10</em><a class="headerlink" href="#pyvisa.constants.StopBits.one" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StopBits.one_and_a_half">
+<code class="descname">one_and_a_half</code><em class="property"> = 15</em><a class="headerlink" href="#pyvisa.constants.StopBits.one_and_a_half" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StopBits.two">
+<code class="descname">two</code><em class="property"> = 20</em><a class="headerlink" href="#pyvisa.constants.StopBits.two" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyvisa.constants.Parity">
+<em class="property">class </em><code class="descclassname">pyvisa.constants.</code><code class="descname">Parity</code><a class="reference internal" href="../_modules/pyvisa/constants.html#Parity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyvisa.constants.Parity" title="Permalink to this definition">¶</a></dt>
+<dd><p>The parity types to use with every frame transmitted and received on a serial session.</p>
+<dl class="attribute">
+<dt id="pyvisa.constants.Parity.even">
+<code class="descname">even</code><em class="property"> = 2</em><a class="headerlink" href="#pyvisa.constants.Parity.even" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.Parity.mark">
+<code class="descname">mark</code><em class="property"> = 3</em><a class="headerlink" href="#pyvisa.constants.Parity.mark" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.Parity.none">
+<code class="descname">none</code><em class="property"> = 0</em><a class="headerlink" href="#pyvisa.constants.Parity.none" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.Parity.odd">
+<code class="descname">odd</code><em class="property"> = 1</em><a class="headerlink" href="#pyvisa.constants.Parity.odd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.Parity.space">
+<code class="descname">space</code><em class="property"> = 4</em><a class="headerlink" href="#pyvisa.constants.Parity.space" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyvisa.constants.SerialTermination">
+<em class="property">class </em><code class="descclassname">pyvisa.constants.</code><code class="descname">SerialTermination</code><a class="reference internal" href="../_modules/pyvisa/constants.html#SerialTermination"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyvisa.constants.SerialTermination" title="Permalink to this definition">¶</a></dt>
+<dd><p>The available methods for terminating a serial transfer.</p>
+<dl class="attribute">
+<dt id="pyvisa.constants.SerialTermination.last_bit">
+<code class="descname">last_bit</code><em class="property"> = 1</em><a class="headerlink" href="#pyvisa.constants.SerialTermination.last_bit" title="Permalink to this definition">¶</a></dt>
+<dd><p>The transfer occurs with the last bit not set until the last
+character is sent.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.SerialTermination.none">
+<code class="descname">none</code><em class="property"> = 0</em><a class="headerlink" href="#pyvisa.constants.SerialTermination.none" title="Permalink to this definition">¶</a></dt>
+<dd><p>The transfer terminates when all requested data is transferred
+or when an error occurs.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.SerialTermination.termination_break">
+<code class="descname">termination_break</code><em class="property"> = 3</em><a class="headerlink" href="#pyvisa.constants.SerialTermination.termination_break" title="Permalink to this definition">¶</a></dt>
+<dd><p>The write transmits a break after all the characters for the
+write are sent.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.SerialTermination.termination_char">
+<code class="descname">termination_char</code><em class="property"> = 2</em><a class="headerlink" href="#pyvisa.constants.SerialTermination.termination_char" title="Permalink to this definition">¶</a></dt>
+<dd><p>The transfer terminate by searching for “/”
+appending the termination character.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyvisa.constants.InterfaceType">
+<em class="property">class </em><code class="descclassname">pyvisa.constants.</code><code class="descname">InterfaceType</code><a class="reference internal" href="../_modules/pyvisa/constants.html#InterfaceType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyvisa.constants.InterfaceType" title="Permalink to this definition">¶</a></dt>
+<dd><p>The hardware interface</p>
+<dl class="attribute">
+<dt id="pyvisa.constants.InterfaceType.asrl">
+<code class="descname">asrl</code><em class="property"> = 4</em><a class="headerlink" href="#pyvisa.constants.InterfaceType.asrl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serial devices connected to either an RS-232 or RS-485 controller.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.InterfaceType.firewire">
+<code class="descname">firewire</code><em class="property"> = 9</em><a class="headerlink" href="#pyvisa.constants.InterfaceType.firewire" title="Permalink to this definition">¶</a></dt>
+<dd><p>Firewire device.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.InterfaceType.gpib">
+<code class="descname">gpib</code><em class="property"> = 1</em><a class="headerlink" href="#pyvisa.constants.InterfaceType.gpib" title="Permalink to this definition">¶</a></dt>
+<dd><p>GPIB Interface.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.InterfaceType.gpib_vxi">
+<code class="descname">gpib_vxi</code><em class="property"> = 3</em><a class="headerlink" href="#pyvisa.constants.InterfaceType.gpib_vxi" title="Permalink to this definition">¶</a></dt>
+<dd><p>GPIB VXI (VME eXtensions for Instrumentation).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.InterfaceType.pxi">
+<code class="descname">pxi</code><em class="property"> = 5</em><a class="headerlink" href="#pyvisa.constants.InterfaceType.pxi" title="Permalink to this definition">¶</a></dt>
+<dd><p>PXI device.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.InterfaceType.rio">
+<code class="descname">rio</code><em class="property"> = 8</em><a class="headerlink" href="#pyvisa.constants.InterfaceType.rio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rio device.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.InterfaceType.rsnrp">
+<code class="descname">rsnrp</code><em class="property"> = 33024</em><a class="headerlink" href="#pyvisa.constants.InterfaceType.rsnrp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rohde and Schwarz Device via Passport</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.InterfaceType.tcpip">
+<code class="descname">tcpip</code><em class="property"> = 6</em><a class="headerlink" href="#pyvisa.constants.InterfaceType.tcpip" title="Permalink to this definition">¶</a></dt>
+<dd><p>TCPIP device.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.InterfaceType.unknown">
+<code class="descname">unknown</code><em class="property"> = -1</em><a class="headerlink" href="#pyvisa.constants.InterfaceType.unknown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.InterfaceType.usb">
+<code class="descname">usb</code><em class="property"> = 7</em><a class="headerlink" href="#pyvisa.constants.InterfaceType.usb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Universal Serial Bus (USB) hardware bus.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.InterfaceType.vxi">
+<code class="descname">vxi</code><em class="property"> = 2</em><a class="headerlink" href="#pyvisa.constants.InterfaceType.vxi" title="Permalink to this definition">¶</a></dt>
+<dd><p>VXI (VME eXtensions for Instrumentation), VME, MXI (Multisystem eXtension Interface).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyvisa.constants.AddressState">
+<em class="property">class </em><code class="descclassname">pyvisa.constants.</code><code class="descname">AddressState</code><a class="reference internal" href="../_modules/pyvisa/constants.html#AddressState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyvisa.constants.AddressState" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="attribute">
+<dt id="pyvisa.constants.AddressState.listenr">
+<code class="descname">listenr</code><em class="property"> = 2</em><a class="headerlink" href="#pyvisa.constants.AddressState.listenr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.AddressState.talker">
+<code class="descname">talker</code><em class="property"> = 1</em><a class="headerlink" href="#pyvisa.constants.AddressState.talker" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.AddressState.unaddressed">
+<code class="descname">unaddressed</code><em class="property"> = 0</em><a class="headerlink" href="#pyvisa.constants.AddressState.unaddressed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyvisa.constants.IOProtocol">
+<em class="property">class </em><code class="descclassname">pyvisa.constants.</code><code class="descname">IOProtocol</code><a class="reference internal" href="../_modules/pyvisa/constants.html#IOProtocol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyvisa.constants.IOProtocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="attribute">
+<dt id="pyvisa.constants.IOProtocol.fdc">
+<code class="descname">fdc</code><em class="property"> = 2</em><a class="headerlink" href="#pyvisa.constants.IOProtocol.fdc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fast data channel (FDC) protocol for VXI</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.IOProtocol.hs488">
+<code class="descname">hs488</code><em class="property"> = 3</em><a class="headerlink" href="#pyvisa.constants.IOProtocol.hs488" title="Permalink to this definition">¶</a></dt>
+<dd><p>High speed 488 transfer for GPIB</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.IOProtocol.normal">
+<code class="descname">normal</code><em class="property"> = 1</em><a class="headerlink" href="#pyvisa.constants.IOProtocol.normal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.IOProtocol.protocol4882_strs">
+<code class="descname">protocol4882_strs</code><em class="property"> = 4</em><a class="headerlink" href="#pyvisa.constants.IOProtocol.protocol4882_strs" title="Permalink to this definition">¶</a></dt>
+<dd><p>488 style transfer for serial</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.IOProtocol.usbtmc_vendor">
+<code class="descname">usbtmc_vendor</code><em class="property"> = 5</em><a class="headerlink" href="#pyvisa.constants.IOProtocol.usbtmc_vendor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test measurement class vendor specific for USB</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyvisa.constants.LineState">
+<em class="property">class </em><code class="descclassname">pyvisa.constants.</code><code class="descname">LineState</code><a class="reference internal" href="../_modules/pyvisa/constants.html#LineState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyvisa.constants.LineState" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="attribute">
+<dt id="pyvisa.constants.LineState.asserted">
+<code class="descname">asserted</code><em class="property"> = 1</em><a class="headerlink" href="#pyvisa.constants.LineState.asserted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.LineState.unasserted">
+<code class="descname">unasserted</code><em class="property"> = 0</em><a class="headerlink" href="#pyvisa.constants.LineState.unasserted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.LineState.unknown">
+<code class="descname">unknown</code><em class="property"> = -1</em><a class="headerlink" href="#pyvisa.constants.LineState.unknown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyvisa.constants.StatusCode">
+<em class="property">class </em><code class="descclassname">pyvisa.constants.</code><code class="descname">StatusCode</code><a class="reference internal" href="../_modules/pyvisa/constants.html#StatusCode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyvisa.constants.StatusCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the status codes that NI-VISA driver-level operations can return.</p>
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_abort">
+<code class="descname">error_abort</code><em class="property"> = -1073807312</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_abort" title="Permalink to this definition">¶</a></dt>
+<dd><p>The operation was aborted.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_allocation">
+<code class="descname">error_allocation</code><em class="property"> = -1073807300</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_allocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insufficient system resources to perform necessary memory allocation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_attribute_read_only">
+<code class="descname">error_attribute_read_only</code><em class="property"> = -1073807329</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_attribute_read_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified attribute is read-only.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_bus_error">
+<code class="descname">error_bus_error</code><em class="property"> = -1073807304</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_bus_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bus error occurred during transfer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_closing_failed">
+<code class="descname">error_closing_failed</code><em class="property"> = -1073807338</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_closing_failed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unable to deallocate the previously allocated data structures corresponding to this session or object reference.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_connection_lost">
+<code class="descname">error_connection_lost</code><em class="property"> = -1073807194</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_connection_lost" title="Permalink to this definition">¶</a></dt>
+<dd><p>The connection for the specified session has been lost.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_file_access">
+<code class="descname">error_file_access</code><em class="property"> = -1073807199</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_file_access" title="Permalink to this definition">¶</a></dt>
+<dd><p>An error occurred while trying to open the specified file. Possible causes include an invalid path or lack of access rights.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_file_i_o">
+<code class="descname">error_file_i_o</code><em class="property"> = -1073807198</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_file_i_o" title="Permalink to this definition">¶</a></dt>
+<dd><p>An error occurred while performing I/O on the specified file.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_handler_not_installed">
+<code class="descname">error_handler_not_installed</code><em class="property"> = -1073807320</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_handler_not_installed" title="Permalink to this definition">¶</a></dt>
+<dd><p>A handler is not currently installed for the specified event.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_in_progress">
+<code class="descname">error_in_progress</code><em class="property"> = -1073807303</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_in_progress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unable to queue the asynchronous operation because there is already an operation in progress.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_input_protocol_violation">
+<code class="descname">error_input_protocol_violation</code><em class="property"> = -1073807305</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_input_protocol_violation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Device reported an input protocol error during transfer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_interface_number_not_configured">
+<code class="descname">error_interface_number_not_configured</code><em class="property"> = -1073807195</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_interface_number_not_configured" title="Permalink to this definition">¶</a></dt>
+<dd><p>The interface type is valid but the specified interface number is not configured.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_interrupt_pending">
+<code class="descname">error_interrupt_pending</code><em class="property"> = -1073807256</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_interrupt_pending" title="Permalink to this definition">¶</a></dt>
+<dd><p>An interrupt is still pending from a previous call.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_access_key">
+<code class="descname">error_invalid_access_key</code><em class="property"> = -1073807327</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_access_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>The access key to the resource associated with this session is invalid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_access_mode">
+<code class="descname">error_invalid_access_mode</code><em class="property"> = -1073807341</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_access_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invalid access mode.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_address_space">
+<code class="descname">error_invalid_address_space</code><em class="property"> = -1073807282</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_address_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invalid address space specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_context">
+<code class="descname">error_invalid_context</code><em class="property"> = -1073807318</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specified event context is invalid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_degree">
+<code class="descname">error_invalid_degree</code><em class="property"> = -1073807333</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_degree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specified degree is invalid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_event">
+<code class="descname">error_invalid_event</code><em class="property"> = -1073807322</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specified event type is not supported by the resource.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_expression">
+<code class="descname">error_invalid_expression</code><em class="property"> = -1073807344</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_expression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invalid expression specified for search.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_format">
+<code class="descname">error_invalid_format</code><em class="property"> = -1073807297</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>A format specifier in the format string is invalid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_handler_reference">
+<code class="descname">error_invalid_handler_reference</code><em class="property"> = -1073807319</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_handler_reference" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified handler reference is invalid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_job_i_d">
+<code class="descname">error_invalid_job_i_d</code><em class="property"> = -1073807332</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_job_i_d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specified job identifier is invalid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_length">
+<code class="descname">error_invalid_length</code><em class="property"> = -1073807229</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invalid length specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_line">
+<code class="descname">error_invalid_line</code><em class="property"> = -1073807200</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>The value specified by the line parameter is invalid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_lock_type">
+<code class="descname">error_invalid_lock_type</code><em class="property"> = -1073807328</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_lock_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified type of lock is not supported by this resource.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_mask">
+<code class="descname">error_invalid_mask</code><em class="property"> = -1073807299</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invalid buffer mask specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_mechanism">
+<code class="descname">error_invalid_mechanism</code><em class="property"> = -1073807321</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_mechanism" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invalid mechanism specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_mode">
+<code class="descname">error_invalid_mode</code><em class="property"> = -1073807215</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified mode is invalid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_object">
+<code class="descname">error_invalid_object</code><em class="property"> = -1073807346</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified session or object reference is invalid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_offset">
+<code class="descname">error_invalid_offset</code><em class="property"> = -1073807279</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invalid offset specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_parameter">
+<code class="descname">error_invalid_parameter</code><em class="property"> = -1073807240</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>The value of an unknown parameter is invalid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_protocol">
+<code class="descname">error_invalid_protocol</code><em class="property"> = -1073807239</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_protocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>The protocol specified is invalid.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_resource_name">
+<code class="descname">error_invalid_resource_name</code><em class="property"> = -1073807342</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_resource_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invalid resource reference specified. Parsing error.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_setup">
+<code class="descname">error_invalid_setup</code><em class="property"> = -1073807302</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unable to start operation because setup is invalid due to inconsistent state of properties.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_size">
+<code class="descname">error_invalid_size</code><em class="property"> = -1073807237</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invalid size of window specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_invalid_width">
+<code class="descname">error_invalid_width</code><em class="property"> = -1073807278</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_invalid_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invalid source or destination width specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_io">
+<code class="descname">error_io</code><em class="property"> = -1073807298</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_io" title="Permalink to this definition">¶</a></dt>
+<dd><p>Could not perform operation because of I/O error.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_library_not_found">
+<code class="descname">error_library_not_found</code><em class="property"> = -1073807202</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_library_not_found" title="Permalink to this definition">¶</a></dt>
+<dd><p>A code library required by VISA could not be located or loaded.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_line_in_use">
+<code class="descname">error_line_in_use</code><em class="property"> = -1073807294</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_line_in_use" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified trigger line is currently in use.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_machine_not_available">
+<code class="descname">error_machine_not_available</code><em class="property"> = -1073807193</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_machine_not_available" title="Permalink to this definition">¶</a></dt>
+<dd><p>The remote machine does not exist or is not accepting any connections.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_memory_not_shared">
+<code class="descname">error_memory_not_shared</code><em class="property"> = -1073807203</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_memory_not_shared" title="Permalink to this definition">¶</a></dt>
+<dd><p>The device does not export any memory.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_no_listeners">
+<code class="descname">error_no_listeners</code><em class="property"> = -1073807265</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_no_listeners" title="Permalink to this definition">¶</a></dt>
+<dd><p>No listeners condition is detected (both NRFD and NDAC are deasserted).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_no_permission">
+<code class="descname">error_no_permission</code><em class="property"> = -1073807192</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_no_permission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the remote machine is denied.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_nonimplemented_operation">
+<code class="descname">error_nonimplemented_operation</code><em class="property"> = -1073807231</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_nonimplemented_operation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified operation is unimplemented.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_nonsupported_attribute">
+<code class="descname">error_nonsupported_attribute</code><em class="property"> = -1073807331</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_nonsupported_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified attribute is not defined or supported by the referenced session, event, or find list.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_nonsupported_attribute_state">
+<code class="descname">error_nonsupported_attribute_state</code><em class="property"> = -1073807330</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_nonsupported_attribute_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified state of the attribute is not valid or is not supported as defined by the session, event, or find list.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_nonsupported_format">
+<code class="descname">error_nonsupported_format</code><em class="property"> = -1073807295</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_nonsupported_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>A format specifier in the format string is not supported.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_nonsupported_interrupt">
+<code class="descname">error_nonsupported_interrupt</code><em class="property"> = -1073807201</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_nonsupported_interrupt" title="Permalink to this definition">¶</a></dt>
+<dd><p>The interface cannot generate an interrupt on the requested level or with the requested statusID value.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_nonsupported_line">
+<code class="descname">error_nonsupported_line</code><em class="property"> = -1073807197</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_nonsupported_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified trigger source line (trigSrc) or destination line (trigDest) is not supported by this VISA implementation, or the combination of lines is not a valid mapping.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_nonsupported_mechanism">
+<code class="descname">error_nonsupported_mechanism</code><em class="property"> = -1073807196</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_nonsupported_mechanism" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified mechanism is not supported for the specified event type.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_nonsupported_mode">
+<code class="descname">error_nonsupported_mode</code><em class="property"> = -1073807290</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_nonsupported_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified mode is not supported by this VISA implementation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_nonsupported_offset">
+<code class="descname">error_nonsupported_offset</code><em class="property"> = -1073807276</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_nonsupported_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specified offset is not accessible from this hardware.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_nonsupported_offset_alignment">
+<code class="descname">error_nonsupported_offset_alignment</code><em class="property"> = -1073807248</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_nonsupported_offset_alignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified offset is not properly aligned for the access width of the operation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_nonsupported_operation">
+<code class="descname">error_nonsupported_operation</code><em class="property"> = -1073807257</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_nonsupported_operation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The session or object reference does not support this operation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_nonsupported_varying_widths">
+<code class="descname">error_nonsupported_varying_widths</code><em class="property"> = -1073807275</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_nonsupported_varying_widths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cannot support source and destination widths that are different.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_nonsupported_width">
+<code class="descname">error_nonsupported_width</code><em class="property"> = -1073807242</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_nonsupported_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specified width is not supported by this hardware.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_not_cic">
+<code class="descname">error_not_cic</code><em class="property"> = -1073807264</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_not_cic" title="Permalink to this definition">¶</a></dt>
+<dd><p>The interface associated with this session is not currently the Controller-in-Charge.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_not_enabled">
+<code class="descname">error_not_enabled</code><em class="property"> = -1073807313</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_not_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>The session must be enabled for events of the specified type in order to receive them.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_not_system_controller">
+<code class="descname">error_not_system_controller</code><em class="property"> = -1073807263</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_not_system_controller" title="Permalink to this definition">¶</a></dt>
+<dd><p>The interface associated with this session is not the system controller.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_output_protocol_violation">
+<code class="descname">error_output_protocol_violation</code><em class="property"> = -1073807306</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_output_protocol_violation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Device reported an output protocol error during transfer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_queue_error">
+<code class="descname">error_queue_error</code><em class="property"> = -1073807301</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_queue_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unable to queue asynchronous operation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_queue_overflow">
+<code class="descname">error_queue_overflow</code><em class="property"> = -1073807315</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_queue_overflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>The event queue for the specified type has overflowed, usually due to not closing previous events.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_raw_read_protocol_violation">
+<code class="descname">error_raw_read_protocol_violation</code><em class="property"> = -1073807307</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_raw_read_protocol_violation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Violation of raw read protocol occurred during transfer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_raw_write_protocol_violation">
+<code class="descname">error_raw_write_protocol_violation</code><em class="property"> = -1073807308</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_raw_write_protocol_violation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Violation of raw write protocol occurred during transfer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_resource_busy">
+<code class="descname">error_resource_busy</code><em class="property"> = -1073807246</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_resource_busy" title="Permalink to this definition">¶</a></dt>
+<dd><p>The resource is valid, but VISA cannot currently access it.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_resource_locked">
+<code class="descname">error_resource_locked</code><em class="property"> = -1073807345</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_resource_locked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specified type of lock cannot be obtained or specified operation cannot be performed because the resource is locked.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_resource_not_found">
+<code class="descname">error_resource_not_found</code><em class="property"> = -1073807343</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_resource_not_found" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insufficient location information, or the device or resource is not present in the system.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_response_pending">
+<code class="descname">error_response_pending</code><em class="property"> = -1073807271</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_response_pending" title="Permalink to this definition">¶</a></dt>
+<dd><p>A previous response is still pending, causing a multiple query error.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_serial_framing">
+<code class="descname">error_serial_framing</code><em class="property"> = -1073807253</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_serial_framing" title="Permalink to this definition">¶</a></dt>
+<dd><p>A framing error occurred during transfer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_serial_overrun">
+<code class="descname">error_serial_overrun</code><em class="property"> = -1073807252</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_serial_overrun" title="Permalink to this definition">¶</a></dt>
+<dd><p>An overrun error occurred during transfer. A character was not read from the hardware before the next character arrived.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_serial_parity">
+<code class="descname">error_serial_parity</code><em class="property"> = -1073807254</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_serial_parity" title="Permalink to this definition">¶</a></dt>
+<dd><p>A parity error occurred during transfer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_session_not_locked">
+<code class="descname">error_session_not_locked</code><em class="property"> = -1073807204</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_session_not_locked" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current session did not have any lock on the resource.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_srq_not_occurred">
+<code class="descname">error_srq_not_occurred</code><em class="property"> = -1073807286</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_srq_not_occurred" title="Permalink to this definition">¶</a></dt>
+<dd><p>Service request has not been received for the session.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_system_error">
+<code class="descname">error_system_error</code><em class="property"> = -1073807360</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_system_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unknown system error.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_timeout">
+<code class="descname">error_timeout</code><em class="property"> = -1073807339</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Timeout expired before operation completed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_trigger_not_mapped">
+<code class="descname">error_trigger_not_mapped</code><em class="property"> = -1073807250</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_trigger_not_mapped" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path from the trigger source line (trigSrc) to the destination line (trigDest) is not currently mapped.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_user_buffer">
+<code class="descname">error_user_buffer</code><em class="property"> = -1073807247</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_user_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A specified user buffer is not valid or cannot be accessed for the required size.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_window_already_mapped">
+<code class="descname">error_window_already_mapped</code><em class="property"> = -1073807232</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_window_already_mapped" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified session currently contains a mapped window.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.error_window_not_mapped">
+<code class="descname">error_window_not_mapped</code><em class="property"> = -1073807273</em><a class="headerlink" href="#pyvisa.constants.StatusCode.error_window_not_mapped" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified session is currently unmapped.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.success">
+<code class="descname">success</code><em class="property"> = 0</em><a class="headerlink" href="#pyvisa.constants.StatusCode.success" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operation completed successfully.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.success_device_not_present">
+<code class="descname">success_device_not_present</code><em class="property"> = 1073676413</em><a class="headerlink" href="#pyvisa.constants.StatusCode.success_device_not_present" title="Permalink to this definition">¶</a></dt>
+<dd><p>Session opened successfully, but the device at the specified address is not responding.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.success_event_already_disabled">
+<code class="descname">success_event_already_disabled</code><em class="property"> = 1073676291</em><a class="headerlink" href="#pyvisa.constants.StatusCode.success_event_already_disabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specified event is already disabled for at least one of the specified mechanisms.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.success_event_already_enabled">
+<code class="descname">success_event_already_enabled</code><em class="property"> = 1073676290</em><a class="headerlink" href="#pyvisa.constants.StatusCode.success_event_already_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specified event is already enabled for at least one of the specified mechanisms.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.success_max_count_read">
+<code class="descname">success_max_count_read</code><em class="property"> = 1073676294</em><a class="headerlink" href="#pyvisa.constants.StatusCode.success_max_count_read" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of bytes read is equal to the input count.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.success_nested_exclusive">
+<code class="descname">success_nested_exclusive</code><em class="property"> = 1073676442</em><a class="headerlink" href="#pyvisa.constants.StatusCode.success_nested_exclusive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operation completed successfully, and this session has nested exclusive locks.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.success_nested_shared">
+<code class="descname">success_nested_shared</code><em class="property"> = 1073676441</em><a class="headerlink" href="#pyvisa.constants.StatusCode.success_nested_shared" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operation completed successfully, and this session has nested shared locks.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.success_no_more_handler_calls_in_chain">
+<code class="descname">success_no_more_handler_calls_in_chain</code><em class="property"> = 1073676440</em><a class="headerlink" href="#pyvisa.constants.StatusCode.success_no_more_handler_calls_in_chain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event handled successfully. Do not invoke any other handlers on this session for this event.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.success_queue_already_empty">
+<code class="descname">success_queue_already_empty</code><em class="property"> = 1073676292</em><a class="headerlink" href="#pyvisa.constants.StatusCode.success_queue_already_empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operation completed successfully, but the queue was already empty.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.success_queue_not_empty">
+<code class="descname">success_queue_not_empty</code><em class="property"> = 1073676416</em><a class="headerlink" href="#pyvisa.constants.StatusCode.success_queue_not_empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait terminated successfully on receipt of an event notification. There is still at least one more event occurrence of the requested type(s) available for this session.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.success_syncronous">
+<code class="descname">success_syncronous</code><em class="property"> = 1073676443</em><a class="headerlink" href="#pyvisa.constants.StatusCode.success_syncronous" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asynchronous operation request was performed synchronously.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.success_termination_character_read">
+<code class="descname">success_termination_character_read</code><em class="property"> = 1073676293</em><a class="headerlink" href="#pyvisa.constants.StatusCode.success_termination_character_read" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified termination character was read.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.success_trigger_already_mapped">
+<code class="descname">success_trigger_already_mapped</code><em class="property"> = 1073676414</em><a class="headerlink" href="#pyvisa.constants.StatusCode.success_trigger_already_mapped" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path from the trigger source line (trigSrc) to the destination line (trigDest) is already mapped.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.warning_configuration_not_loaded">
+<code class="descname">warning_configuration_not_loaded</code><em class="property"> = 1073676407</em><a class="headerlink" href="#pyvisa.constants.StatusCode.warning_configuration_not_loaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified configuration either does not exist or could not be loaded. The VISA-specified defaults are used.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.warning_ext_function_not_implemented">
+<code class="descname">warning_ext_function_not_implemented</code><em class="property"> = 1073676457</em><a class="headerlink" href="#pyvisa.constants.StatusCode.warning_ext_function_not_implemented" title="Permalink to this definition">¶</a></dt>
+<dd><p>The operation succeeded, but a lower level driver did not implement the extended functionality.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.warning_nonsupported_attribute_state">
+<code class="descname">warning_nonsupported_attribute_state</code><em class="property"> = 1073676420</em><a class="headerlink" href="#pyvisa.constants.StatusCode.warning_nonsupported_attribute_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Although the specified state of the attribute is valid, it is not supported by this resource implementation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.warning_nonsupported_buffer">
+<code class="descname">warning_nonsupported_buffer</code><em class="property"> = 1073676424</em><a class="headerlink" href="#pyvisa.constants.StatusCode.warning_nonsupported_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified buffer is not supported.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.warning_null_object">
+<code class="descname">warning_null_object</code><em class="property"> = 1073676418</em><a class="headerlink" href="#pyvisa.constants.StatusCode.warning_null_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified object reference is uninitialized.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.warning_queue_overflow">
+<code class="descname">warning_queue_overflow</code><em class="property"> = 1073676300</em><a class="headerlink" href="#pyvisa.constants.StatusCode.warning_queue_overflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>VISA received more event information of the specified type than the configured queue size could hold.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyvisa.constants.StatusCode.warning_unknown_status">
+<code class="descname">warning_unknown_status</code><em class="property"> = 1073676421</em><a class="headerlink" href="#pyvisa.constants.StatusCode.warning_unknown_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The status code passed to the operation could not be interpreted.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="resources.html" class="btn btn-neutral" title="Resource classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PyVISA Authors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

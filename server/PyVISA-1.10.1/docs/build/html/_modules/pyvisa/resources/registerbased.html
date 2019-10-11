@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyvisa.resources.registerbased &mdash; PyVISA 1.11.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> PyVISA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction/index.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/index.html">Advanced topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PyVISA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyvisa.resources.registerbased</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyvisa.resources.registerbased</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    pyvisa.resources.registerbased</span>
+<span class="sd">    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+
+<span class="sd">    High level wrapper for RegisterBased Instruments.</span>
+
+<span class="sd">    This file is part of PyVISA.</span>
+
+<span class="sd">    :copyright: 2014 by PyVISA Authors, see AUTHORS for more details.</span>
+<span class="sd">    :license: MIT, see LICENSE for more details.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">unicode_literals</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+
+<span class="kn">from</span> <span class="nn">.resource</span> <span class="k">import</span> <span class="n">Resource</span>
+
+
+<div class="viewcode-block" id="RegisterBasedResource"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.RegisterBasedResource">[docs]</a><span class="k">class</span> <span class="nc">RegisterBasedResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for resources that use register based communication.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RegisterBasedResource.read_memory"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.RegisterBasedResource.read_memory">[docs]</a>    <span class="k">def</span> <span class="nf">read_memory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reads in an 8-bit, 16-bit, 32-bit, or 64-bit value from the specified memory space and offset.</span>
+
+<span class="sd">        :param space: Specifies the address space. (Constants.*SPACE*)</span>
+<span class="sd">        :param offset: Offset (in bytes) of the address or register from which to read.</span>
+<span class="sd">        :param width: Number of bits to read.</span>
+<span class="sd">        :param extended: Use 64 bits offset independent of the platform.</span>
+<span class="sd">        :return: Data read from memory.</span>
+
+<span class="sd">        Corresponds to viIn* functions of the visa library.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">visalib</span><span class="o">.</span><span class="n">read_memory</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">extended</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RegisterBasedResource.write_memory"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.RegisterBasedResource.write_memory">[docs]</a>    <span class="k">def</span> <span class="nf">write_memory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write in an 8-bit, 16-bit, 32-bit, value to the specified memory space and offset.</span>
+
+<span class="sd">        :param space: Specifies the address space. (Constants.*SPACE*)</span>
+<span class="sd">        :param offset: Offset (in bytes) of the address or register from which to read.</span>
+<span class="sd">        :param data: Data to write to bus.</span>
+<span class="sd">        :param width: Number of bits to read.</span>
+<span class="sd">        :param extended: Use 64 bits offset independent of the platform.</span>
+
+<span class="sd">        Corresponds to viOut* functions of the visa library.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">visalib</span><span class="o">.</span><span class="n">write_memory</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">extended</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RegisterBasedResource.move_in"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.RegisterBasedResource.move_in">[docs]</a>    <span class="k">def</span> <span class="nf">move_in</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Moves a block of data to local memory from the specified address space and offset.</span>
+
+<span class="sd">        :param space: Specifies the address space. (Constants.*SPACE*)</span>
+<span class="sd">        :param offset: Offset (in bytes) of the address or register from which to read.</span>
+<span class="sd">        :param length: Number of elements to transfer, where the data width of the elements to transfer</span>
+<span class="sd">                       is identical to the source data width.</span>
+<span class="sd">        :param width: Number of bits to read per element.</span>
+<span class="sd">        :param extended: Use 64 bits offset independent of the platform.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">visalib</span><span class="o">.</span><span class="n">move_in</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">extended</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RegisterBasedResource.move_out"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.RegisterBasedResource.move_out">[docs]</a>    <span class="k">def</span> <span class="nf">move_out</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Moves a block of data from local memory to the specified address space and offset.</span>
+
+<span class="sd">        :param space: Specifies the address space. (Constants.*SPACE*)</span>
+<span class="sd">        :param offset: Offset (in bytes) of the address or register from which to read.</span>
+<span class="sd">        :param length: Number of elements to transfer, where the data width of the elements to transfer</span>
+<span class="sd">                       is identical to the source data width.</span>
+<span class="sd">        :param data: Data to write to bus.</span>
+<span class="sd">        :param width: Number of bits to read per element.</span>
+<span class="sd">        :param extended: Use 64 bits offset independent of the platform.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">visalib</span><span class="o">.</span><span class="n">move_out</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">extended</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PyVISA Authors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

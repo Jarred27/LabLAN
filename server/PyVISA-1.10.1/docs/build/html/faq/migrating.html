@@ -1,0 +1,486 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Migrating from PyVISA &lt; 1.5 &mdash; PyVISA 1.11.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Contributing to PyVISA" href="contributing.html" />
+    <link rel="prev" title="NI-VISA Installation" href="getting_nivisa.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PyVISA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/index.html">Advanced topics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">FAQ</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="faq.html">Miscellaneous questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_nivisa.html">NI-VISA Installation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Migrating from PyVISA &lt; 1.5</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#short-summary">Short summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-more-detailed-description">A more detailed description</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dropped-support-for-string-related-functions">Dropped support for string related functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#isolated-low-level-wrapping-module">Isolated low-level wrapping module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#no-singleton-objects">No singleton objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#visalibrary-methods-as-way-to-call-visa-functions">VisaLibrary methods as way to call Visa functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ask-vs-query">Ask vs. query</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seconds-to-milliseconds">Seconds to milliseconds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#removal-of-instrument-delay-and-added-instrument-query-delay">Removal of Instrument.delay and added Instrument.query_delay</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deprecated-term-chars-and-automatic-removal-of-cr-lf">Deprecated term_chars and automatic removal of CR + LF</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing to PyVISA</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PyVISA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Frequently asked questions</a> &raquo;</li>
+        
+      <li>Migrating from PyVISA &lt; 1.5</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/faq/migrating.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="migrating-from-pyvisa-1-5">
+<span id="faq-migrating"></span><h1>Migrating from PyVISA &lt; 1.5<a class="headerlink" href="#migrating-from-pyvisa-1-5" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">if you want PyVISA 1.4 compatibility use PyVISA 1.5 that provides
+Python 3 support, better visa library detection heuristics,
+Windows, Linux and OS X support, and no singleton object.
+PyVISA 1.6+ introduces a few compatibility breaks.</p>
+</div>
+<p>Some of these decisions were inspired by the <code class="docutils literal notranslate"><span class="pre">visalib</span></code> package as a part of <a class="reference external" href="https://lantz.readthedocs.org/">Lantz</a></p>
+<div class="section" id="short-summary">
+<h2>Short summary<a class="headerlink" href="#short-summary" title="Permalink to this headline">¶</a></h2>
+<p>PyVISA 1.5 has full compatibility with previous versions of PyVISA using the
+legacy module (changing some of the underlying implementation). But you are
+encouraged to do a few things differently if you want to keep up with the
+latest developments and be compatible with PyVISA &gt; 1.5.</p>
+<p>Indeed PyVISA 1.6 breaks compatibility to bring across a few good things.</p>
+<p><strong>If you are doing:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyvisa</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">keithley</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">instrument</span><span class="p">(</span><span class="s2">&quot;GPIB::12&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">keithley</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="s2">&quot;*IDN?&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>change it to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyvisa</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">keithley</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">open_resource</span><span class="p">(</span><span class="s2">&quot;GPIB::12&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">keithley</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;*IDN?&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>If you are doing:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">pyvisa</span><span class="o">.</span><span class="n">get_instruments_list</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>change it to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">rm</span><span class="o">.</span><span class="n">list_resources</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><strong>If you are doing:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyvisa.vpp43</span> <span class="k">as</span> <span class="nn">vpp43</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vpp43</span><span class="o">.</span><span class="n">visa_library</span><span class="o">.</span><span class="n">load_library</span><span class="p">(</span><span class="s2">&quot;/path/to/my/libvisa.so.7&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>change it to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyvisa</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">(</span><span class="s2">&quot;/path/to/my/libvisa.so.7&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lib</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">visalib</span>
+</pre></div>
+</div>
+<p><strong>If you are doing::</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vpp43</span><span class="o">.</span><span class="n">lock</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>change it to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lib</span><span class="o">.</span><span class="n">lock</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or better:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">resource</span><span class="o">.</span><span class="n">lock</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>If you are doing::</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span><span class="o">.</span><span class="n">term_chars</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+<p>change it to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span><span class="o">.</span><span class="n">read_termination</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span><span class="o">.</span><span class="n">write_termination</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+<p><strong>If you are doing::</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>change it to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">last_status</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or even better, do it per resource:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">rm</span><span class="o">.</span><span class="n">last_status</span><span class="p">)</span> <span class="c1"># for the resource manager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">last_status</span><span class="p">)</span> <span class="c1"># for a specific instrument</span>
+</pre></div>
+</div>
+<p><strong>If you are doing::</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Seconds</span>
+</pre></div>
+</div>
+<p>change it to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># Milliseconds</span>
+</pre></div>
+</div>
+<p>As you see, most of the code shown above is making a few things explict.
+It adds 1 line of code (instantiating the ResourceManager object)
+which is not a big deal but it makes things cleaner.</p>
+<p>If you were using <code class="docutils literal notranslate"><span class="pre">printf</span></code>, <code class="docutils literal notranslate"><span class="pre">queryf</span></code>, <code class="docutils literal notranslate"><span class="pre">scanf</span></code>, <code class="docutils literal notranslate"><span class="pre">sprintf</span></code> or <code class="docutils literal notranslate"><span class="pre">sscanf</span></code> of <code class="docutils literal notranslate"><span class="pre">vpp43</span></code>,
+rewrite as pure Python code (see below).</p>
+<p>If you were using <code class="docutils literal notranslate"><span class="pre">Instrument.delay</span></code>, change your code or use <code class="docutils literal notranslate"><span class="pre">Instrument.query_delay</span></code>
+(see below).</p>
+<p>A few alias has been created to ease the transition:</p>
+<blockquote>
+<div><ul class="simple">
+<li>ask -&gt; query</li>
+<li>ask_delay -&gt; query_delay</li>
+<li>get_instrument -&gt; open_resource</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="a-more-detailed-description">
+<h2>A more detailed description<a class="headerlink" href="#a-more-detailed-description" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dropped-support-for-string-related-functions">
+<h3>Dropped support for string related functions<a class="headerlink" href="#dropped-support-for-string-related-functions" title="Permalink to this headline">¶</a></h3>
+<p>The VISA library includes functions to search and manipulate strings such as <code class="docutils literal notranslate"><span class="pre">printf</span></code>,
+<code class="docutils literal notranslate"><span class="pre">queryf</span></code>, <code class="docutils literal notranslate"><span class="pre">scanf</span></code>, <code class="docutils literal notranslate"><span class="pre">sprintf</span></code> and <code class="docutils literal notranslate"><span class="pre">sscanf</span></code>. This makes sense as VISA involves a lot of
+string handling operations. The original PyVISA implementation wrapped these functions.
+But these operations are easily expressed in pure python and therefore were rarely used.</p>
+<p>PyVISA 1.5 keeps these functions for backwards compatibility but they are removed in 1.6.</p>
+<p>We suggest that you replace such functions by a pure Python version.</p>
+</div>
+<div class="section" id="isolated-low-level-wrapping-module">
+<h3>Isolated low-level wrapping module<a class="headerlink" href="#isolated-low-level-wrapping-module" title="Permalink to this headline">¶</a></h3>
+<p>In the original PyVISA implementation, the low level implementation (<code class="docutils literal notranslate"><span class="pre">vpp43</span></code>) was
+mixed with higher level constructs. The VISA library was wrapped using ctypes.</p>
+<p>In 1.5, we refactored it as <code class="docutils literal notranslate"><span class="pre">ctwrapper</span></code>. This allows us to test the
+foreign function calls by isolating them from higher level abstractions.
+More importantly, it also allows us to build new low level modules that
+can be used as drop in replacements for <code class="docutils literal notranslate"><span class="pre">ctwrapper</span></code> in high level modules.</p>
+<p>In 1.6, we made the <code class="docutils literal notranslate"><span class="pre">ResourceManager</span></code> the object exposed to the user. The type of the
+<code class="docutils literal notranslate"><span class="pre">VisaLibrary</span></code> can selected depending of the <code class="docutils literal notranslate"><span class="pre">library_path</span></code> and obtained from a plugin
+package.</p>
+<p>We have two of such packages planned:</p>
+<ul class="simple">
+<li>a Mock module that allows you to test a PyVISA program even if you do not have
+VISA installed.</li>
+<li>a CFFI based wrapper. CFFI is new python package that allows easier and more
+robust wrapping of foreign libraries. It might be part of Python in the future.</li>
+</ul>
+<p>PyVISA 1.5 keeps <code class="docutils literal notranslate"><span class="pre">vpp43</span></code> in the legacy subpackage (reimplemented on top of <code class="docutils literal notranslate"><span class="pre">ctwrapper</span></code>)
+to help with the migration. This module is gone in 1.6.</p>
+<p>All functions that were present in <code class="docutils literal notranslate"><span class="pre">vpp43</span></code> are now present in <code class="docutils literal notranslate"><span class="pre">ctwrapper</span></code> but they
+take an additional first parameter: the foreign library wrapper.</p>
+<p>We suggest that you replace <code class="docutils literal notranslate"><span class="pre">vpp43</span></code> by accessing the <code class="docutils literal notranslate"><span class="pre">VisaLibrary</span></code> object under the attribute
+visalib of the resource manager which provides all foreign functions as bound methods (see below).</p>
+</div>
+<div class="section" id="no-singleton-objects">
+<h3>No singleton objects<a class="headerlink" href="#no-singleton-objects" title="Permalink to this headline">¶</a></h3>
+<p>The original PyVISA implementation relied on a singleton, global objects for the
+library wrapper (named <code class="docutils literal notranslate"><span class="pre">visa_library</span></code>, an instance of the old <code class="docutils literal notranslate"><span class="pre">pyvisa.vpp43.VisaLibrary</span></code>)
+and the resource manager (named <code class="docutils literal notranslate"><span class="pre">resource_manager</span></code>, and instance of the old
+<code class="docutils literal notranslate"><span class="pre">pyvisa.visa.ResourceManager</span></code>). These were instantiated on import and the user
+could rebind to a different library using the <code class="docutils literal notranslate"><span class="pre">load_library</span></code> method. Calling this
+method however did not affect <code class="docutils literal notranslate"><span class="pre">resource_manager</span></code> and might lead to an inconsistent
+state.</p>
+<p>There were additionally a few global structures such a <code class="docutils literal notranslate"><span class="pre">status</span></code> which stored the last
+status returned by the library and the warning context to prevent unwanted warnings.</p>
+<p>In 1.5, there is a new <code class="docutils literal notranslate"><span class="pre">VisaLibrary</span></code> class and a new <code class="docutils literal notranslate"><span class="pre">ResourceManager</span></code> class (they are
+both in <code class="docutils literal notranslate"><span class="pre">pyvisa.highlevel</span></code>). The new classes are not singletons, at least not in the
+strict sense. Multiple instances of <code class="docutils literal notranslate"><span class="pre">VisaLibrary</span></code> and <code class="docutils literal notranslate"><span class="pre">ResourceManager</span></code> are possible,
+but only if they refer to different foreign libraries. In code, this means:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lib1</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">VisaLibrary</span><span class="p">(</span><span class="s2">&quot;/path/to/my/libvisa.so.7&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lib2</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">VisaLibrary</span><span class="p">(</span><span class="s2">&quot;/path/to/my/libvisa.so.7&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lib3</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">VisaLibrary</span><span class="p">(</span><span class="s2">&quot;/path/to/my/libvisa.so.8&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lib1</span> <span class="ow">is</span> <span class="n">lib2</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lib1</span> <span class="ow">is</span> <span class="n">lib3</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Most of the time, you will not need access to a <code class="docutils literal notranslate"><span class="pre">VisaLibrary</span></code> object but to a <code class="docutils literal notranslate"><span class="pre">ResourceManager</span></code>.
+You can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lib</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">VisaLibrary</span><span class="p">(</span><span class="s2">&quot;/path/to/my/libvisa.so.7&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">resource_manager</span>
+</pre></div>
+</div>
+<p>or equivalently:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">(</span><span class="s2">&quot;/path/to/my/libvisa.so.7&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the path for the library is not given, the path is obtained from
+the user settings file (if exists) or guessed from the OS.</p>
+</div>
+<p>In 1.6, the state returned by the library is stored per resource. Additionally,
+warnings can be silenced by resource as well. You can access with the <code class="docutils literal notranslate"><span class="pre">last_status</span></code>
+property.</p>
+<p>All together, these changes makes PyVISA thread safe.</p>
+</div>
+<div class="section" id="visalibrary-methods-as-way-to-call-visa-functions">
+<h3>VisaLibrary methods as way to call Visa functions<a class="headerlink" href="#visalibrary-methods-as-way-to-call-visa-functions" title="Permalink to this headline">¶</a></h3>
+<p>In the original PyVISA implementation, the <code class="docutils literal notranslate"><span class="pre">VisaLibrary</span></code> class was just having
+a reference to the ctypes library and a few functions.</p>
+<p>In 1.5, we introduced a new <code class="docutils literal notranslate"><span class="pre">VisaLibrary</span></code> class (<code class="docutils literal notranslate"><span class="pre">pyvisa.highlevel</span></code>) which has
+every single low level function defined in <code class="docutils literal notranslate"><span class="pre">ctwrapper</span></code> as bound methods. In code,
+this means that you can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyvisa</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">(</span><span class="s2">&quot;/path/to/my/libvisa.so.7&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lib</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">visalib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">read_stb</span><span class="p">(</span><span class="n">session</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>(But it is very likely that you do not have to do it as the resource should have the
+function you need)</p>
+<p>It also has every single VISA foreign function in the underlying library as static
+method. In code, this means that you can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">status</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_ushort</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ret</span> <span class="n">lib</span><span class="o">.</span><span class="n">viReadSTB</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="n">status</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ask-vs-query">
+<h3>Ask vs. query<a class="headerlink" href="#ask-vs-query" title="Permalink to this headline">¶</a></h3>
+<p>Historically, the method <code class="docutils literal notranslate"><span class="pre">ask</span></code> has been used in PyVISA to do a <code class="docutils literal notranslate"><span class="pre">write</span></code> followed
+by a <code class="docutils literal notranslate"><span class="pre">read</span></code>. But in many other programs this operation is called <code class="docutils literal notranslate"><span class="pre">query</span></code>. Thereby
+we have decided to switch the name, keeping an alias to help with the transition.</p>
+<p>However, <code class="docutils literal notranslate"><span class="pre">ask_for_values</span></code> has not been aliased to <code class="docutils literal notranslate"><span class="pre">query_values</span></code> because the API
+is different. <code class="docutils literal notranslate"><span class="pre">ask_for_values</span></code> still uses the old formatting API which is limited
+and broken. We suggest that you migrate everything to <code class="docutils literal notranslate"><span class="pre">query_values</span></code></p>
+</div>
+<div class="section" id="seconds-to-milliseconds">
+<h3>Seconds to milliseconds<a class="headerlink" href="#seconds-to-milliseconds" title="Permalink to this headline">¶</a></h3>
+<p>The timeout is now in milliseconds (not in seconds as it was before). The reason
+behind this change is to make it coherent with all other VISA implementations out
+there. The C-API, LabVIEW, .NET: all use milliseconds. Using the same units not
+only makes it easy to migrate to PyVISA but also allows to profit from all other
+VISA docs out there without extra cognitive effort.</p>
+</div>
+<div class="section" id="removal-of-instrument-delay-and-added-instrument-query-delay">
+<h3>Removal of Instrument.delay and added Instrument.query_delay<a class="headerlink" href="#removal-of-instrument-delay-and-added-instrument-query-delay" title="Permalink to this headline">¶</a></h3>
+<p>In the original PyVISA implementation, <code class="docutils literal notranslate"><span class="pre">Instrument</span></code> takes a <code class="docutils literal notranslate"><span class="pre">delay</span></code>
+argument that adds a pause after each write operation (This also can
+be changed using the <code class="docutils literal notranslate"><span class="pre">delay</span></code> attribute).</p>
+<p>In PyVISA 1.6, <code class="docutils literal notranslate"><span class="pre">delay</span></code> is removed. Delays after write operations must
+be added to the application code. Instead, a new attribute and argument
+<code class="docutils literal notranslate"><span class="pre">query_delay</span></code> is available. This allows you to pause between <code class="docutils literal notranslate"><span class="pre">write`</span> <span class="pre">and</span> <span class="pre">``read</span></code>
+operations inside <code class="docutils literal notranslate"><span class="pre">query</span></code>. Additionally, <code class="docutils literal notranslate"><span class="pre">query</span></code> takes an optional argument
+called <code class="docutils literal notranslate"><span class="pre">query</span></code> allowing you to change it for each method call.</p>
+</div>
+<div class="section" id="deprecated-term-chars-and-automatic-removal-of-cr-lf">
+<h3>Deprecated term_chars and automatic removal of CR + LF<a class="headerlink" href="#deprecated-term-chars-and-automatic-removal-of-cr-lf" title="Permalink to this headline">¶</a></h3>
+<p>In the original PyVISA implementation, <code class="docutils literal notranslate"><span class="pre">Instrument</span></code> takes a <code class="docutils literal notranslate"><span class="pre">term_chars</span></code>
+argument to change at the read and write termination characters. If this
+argument is <code class="docutils literal notranslate"><span class="pre">None</span></code>, <code class="docutils literal notranslate"><span class="pre">CR</span> <span class="pre">+</span> <span class="pre">LF</span></code> is appended to each outgoing message and
+not expected for incoming messages (although removed if present).</p>
+<p>In PyVISA 1.6, <code class="docutils literal notranslate"><span class="pre">term_chars</span></code> is replaced by <code class="docutils literal notranslate"><span class="pre">read_termination`</span> <span class="pre">and</span>
+<span class="pre">``write_termination</span></code>. In this way, you can set independently the termination
+for each operation. Automatic removal of <code class="docutils literal notranslate"><span class="pre">CR</span> <span class="pre">+</span> <span class="pre">LF</span></code> is also gone in 1.6.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing to PyVISA" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="getting_nivisa.html" class="btn btn-neutral" title="NI-VISA Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PyVISA Authors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

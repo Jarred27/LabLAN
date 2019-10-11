@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Communicating with your instrument &mdash; PyVISA 1.11.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="A more complex example" href="example.html" />
+    <link rel="prev" title="Configuring the backend" href="configuring.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PyVISA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring.html">Configuring the backend</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Communicating with your instrument</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#an-example">An example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getting-the-instrument-configuration-right">Getting the instrument configuration right</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#making-sure-the-instrument-understand-the-command">Making sure the instrument understand the command</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-third-party-softwares">Using third-party softwares</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="example.html">A more complex example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rvalues.html">Reading and Writing values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html">Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html">PyVISA Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="names.html">VISA resource names</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/index.html">Advanced topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PyVISA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">User guide</a> &raquo;</li>
+        
+      <li>Communicating with your instrument</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/introduction/communication.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="communicating-with-your-instrument">
+<span id="intro-communication"></span><h1>Communicating with your instrument<a class="headerlink" href="#communicating-with-your-instrument" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you have been using PyVISA before version 1.5, you might want to
+read <a class="reference internal" href="../faq/migrating.html#faq-migrating"><span class="std std-ref">Migrating from PyVISA &lt; 1.5</span></a>.</p>
+</div>
+<div class="section" id="an-example">
+<h2>An example<a class="headerlink" href="#an-example" title="Permalink to this headline">¶</a></h2>
+<p>Let’s go <em>in medias res</em> and have a look at a simple example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyvisa</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span><span class="o">.</span><span class="n">list_resources</span><span class="p">()</span>
+<span class="go">(&#39;ASRL1::INSTR&#39;, &#39;ASRL2::INSTR&#39;, &#39;GPIB0::14::INSTR&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_instrument</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">open_resource</span><span class="p">(</span><span class="s1">&#39;GPIB0::14::INSTR&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_instrument</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;*IDN?&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This example already shows the two main design goals of PyVISA: preferring
+simplicity over generality, and doing it the object-oriented way.</p>
+<p>After importing <code class="docutils literal notranslate"><span class="pre">pyvisa</span></code>, we create a <code class="docutils literal notranslate"><span class="pre">ResourceManager</span></code> object. If called
+without arguments, PyVISA will prefer the default backend (NI) which tries to
+find the VISA shared library for you. If it fails it will fall back to
+pyvisa-py if installed. You can check what backend is used and the location of
+the shared library used, if relevant, simply by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">rm</span><span class="p">)</span>
+<span class="go">&lt;ResourceManager(&#39;/path/to/visa.so&#39;)&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In some cases, PyVISA is not able to find the library for you resulting in
+an <code class="docutils literal notranslate"><span class="pre">OSError</span></code>. To fix it, find the library path yourself and pass it to
+the ResourceManager constructor. You can also specify it in a configuration
+file as discussed in <a class="reference internal" href="configuring.html#intro-configuring"><span class="std std-ref">Configuring the backend</span></a>.</p>
+</div>
+<p>Once that you have a <code class="docutils literal notranslate"><span class="pre">ResourceManager</span></code>, you can list the available resources
+using the <code class="docutils literal notranslate"><span class="pre">list_resources</span></code> method. The output is a tuple listing the
+<a class="reference internal" href="names.html#intro-resource-names"><span class="std std-ref">VISA resource names</span></a>. You can use a dedicated regular expression syntax
+to filter the instruments discovered by this method. The syntax is described in
+details in <a class="reference internal" href="../api/resourcemanager.html#pyvisa.highlevel.ResourceManager.list_resources" title="pyvisa.highlevel.ResourceManager.list_resources"><code class="xref py py-meth docutils literal notranslate"><span class="pre">list_resources()</span></code></a>. The default value is ‘?*::INSTR’ which means that
+by default only instrument whose resource name ends with ‘::INSTR’ are listed
+(in particular USB RAW resources and TCPIP SOCKET resources are not listed).</p>
+<p>In this case, there is a GPIB instrument with instrument number 14, so you ask
+the <code class="docutils literal notranslate"><span class="pre">ResourceManager</span></code> to open “‘GPIB0::14::INSTR’” and assign the returned
+object to the <em>my_instrument</em>.</p>
+<p>Notice <code class="docutils literal notranslate"><span class="pre">open_resource</span></code> has given you an instance of <code class="docutils literal notranslate"><span class="pre">GPIBInstrument</span></code> class
+(a subclass of the more generic <code class="docutils literal notranslate"><span class="pre">Resource</span></code>).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_instrument</span><span class="p">)</span>
+<span class="go">&lt;GPIBInstrument(&#39;GPIB::14&#39;)&gt;</span>
+</pre></div>
+</div>
+<p>There many <code class="docutils literal notranslate"><span class="pre">Resource</span></code> subclasses representing the different types of
+resources, but you do not have to worry as the <code class="docutils literal notranslate"><span class="pre">ResourceManager</span></code> will provide
+you with the appropriate class. You can check the methods and attributes of
+each class in the <a class="reference internal" href="../api/resources.html#api-resources"><span class="std std-ref">Resource classes</span></a></p>
+<p>Then, you query the device with the following message: <code class="docutils literal notranslate"><span class="pre">'\*IDN?'</span></code>.
+Which is the standard GPIB message for “what are you?” or – in some cases –
+“what’s on your display at the moment?”. <code class="docutils literal notranslate"><span class="pre">query</span></code> is a short form for a
+<code class="docutils literal notranslate"><span class="pre">write</span></code> operation to send a message, followed by a <code class="docutils literal notranslate"><span class="pre">read</span></code>.</p>
+<p>So:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_instrument</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;*IDN?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>is the same as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_instrument</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;*IDN?&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_instrument</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can access all the opened resources by calling
+<code class="docutils literal notranslate"><span class="pre">rm.list_opened_resources()</span></code>. This will return a list of <code class="docutils literal notranslate"><span class="pre">Resource</span></code>,
+however note that this list is not dynamically updated.</p>
+</div>
+</div>
+<div class="section" id="getting-the-instrument-configuration-right">
+<h2>Getting the instrument configuration right<a class="headerlink" href="#getting-the-instrument-configuration-right" title="Permalink to this headline">¶</a></h2>
+<p>For most instruments, you actually need to properly configure the instrument
+so that it understands the message sent by the computer (in particular how to
+identifies the end of the commands) and so that computer knows when the
+instrument is done talking. If you don’t you are likely to see a <code class="xref py py-exc docutils literal notranslate"><span class="pre">VisaIOError</span></code>
+reporting a timeout.</p>
+<p>For message based instruments (which covers most of the use cases), this
+usually consists in properly setting the <a class="reference internal" href="../api/resources.html#pyvisa.resources.MessageBasedResource.read_termination" title="pyvisa.resources.MessageBasedResource.read_termination"><code class="xref py py-attr docutils literal notranslate"><span class="pre">read_termination</span></code></a> and
+<a class="reference internal" href="../api/resources.html#pyvisa.resources.MessageBasedResource.write_termination" title="pyvisa.resources.MessageBasedResource.write_termination"><code class="xref py py-attr docutils literal notranslate"><span class="pre">write_termination</span></code></a> attribute of the resource. Resources have more attributes
+described in <a class="reference internal" href="resources.html#intro-resources"><span class="std std-ref">Resources</span></a>, but for now we will focus on those two.</p>
+<p>The first place to look for the values you should set for your instrument is
+the manual. The information you are looking is usually located close to the
+beginning of the IO operation section of the manual. If you cannot find the
+value, you can try to iterate through a couple of standard values but this is
+not recommended approach.</p>
+<p>Once you have that information you can try to configure your instrument and
+start communicating as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_instrument</span><span class="o">.</span><span class="n">read_termination</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_instrument</span><span class="o">.</span><span class="n">write_termination</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_instrument</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;*IDN?&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here we use <cite>‘n’</cite> known as ‘line feed’. This is a common value, another one is
+<cite>‘r’</cite> i.e. ‘carriage return’, and in some cases the null byte ‘0’ is used.</p>
+<p>In in an ideal world, this will work and you will be able to get an answer from
+your instrument. If it does not, it means the settings are likely wrong (the
+documentation does not always shine by its clarity). In the following we will
+discuss common debugging tricks, if nothing works feel free to post on the
+PyVISA <a class="reference external" href="https://github.com/pyvisa/pyvisa/issues">issue tracker</a>. If you do be sure to describe in detail your setup and
+what you already attempted.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The particular case of reading back large chunk of data either in ASCII
+or binary format is not discussed below but in <a class="reference internal" href="rvalues.html#intro-rvalues"><span class="std std-ref">Reading and Writing values</span></a>.</p>
+</div>
+<div class="section" id="making-sure-the-instrument-understand-the-command">
+<h3>Making sure the instrument understand the command<a class="headerlink" href="#making-sure-the-instrument-understand-the-command" title="Permalink to this headline">¶</a></h3>
+<p>When using query, we are testing both writing to and reading from the
+instrument. The first thing to do is to try to identify if the issue occurs
+during the write or the read operation.</p>
+<p>If your instrument has a front panel, you can check for errors (some instrument
+will display a transient message right after the read). If an error occurs,
+it may mean your command string contains a mistake or the instrument is using
+a different set of command (some instrument supports both a legacy set of
+commands and SCPI commands). If you see no error it means that either the
+instrument did not detect the end of your message or you just cannot read it.
+The next step is to determine in what situation we are.</p>
+<p>To do so, you can look for a command that would produce a visible/measurable
+change on the instrument and send it. In the absence of errors, if the expected
+change did not occur it means the instrument did not understand that the
+command was complete. This points out to an issue with the <a class="reference internal" href="../api/resources.html#pyvisa.resources.MessageBasedResource.write_termination" title="pyvisa.resources.MessageBasedResource.write_termination"><code class="xref py py-attr docutils literal notranslate"><span class="pre">write_termination</span></code></a>.
+At this stage, you can go back to the manual (some instruments allow to switch
+between the recognized values), or try standards values (such as <cite>‘n’</cite>,
+<cite>‘r’</cite>, combination of those two, <cite>‘0’</cite>).</p>
+<p>Assuming you were able to confirm that the instrument understood the command
+you sent, it means the reading part is the issue, which is easier to
+troubleshoot. You can try different standard values for the <a class="reference internal" href="../api/resources.html#pyvisa.resources.MessageBasedResource.read_termination" title="pyvisa.resources.MessageBasedResource.read_termination"><code class="xref py py-attr docutils literal notranslate"><span class="pre">read_termination</span></code></a>,
+but if nothing works you can use the <a class="reference internal" href="../api/resources.html#pyvisa.resources.MessageBasedResource.read_bytes" title="pyvisa.resources.MessageBasedResource.read_bytes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">read_bytes()</span></code></a> method. This method will read
+at most the number of bytes specified. So you can try reading one byte at a
+time till you encounter a time out. When that happens most likely the last
+character you read is the termination character. Here is a quick example:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_instrument</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;*IDN?&#39;</span><span class="p">)</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">my_instrument</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>If <a class="reference internal" href="../api/resources.html#pyvisa.resources.MessageBasedResource.read_bytes" title="pyvisa.resources.MessageBasedResource.read_bytes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">read_bytes()</span></code></a> times out on the first read, it actually means that the
+instrument did not answer. If the instrument is old it may be because your are
+too fast for it, so you can try waiting a bit before reading (using
+<cite>time.sleep</cite> from Python standard library). Otherwise, you either use a command
+that does not cause any answer or actually your write does not work (go back
+up a couple of paragraph).</p>
+<p>The above focused on using only PyVISA,  if you are running Windows, or MacOS
+you are likely to have access to third party tools that can help. Some tips to
+use them are given in the next section.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Some instruments do not react well to a communication error, and you may
+have to restart it to get it to work again.</p>
+</div>
+</div>
+<div class="section" id="using-third-party-softwares">
+<h3>Using third-party softwares<a class="headerlink" href="#using-third-party-softwares" title="Permalink to this headline">¶</a></h3>
+<p>The implementation of VISA from National Instruments and Keysight both come
+with tools (NIMax, Keysight Connection Expert) that can be used to figure out
+what is wrong with your communication setup.</p>
+<p>In both cases, you can open an interactive communication session to your
+instrument and tune the settings using a GUI (which can make things easier).
+The basic procedure is the one described above, if you can make it work in
+one of those tools you should be able, in most cases, to get it to work in
+PyVISA. However if it does not work using those tools, it won’t work in
+PyVISA.</p>
+<p>Hopefully those simple tips will allow you to get through. In some cases, it
+may not be the case and you are always welcome to ask for help (but realize
+that the maintainers are unlikely to have access to the instrument you are
+having trouble with).</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="example.html" class="btn btn-neutral float-right" title="A more complex example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="configuring.html" class="btn btn-neutral" title="Configuring the backend" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PyVISA Authors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

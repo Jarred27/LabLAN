@@ -1,0 +1,290 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PyVISA: Control your instruments with Python &mdash; PyVISA 1.11.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="User guide" href="introduction/index.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> PyVISA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction/index.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced/index.html">Advanced topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">PyVISA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>PyVISA: Control your instruments with Python</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pyvisa-control-your-instruments-with-python">
+<h1>PyVISA: Control your instruments with Python<a class="headerlink" href="#pyvisa-control-your-instruments-with-python" title="Permalink to this headline">¶</a></h1>
+<img alt="PyVISA" class="floatingflask" src="_images/logo-full.jpg" />
+<p>PyVISA is a Python package that enables you to control all kinds of measurement
+devices independently of the interface (e.g. GPIB, RS232, USB, Ethernet). As
+an example, reading self-identification from a Keithley Multimeter with GPIB
+number 12 is as easy as three lines of Python code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyvisa</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span><span class="o">.</span><span class="n">list_resources</span><span class="p">()</span>
+<span class="go">(&#39;ASRL1::INSTR&#39;, &#39;ASRL2::INSTR&#39;, &#39;GPIB0::12::INSTR&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">inst</span> <span class="o">=</span> <span class="n">rm</span><span class="o">.</span><span class="n">open_resource</span><span class="p">(</span><span class="s1">&#39;GPIB0::12::INSTR&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">inst</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;*IDN?&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>(That’s the whole program; really!) It works on Windows, Linux and Mac;
+with arbitrary adapters (e.g. National Instruments, Agilent, Tektronix,
+Stanford Research Systems).</p>
+<div class="section" id="general-overview">
+<h2>General overview<a class="headerlink" href="#general-overview" title="Permalink to this headline">¶</a></h2>
+<p>The programming of measurement instruments can be real pain. There are many
+different protocols, sent over many different interfaces and bus systems
+(e.g. GPIB, RS232, USB, Ethernet). For every programming language you want
+to use, you have to find libraries that support both your device and its bus
+system.</p>
+<p>In order to ease this unfortunate situation, the Virtual Instrument Software
+Architecture (VISA) specification was defined in the middle of the 90ies.
+VISA is a standard for configuring, programming, and troubleshooting
+instrumentation systems comprising GPIB, VXI, PXI, Serial, Ethernet, and/or
+USB interfaces.</p>
+<p>Today VISA is implemented on all significant operating systems. A couple
+of vendors offer VISA libraries, partly with free download.  These libraries
+work together with arbitrary peripherical devices, although they may be
+limited to certain interface devices, such as the vendor’s GPIB card.</p>
+<p>The VISA specification has explicit bindings to Visual Basic, C, and G
+(LabVIEW’s graphical language). Python can be used to call functions from a
+VISA shared library (<cite>.dll</cite>, <cite>.so</cite>, <cite>.dylib</cite>) allowing to directly leverage the
+standard implementations. In addition, Python can be used to directly access
+most bus systems used by instruments which is why one can envision to implement
+the VISA standard directly in Python (see the <cite>PyVISA-Py</cite> project for more
+details). PyVISA is both a Python wrapper for VISA shared libraries but
+can also serve as a front-end for other VISA implementation such as
+<cite>PyVISA-Py</cite>.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction/index.html">User guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction/getting.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/configuring.html">Configuring the backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/communication.html">Communicating with your instrument</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/example.html">A more complex example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/rvalues.html">Reading and Writing values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/resources.html">Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/shell.html">PyVISA Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/names.html">VISA resource names</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="advanced/index.html">Advanced topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="advanced/architecture.html">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced/backends.html">A frontend for multiple backends</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq/index.html">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq/faq.html">Miscellaneous questions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq/getting_nivisa.html">NI-VISA Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq/migrating.html">Migrating from PyVISA &lt; 1.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq/contributing.html">Contributing to PyVISA</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/visalibrarybase.html">Visa Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/resourcemanager.html">Resource Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/resources.html">Resource classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/constants.html">Constants module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="introduction/index.html" class="btn btn-neutral float-right" title="User guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PyVISA Authors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

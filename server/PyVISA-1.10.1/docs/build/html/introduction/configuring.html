@@ -1,0 +1,309 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Configuring the backend &mdash; PyVISA 1.11.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Communicating with your instrument" href="communication.html" />
+    <link rel="prev" title="Installation" href="getting.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PyVISA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting.html">Installation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuring the backend</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-the-ni-backend">Configuring the NI backend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="communication.html">Communicating with your instrument</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example.html">A more complex example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rvalues.html">Reading and Writing values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html">Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html">PyVISA Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="names.html">VISA resource names</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/index.html">Advanced topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PyVISA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">User guide</a> &raquo;</li>
+        
+      <li>Configuring the backend</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/introduction/configuring.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="configuring-the-backend">
+<span id="intro-configuring"></span><h1>Configuring the backend<a class="headerlink" href="#configuring-the-backend" title="Permalink to this headline">¶</a></h1>
+<p>Currently there are two backends available: The one included in pyvisa, which
+uses the NI library, and the backend provided by pyvisa-py, which is a pure
+python implementation of the VISA library. If no backend is specified, pyvisa
+uses the NI backend if the NI library has been installed (see next section for
+details). Failing that, it uses the pyvisa-py backend.</p>
+<p>You can also select a desired backend by passing a parameter to the
+ResourceManager, shown here for pyvisa-py:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">visa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">(</span><span class="s1">&#39;@py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Alternatively it can also be selected by setting the environment variable
+PYVISA_LIBRARY. It takes the same values as the ResourceManager constructor.</p>
+<div class="section" id="configuring-the-ni-backend">
+<h2>Configuring the NI backend<a class="headerlink" href="#configuring-the-ni-backend" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The NI backend requires that you install first the NI-VISA library. You can
+get info here: (<a class="reference internal" href="../faq/getting_nivisa.html#faq-getting-nivisa"><span class="std std-ref">NI-VISA Installation</span></a>)</p>
+</div>
+<p>In most cases PyVISA will be able to find the location of the shared visa
+library. If this does not work or you want to use another one, you need to
+provide the library path to the <a class="reference internal" href="../api/resourcemanager.html#pyvisa.highlevel.ResourceManager" title="pyvisa.highlevel.ResourceManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceManager</span></code></a> constructor:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span> <span class="o">=</span> <span class="n">ResourceManager</span><span class="p">(</span><span class="s1">&#39;Path to library&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can make this library the default for all PyVISA applications by using
+a configuration file called <code class="file docutils literal notranslate"><span class="pre">.pyvisarc</span></code> (mind the leading dot) in your
+<a class="reference external" href="http://en.wikipedia.org/wiki/Home_directory">home directory</a>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operating System</th>
+<th class="head">Location</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Windows NT</td>
+<td><code class="file docutils literal notranslate"><span class="pre">&lt;root&gt;\WINNT\Profiles\&lt;username&gt;</span></code></td>
+</tr>
+<tr class="row-odd"><td>Windows 2000, XP and 2003</td>
+<td><code class="file docutils literal notranslate"><span class="pre">&lt;root&gt;\Documents</span> <span class="pre">and</span> <span class="pre">Settings\&lt;username&gt;</span></code></td>
+</tr>
+<tr class="row-even"><td>Windows Vista, 7 or 8</td>
+<td><code class="file docutils literal notranslate"><span class="pre">&lt;root&gt;\Users\&lt;username&gt;</span></code></td>
+</tr>
+<tr class="row-odd"><td>Mac OS X</td>
+<td><code class="file docutils literal notranslate"><span class="pre">/Users/&lt;username&gt;</span></code></td>
+</tr>
+<tr class="row-even"><td>Linux</td>
+<td><code class="file docutils literal notranslate"><span class="pre">/home/&lt;username&gt;</span></code> (depends on the distro)</td>
+</tr>
+</tbody>
+</table>
+<p>For example in Windows XP, place it in your user folder “Documents and Settings”
+folder, e.g. <code class="file docutils literal notranslate"><span class="pre">C:\Documents</span> <span class="pre">and</span> <span class="pre">Settings\smith\.pyvisarc</span></code> if “smith” is
+the name of your login account.</p>
+<p>This file has the format of an INI file. For example, if the library
+is at <code class="file docutils literal notranslate"><span class="pre">/usr/lib/libvisa.so.7</span></code>, the file <code class="file docutils literal notranslate"><span class="pre">.pyvisarc</span></code> must
+contain the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Paths</span><span class="p">]</span>
+
+<span class="n">VISA</span> <span class="n">library</span><span class="p">:</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libvisa</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">7</span>
+</pre></div>
+</div>
+<p>Please note that <cite>[Paths]</cite> is treated case-sensitively.</p>
+<p>You can define a site-wide configuration file at
+<code class="file docutils literal notranslate"><span class="pre">/usr/share/pyvisa/.pyvisarc</span></code> (It may also be
+<code class="file docutils literal notranslate"><span class="pre">/usr/local/...</span></code> depending on the location of your Python).
+Under Windows, this file is usually placed at
+<code class="file docutils literal notranslate"><span class="pre">c:\Python27\share\pyvisa\.pyvisarc</span></code>.</p>
+<p>If you encounter any problem, take a look at the <a class="reference internal" href="../faq/index.html#faq"><span class="std std-ref">Frequently asked questions</span></a>. There you will
+find the solutions to common problem as well as useful debugging techniques. If
+everything fails, feel free to open an issue in our <a class="reference external" href="https://github.com/pyvisa/pyvisa/issues">issue tracker</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="communication.html" class="btn btn-neutral float-right" title="Communicating with your instrument" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="getting.html" class="btn btn-neutral" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PyVISA Authors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

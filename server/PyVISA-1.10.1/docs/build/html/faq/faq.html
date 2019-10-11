@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Miscellaneous questions &mdash; PyVISA 1.11.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="NI-VISA Installation" href="getting_nivisa.html" />
+    <link rel="prev" title="Frequently asked questions" href="index.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PyVISA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/index.html">Advanced topics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">FAQ</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Miscellaneous questions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#is-pyvisa-endorsed-by-national-instruments">Is <em>PyVISA</em> endorsed by National Instruments?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#who-makes-pyvisa">Who makes <em>PyVISA</em>?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#is-pyvisa-thread-safe">Is PyVISA thread-safe?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#i-have-an-error-in-my-program-and-i-am-having-trouble-to-fix-it">I have an error in my program and I am having trouble to fix it</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#i-found-a-bug-how-can-i-report-it">I found a bug, how can I report it?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#error-image-not-found">Error: Image not found</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#error-could-not-found-visa-library">Error: Could not found VISA library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#error-visa-module-has-no-attribute-resourcemanager">Error: <cite>visa</cite> module has no attribute <cite>ResourceManager</cite></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#error-no-matching-architecture">Error: No matching architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#where-can-i-get-more-information-about-visa">Where can I get more information about VISA?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="getting_nivisa.html">NI-VISA Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migrating.html">Migrating from PyVISA &lt; 1.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing to PyVISA</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PyVISA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Frequently asked questions</a> &raquo;</li>
+        
+      <li>Miscellaneous questions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/faq/faq.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="miscellaneous-questions">
+<span id="faq-faq"></span><h1>Miscellaneous questions<a class="headerlink" href="#miscellaneous-questions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="is-pyvisa-endorsed-by-national-instruments">
+<h2>Is <em>PyVISA</em> endorsed by National Instruments?<a class="headerlink" href="#is-pyvisa-endorsed-by-national-instruments" title="Permalink to this headline">¶</a></h2>
+<p>No. <em>PyVISA</em> is developed independently of National Instrument as a wrapper
+for the VISA library.</p>
+</div>
+<div class="section" id="who-makes-pyvisa">
+<h2>Who makes <em>PyVISA</em>?<a class="headerlink" href="#who-makes-pyvisa" title="Permalink to this headline">¶</a></h2>
+<p>PyVISA was originally programmed by Torsten Bronger and Gregor Thalhammer.
+It is based on earlier experiences by Thalhammer.</p>
+<p>It was maintained from March 2012 to August 2013 by Florian Bauer.
+It was maintained from August 2013 to December 2017 by Hernan E. Grecco &lt;<a class="reference external" href="mailto:hernan&#46;grecco&#37;&#52;&#48;gmail&#46;com">hernan<span>&#46;</span>grecco<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;.
+It is currently maintained by Matthieu Dartiailh &lt;<a class="reference external" href="mailto:m&#46;dartiailh&#37;&#52;&#48;gmail&#46;com">m<span>&#46;</span>dartiailh<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p>
+<p>Take a look at <a class="reference external" href="https://github.com/pyvisa/pyvisa/blob/master/AUTHORS">AUTHORS</a> for more information</p>
+</div>
+<div class="section" id="is-pyvisa-thread-safe">
+<h2>Is PyVISA thread-safe?<a class="headerlink" href="#is-pyvisa-thread-safe" title="Permalink to this headline">¶</a></h2>
+<p>Yes, PyVISA is thread safe starting from version 1.6.</p>
+</div>
+<div class="section" id="i-have-an-error-in-my-program-and-i-am-having-trouble-to-fix-it">
+<h2>I have an error in my program and I am having trouble to fix it<a class="headerlink" href="#i-have-an-error-in-my-program-and-i-am-having-trouble-to-fix-it" title="Permalink to this headline">¶</a></h2>
+<p>PyVISA provides useful logs of all operations. Add the following commands to
+your program and run it again:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyvisa</span>
+<span class="n">pyvisa</span><span class="o">.</span><span class="n">log_to_screen</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="i-found-a-bug-how-can-i-report-it">
+<h2>I found a bug, how can I report it?<a class="headerlink" href="#i-found-a-bug-how-can-i-report-it" title="Permalink to this headline">¶</a></h2>
+<p>Please report it on the <a class="reference external" href="https://github.com/pyvisa/pyvisa/issues">Issue Tracker</a>, including operating system, python
+version and library version. In addition you might add supporting information
+by pasting the output of this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pyvisa</span><span class="o">-</span><span class="n">info</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="error-image-not-found">
+<h2>Error: Image not found<a class="headerlink" href="#error-image-not-found" title="Permalink to this headline">¶</a></h2>
+<p>This error occurs when you have provided an invalid path for the VISA library.
+Check that the path provided to the constructor or in the configuration file</p>
+</div>
+<div class="section" id="error-could-not-found-visa-library">
+<h2>Error: Could not found VISA library<a class="headerlink" href="#error-could-not-found-visa-library" title="Permalink to this headline">¶</a></h2>
+<p>This error occurs when you have not provided a path for the VISA library and
+PyVISA is not able to find it for you. You can solve it by providing the
+library path to the <code class="docutils literal notranslate"><span class="pre">VisaLibrary</span></code> or <code class="docutils literal notranslate"><span class="pre">ResourceManager</span></code> constructor:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">visalib</span> <span class="o">=</span> <span class="n">VisaLibrary</span><span class="p">(</span><span class="s1">&#39;/path/to/library&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span> <span class="o">=</span> <span class="n">ResourceManager</span><span class="p">(</span><span class="s1">&#39;Path to library&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or creating a configuration file as described in <a class="reference internal" href="../introduction/configuring.html#intro-configuring"><span class="std std-ref">Configuring the backend</span></a>.</p>
+</div>
+<div class="section" id="error-visa-module-has-no-attribute-resourcemanager">
+<h2>Error: <cite>visa</cite> module has no attribute <cite>ResourceManager</cite><a class="headerlink" href="#error-visa-module-has-no-attribute-resourcemanager" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://github.com/visa-sdk/visa-python">https://github.com/visa-sdk/visa-python</a> provides a visa package that can
+conflict with <code class="xref py py-mod docutils literal notranslate"><span class="pre">visa</span></code> module provided by PyVISA, which is why the
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">visa</span></code> module is deprecated and it is preferred to import
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">pyvisa</span></code> instead of <code class="xref py py-mod docutils literal notranslate"><span class="pre">visa</span></code>. Both modules provides the
+same interface and no other changes should be needed.</p>
+</div>
+<div class="section" id="error-no-matching-architecture">
+<h2>Error: No matching architecture<a class="headerlink" href="#error-no-matching-architecture" title="Permalink to this headline">¶</a></h2>
+<p>This error occurs when you the Python architecture does not match the VISA
+architecture.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>PyVISA tries to parse the error from the underlying foreign function
+library to provide a more useful error message. If it does not succeed, it
+shows the original one.</p>
+<p>In Mac OS X the original error message looks like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">OSError</span><span class="p">:</span> <span class="n">dlopen</span><span class="p">(</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">visa</span><span class="o">.</span><span class="n">framework</span><span class="o">/</span><span class="n">visa</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span> <span class="n">no</span> <span class="n">suitable</span> <span class="n">image</span> <span class="n">found</span><span class="o">.</span>  <span class="n">Did</span> <span class="n">find</span><span class="p">:</span>
+    <span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">visa</span><span class="o">.</span><span class="n">framework</span><span class="o">/</span><span class="n">visa</span><span class="p">:</span> <span class="n">no</span> <span class="n">matching</span> <span class="n">architecture</span> <span class="ow">in</span> <span class="n">universal</span> <span class="n">wrapper</span>
+    <span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Frameworks</span><span class="o">/</span><span class="n">visa</span><span class="o">.</span><span class="n">framework</span><span class="o">/</span><span class="n">visa</span><span class="p">:</span> <span class="n">no</span> <span class="n">matching</span> <span class="n">architecture</span> <span class="ow">in</span> <span class="n">universal</span> <span class="n">wrapper</span>
+</pre></div>
+</div>
+<p>In Linux the original error message looks like this:</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">OSError</span><span class="p">:</span> <span class="n">Could</span> <span class="ow">not</span> <span class="nb">open</span> <span class="n">VISA</span> <span class="n">library</span><span class="p">:</span>
+    <span class="n">Error</span> <span class="k">while</span> <span class="n">accessing</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">vxipnp</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">libvisa</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">7</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">vxipnp</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">libvisa</span><span class="o">.</span><span class="n">so</span><span class="o">.</span><span class="mi">7</span><span class="p">:</span> <span class="n">wrong</span> <span class="n">ELF</span> <span class="n">class</span><span class="p">:</span> <span class="n">ELFCLASS32</span>
+</pre></div>
+</div>
+</div>
+<p>First, determine the details of your installation with the help of the
+following debug command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pyvisa</span><span class="o">-</span><span class="n">info</span>
+</pre></div>
+</div>
+<p>You will see the ‘bitness’ of the Python interpreter and at the end you will
+see the list of VISA libraries that PyVISA was able to find.</p>
+<p>The solution is to:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Install and use a VISA library matching your Python ‘bitness’</p>
+<p>Download and install it from <strong>National Instruments’s VISA</strong>. Run the
+debug command again to see if the new library was found by PyVISA. If not,
+create a configuration file as described in <a class="reference internal" href="../introduction/configuring.html#intro-configuring"><span class="std std-ref">Configuring the backend</span></a>.</p>
+<p>If there is no VISA library with the correct bitness available, try
+solution 2.</p>
+</li>
+</ol>
+</div></blockquote>
+<p>or</p>
+<blockquote>
+<div><ol class="arabic" start="2">
+<li><p class="first">Install and use a Python matching your VISA library ‘bitness’</p>
+<p>In Windows and Linux: Download and install Python with the matching
+bitness. Run your script again using the new Python</p>
+<p>In Mac OS X, Python is usually delivered as universal binary (32 and
+64 bits).</p>
+<p>You can run it in 32 bit by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arch</span> <span class="o">-</span><span class="n">i386</span> <span class="n">python</span> <span class="n">myscript</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>or in 64 bits by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arch</span> <span class="o">-</span><span class="n">x86_64</span> <span class="n">python</span> <span class="n">myscript</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>You can create an alias by adding the following line</p>
+<blockquote>
+<div><p>alias python32=”arch -i386 python”</p>
+</div></blockquote>
+<p>into your .bashrc or .profile or ~/.bash_profile (or whatever file
+depending on which shell you are using.)</p>
+<p>You can also create a <a class="reference external" href="http://www.virtualenv.org/en/latest/">virtual environment</a> for this.</p>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="where-can-i-get-more-information-about-visa">
+<h2>Where can I get more information about VISA?<a class="headerlink" href="#where-can-i-get-more-information-about-visa" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>The original VISA docs:<ul>
+<li><a class="reference external" href="http://www.ivifoundation.org/Downloads/Specifications.htm">VISA specification</a> (scroll down to the end)</li>
+<li><a class="reference external" href="http://www.ivifoundation.org/Downloads/Class%20Specifications/vpp43.doc">VISA library specification</a></li>
+<li><a class="reference external" href="http://www.ivifoundation.org/Downloads/Class%20Specifications/vpp432.doc">VISA specification for textual languages</a></li>
+</ul>
+</li>
+<li>The very good VISA manuals from <a class="reference external" href="http://ni.com/visa/">National Instruments’s VISA</a>:<ul>
+<li><a class="reference external" href="http://digital.ni.com/manuals.nsf/websearch/266526277DFF74F786256ADC0065C50C">NI-VISA User Manual</a></li>
+<li><a class="reference external" href="http://digital.ni.com/manuals.nsf/websearch/87E52268CF9ACCEE86256D0F006E860D">NI-VISA Programmer Reference Manual</a></li>
+<li><a class="reference external" href="http://digital.ni.com/manuals.nsf/websearch/21992F3750B967ED86256F47007B00B3">NI-VISA help file</a> in HTML</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="getting_nivisa.html" class="btn btn-neutral float-right" title="NI-VISA Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Frequently asked questions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PyVISA Authors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

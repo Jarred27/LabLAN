@@ -1,0 +1,969 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyvisa.resources.messagebased &mdash; PyVISA 1.11.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> PyVISA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction/index.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced/index.html">Advanced topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PyVISA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyvisa.resources.messagebased</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyvisa.resources.messagebased</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    pyvisa.resources.messagebased</span>
+<span class="sd">    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+
+<span class="sd">    High level wrapper for MessageBased Instruments.</span>
+
+<span class="sd">    This file is part of PyVISA.</span>
+
+<span class="sd">    :copyright: 2014 by PyVISA Authors, see AUTHORS for more details.</span>
+<span class="sd">    :license: MIT, see LICENSE for more details.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="p">(</span><span class="n">division</span><span class="p">,</span> <span class="n">unicode_literals</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">absolute_import</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">contextlib</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">logger</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">constants</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">errors</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">util</span>
+
+<span class="kn">from</span> <span class="nn">.resource</span> <span class="k">import</span> <span class="n">Resource</span>
+
+
+<span class="k">class</span> <span class="nc">ValuesFormat</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Options for reading values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;is_binary&#39;</span><span class="p">,</span> <span class="s1">&#39;container&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;datatype&#39;</span><span class="p">,</span> <span class="s1">&#39;is_big_endian&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;converter&#39;</span><span class="p">,</span> <span class="s1">&#39;separator&#39;</span><span class="p">,</span> <span class="s1">&#39;header_fmt&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_binary</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">datatype</span> <span class="o">=</span> <span class="s1">&#39;f&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_big_endian</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="nb">list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">converter</span> <span class="o">=</span> <span class="s1">&#39;f&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">separator</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_fmt</span> <span class="o">=</span> <span class="s1">&#39;ieee&#39;</span>
+
+    <span class="k">def</span> <span class="nf">use_ascii</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">converter</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">converter</span> <span class="o">=</span> <span class="n">converter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">separator</span> <span class="o">=</span> <span class="n">separator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">container</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_binary</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">use_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datatype</span><span class="p">,</span> <span class="n">is_big_endian</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span>
+                   <span class="n">header_fmt</span><span class="o">=</span><span class="s1">&#39;ieee&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">datatype</span> <span class="o">=</span> <span class="n">datatype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_big_endian</span> <span class="o">=</span> <span class="n">is_big_endian</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">container</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_binary</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_fmt</span> <span class="o">=</span> <span class="n">header_fmt</span>
+
+
+<span class="k">class</span> <span class="nc">ControlRenMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Common control_ren method of some messaged based resources.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># It should work for GPIB, USB and some TCPIP</span>
+    <span class="c1"># For TCPIP I found some (all?) NI&#39;s VISA library do not handle</span>
+    <span class="c1"># control_ren, but it works for Agilent&#39;s VISA library (at least some of</span>
+    <span class="c1"># them)</span>
+    <span class="k">def</span> <span class="nf">control_ren</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Controls the state of the GPIB Remote Enable (REN) interface line,</span>
+<span class="sd">        and optionally the remote/local state of the device.</span>
+
+<span class="sd">        Corresponds to viGpibControlREN function of the VISA library.</span>
+
+<span class="sd">        :param mode: Specifies the state of the REN line and optionally the</span>
+<span class="sd">                     device remote/local state. (Constants.GPIB_REN*)</span>
+<span class="sd">        :return: return value of the library call.</span>
+<span class="sd">        :rtype: VISAStatus</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">visalib</span><span class="o">.</span><span class="n">gpib_control_ren</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MessageBasedResource"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource">[docs]</a><span class="k">class</span> <span class="nc">MessageBasedResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for resources that use message based communication.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">CR</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span>
+    <span class="n">LF</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="n">_read_termination</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_write_termination</span> <span class="o">=</span> <span class="n">CR</span> <span class="o">+</span> <span class="n">LF</span>
+    <span class="n">_encoding</span> <span class="o">=</span> <span class="s1">&#39;ascii&#39;</span>
+
+    <span class="n">chunk_size</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">*</span> <span class="mi">1024</span>
+    <span class="n">query_delay</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="n">_values_format</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_values_format</span> <span class="o">=</span> <span class="n">ValuesFormat</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MessageBasedResource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="c1"># This is done for backwards compatibility but will be removed in 1.10</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">values_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;values_format is deprecated and will be removed in &#39;</span>
+                      <span class="s1">&#39;1.10&#39;</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values_format</span>
+
+    <span class="nd">@values_format</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">values_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmt</span><span class="p">):</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;values_format is deprecated and will be removed in &#39;</span>
+                      <span class="s1">&#39;1.10&#39;</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_values_format</span><span class="o">.</span><span class="n">is_binary</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">fmt</span> <span class="o">&amp;</span> <span class="mh">0x01</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fmt</span> <span class="o">&amp;</span> <span class="mh">0x03</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># single</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_values_format</span><span class="o">.</span><span class="n">datatype</span> <span class="o">=</span> <span class="s1">&#39;f&#39;</span>
+        <span class="k">elif</span> <span class="n">fmt</span> <span class="o">&amp;</span> <span class="mh">0x03</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  <span class="c1"># double:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_values_format</span><span class="o">.</span><span class="n">datatype</span> <span class="o">=</span> <span class="s1">&#39;d&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;unknown data values fmt requested&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_values_format</span><span class="o">.</span><span class="n">is_big_endian</span> <span class="o">=</span> <span class="n">fmt</span> <span class="o">&amp;</span> <span class="mh">0x04</span>
+
+    <span class="c1">####</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ask_delay</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;An alias for query_delay kept for backwards compatibility.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;ask_delay is deprecated and will be removed in &#39;</span>
+                      <span class="s1">&#39;1.10, use query_delay instead&#39;</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_delay</span>
+
+    <span class="nd">@ask_delay</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">ask_delay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;ask_delay is deprecated and will be removed in &#39;</span>
+                      <span class="s1">&#39;1.10, use query_delay instead&#39;</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query_delay</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">encoding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Encoding used for read and write operations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_encoding</span>
+
+    <span class="nd">@encoding</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">encoding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encoding</span><span class="p">):</span>
+        <span class="c1"># Test that the encoding specified makes sense.</span>
+        <span class="s1">&#39;test encoding&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">encoding</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoding</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_encoding</span> <span class="o">=</span> <span class="n">encoding</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">read_termination</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read termination character.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_termination</span>
+
+    <span class="nd">@read_termination</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">read_termination</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+            <span class="c1"># termination character, the rest is just used for verification</span>
+            <span class="c1"># after each read operation.</span>
+            <span class="n">last_char</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="c1"># Consequently, it&#39;s illogical to have the real termination</span>
+            <span class="c1"># character twice in the sequence (otherwise reading would stop</span>
+            <span class="c1"># prematurely).</span>
+
+            <span class="k">if</span> <span class="n">last_char</span> <span class="ow">in</span> <span class="n">value</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;ambiguous ending in termination characters&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_visa_attribute</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">VI_ATTR_TERMCHAR</span><span class="p">,</span> <span class="nb">ord</span><span class="p">(</span><span class="n">last_char</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_visa_attribute</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">VI_ATTR_TERMCHAR_EN</span><span class="p">,</span>
+                                    <span class="n">constants</span><span class="o">.</span><span class="n">VI_TRUE</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># The termchar is also used in VI_ATTR_ASRL_END_IN (for serial</span>
+            <span class="c1"># termination) so return it to its default.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_visa_attribute</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">VI_ATTR_TERMCHAR</span><span class="p">,</span> <span class="nb">ord</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">LF</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_visa_attribute</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">VI_ATTR_TERMCHAR_EN</span><span class="p">,</span>
+                                    <span class="n">constants</span><span class="o">.</span><span class="n">VI_FALSE</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_read_termination</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">write_termination</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Writer termination character.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_write_termination</span>
+
+    <span class="nd">@write_termination</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">write_termination</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_termination</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="MessageBasedResource.write_raw"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.write_raw">[docs]</a>    <span class="k">def</span> <span class="nf">write_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write a byte message to the device.</span>
+
+<span class="sd">        :param message: the message to be sent.</span>
+<span class="sd">        :type message: bytes</span>
+<span class="sd">        :return: number of bytes written.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">visalib</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MessageBasedResource.write"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">termination</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write a string message to the device.</span>
+
+<span class="sd">        The write_termination is always appended to it.</span>
+
+<span class="sd">        :param message: the message to be sent.</span>
+<span class="sd">        :type message: unicode (Py2) or str (Py3)</span>
+<span class="sd">        :return: number of bytes written.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_write_termination</span> <span class="k">if</span> <span class="n">termination</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">termination</span>
+        <span class="n">enco</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_encoding</span> <span class="k">if</span> <span class="n">encoding</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">encoding</span>
+
+        <span class="k">if</span> <span class="n">term</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">term</span><span class="p">):</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;write message already ends with &quot;</span>
+                              <span class="s2">&quot;termination characters&quot;</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">message</span> <span class="o">+=</span> <span class="n">term</span>
+
+        <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_raw</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">enco</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">count</span></div>
+
+<div class="viewcode-block" id="MessageBasedResource.write_ascii_values"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.write_ascii_values">[docs]</a>    <span class="k">def</span> <span class="nf">write_ascii_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span>
+                           <span class="n">termination</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write a string message to the device followed by values in ascii</span>
+<span class="sd">        format.</span>
+
+<span class="sd">        The write_termination is always appended to it.</span>
+
+<span class="sd">        :param message: the message to be sent.</span>
+<span class="sd">        :type message: unicode (Py2) or str (Py3)</span>
+<span class="sd">        :param values: data to be writen to the device.</span>
+<span class="sd">        :param converter: function used to convert each value.</span>
+<span class="sd">                          String formatting codes are also accepted.</span>
+<span class="sd">                          Defaults to str.</span>
+<span class="sd">        :type converter: callable | str</span>
+<span class="sd">        :param separator: a callable that join the values in a single str.</span>
+<span class="sd">                          If a str is given, separator.join(values) is used.</span>
+<span class="sd">        :type: separator: (collections.Iterable[T]) -&gt; str | str</span>
+<span class="sd">        :return: number of bytes written.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_write_termination</span> <span class="k">if</span> <span class="n">termination</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">termination</span>
+        <span class="n">enco</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_encoding</span> <span class="k">if</span> <span class="n">encoding</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">encoding</span>
+
+        <span class="k">if</span> <span class="n">term</span> <span class="ow">and</span> <span class="n">message</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">term</span><span class="p">):</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;write message already ends with &quot;</span>
+                              <span class="s2">&quot;termination characters&quot;</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">block</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">to_ascii_block</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">converter</span><span class="p">,</span> <span class="n">separator</span><span class="p">)</span>
+
+        <span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">enco</span><span class="p">)</span> <span class="o">+</span> <span class="n">block</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">enco</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">term</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">+=</span> <span class="n">term</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">enco</span><span class="p">)</span>
+
+        <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_raw</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">count</span></div>
+
+<div class="viewcode-block" id="MessageBasedResource.write_binary_values"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.write_binary_values">[docs]</a>    <span class="k">def</span> <span class="nf">write_binary_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span>
+                            <span class="n">is_big_endian</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">termination</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write a string message to the device followed by values in binary</span>
+<span class="sd">        format.</span>
+
+<span class="sd">        The write_termination is always appended to it.</span>
+
+<span class="sd">        :param message: the message to be sent.</span>
+<span class="sd">        :type message: unicode (Py2) or str (Py3)</span>
+<span class="sd">        :param values: data to be writen to the device.</span>
+<span class="sd">        :param datatype: the format string for a single element. See struct</span>
+<span class="sd">                         module.</span>
+<span class="sd">        :param is_big_endian: boolean indicating endianess.</span>
+<span class="sd">        :return: number of bytes written.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_write_termination</span> <span class="k">if</span> <span class="n">termination</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">termination</span>
+        <span class="n">enco</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_encoding</span> <span class="k">if</span> <span class="n">encoding</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">encoding</span>
+
+        <span class="k">if</span> <span class="n">term</span> <span class="ow">and</span> <span class="n">message</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">term</span><span class="p">):</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;write message already ends with &quot;</span>
+                              <span class="s2">&quot;termination characters&quot;</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">block</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">to_ieee_block</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">datatype</span><span class="p">,</span> <span class="n">is_big_endian</span><span class="p">)</span>
+
+        <span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">enco</span><span class="p">)</span> <span class="o">+</span> <span class="n">block</span>
+
+        <span class="k">if</span> <span class="n">term</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">+=</span> <span class="n">term</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">enco</span><span class="p">)</span>
+
+        <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_raw</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">count</span></div>
+
+<div class="viewcode-block" id="MessageBasedResource.write_values"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.write_values">[docs]</a>    <span class="k">def</span> <span class="nf">write_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">termination</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;write_values is deprecated and will be removed in &#39;</span>
+                      <span class="s1">&#39;1.10, use write_ascii_values or write_binary_values &#39;</span>
+                      <span class="s1">&#39;instead.&#39;</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">)</span>
+        <span class="n">vf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values_format</span>
+
+        <span class="k">if</span> <span class="n">vf</span><span class="o">.</span><span class="n">is_binary</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_binary_values</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">vf</span><span class="o">.</span><span class="n">datatype</span><span class="p">,</span>
+                                            <span class="n">vf</span><span class="o">.</span><span class="n">is_big_endian</span><span class="p">,</span> <span class="n">termination</span><span class="p">,</span>
+                                            <span class="n">encoding</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">write_ascii_values</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">vf</span><span class="o">.</span><span class="n">converter</span><span class="p">,</span>
+                                       <span class="n">vf</span><span class="o">.</span><span class="n">separator</span><span class="p">,</span> <span class="n">termination</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MessageBasedResource.read_bytes"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.read_bytes">[docs]</a>    <span class="k">def</span> <span class="nf">read_bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">break_on_termchar</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read a certain number of bytes from the instrument.</span>
+
+<span class="sd">        :param count: The number of bytes to read from the instrument.</span>
+<span class="sd">        :type count: int</span>
+<span class="sd">        :param chunk_size: The chunk size to use to perform the reading.</span>
+<span class="sd">        :type chunk_size: int</span>
+<span class="sd">        :param break_on_termchar: Should the reading stop when a termination</span>
+<span class="sd">            character is encountered.</span>
+<span class="sd">        :type break_on_termchar: bool</span>
+
+<span class="sd">        :rtype: bytes</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">chunk_size</span> <span class="o">=</span> <span class="n">chunk_size</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">chunk_size</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+        <span class="n">left_to_read</span> <span class="o">=</span> <span class="n">count</span>
+        <span class="n">termchar_read</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">StatusCode</span><span class="o">.</span><span class="n">success_termination_character_read</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_warning</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">VI_SUCCESS_DEV_NPRESENT</span><span class="p">,</span>
+                                 <span class="n">constants</span><span class="o">.</span><span class="n">VI_SUCCESS_MAX_CNT</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">status</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">count</span><span class="p">:</span>
+                    <span class="n">size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">,</span> <span class="n">left_to_read</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> - reading </span><span class="si">%d</span><span class="s1"> bytes (last status </span><span class="si">%r</span><span class="s1">)&#39;</span><span class="p">,</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">_resource_name</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+                    <span class="n">chunk</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visalib</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+                    <span class="n">ret</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+                    <span class="n">left_to_read</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">break_on_termchar</span> <span class="ow">and</span> <span class="n">status</span> <span class="o">==</span> <span class="n">termchar_read</span><span class="p">:</span>
+                        <span class="k">break</span>
+            <span class="k">except</span> <span class="n">errors</span><span class="o">.</span><span class="n">VisaIOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> - exception while reading: </span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span>
+                             <span class="s1">&#39;Buffer content: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span>  <span class="bp">self</span><span class="o">.</span><span class="n">_resource_name</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span>
+                             <span class="n">ret</span><span class="p">)</span>
+                <span class="k">raise</span>
+        <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MessageBasedResource.read_raw"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.read_raw">[docs]</a>    <span class="k">def</span> <span class="nf">read_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read the unmodified string sent from the instrument to the computer.</span>
+
+<span class="sd">        In contrast to read(), no termination characters are stripped.</span>
+
+<span class="sd">        :param size: The chunk size to use when reading the data.</span>
+
+<span class="sd">        :rtype: bytes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_read_raw</span><span class="p">(</span><span class="n">size</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">_read_raw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read the unmodified string sent from the instrument to the computer.</span>
+
+<span class="sd">        In contrast to read(), no termination characters are stripped.</span>
+
+<span class="sd">        :param size: The chunk size to use when reading the data.</span>
+
+<span class="sd">        :rtype: bytearray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chunk_size</span> <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">size</span>
+
+        <span class="n">loop_status</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">StatusCode</span><span class="o">.</span><span class="n">success_max_count_read</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_warning</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">VI_SUCCESS_DEV_NPRESENT</span><span class="p">,</span>
+                                 <span class="n">constants</span><span class="o">.</span><span class="n">VI_SUCCESS_MAX_CNT</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">status</span> <span class="o">=</span> <span class="n">loop_status</span>
+                <span class="k">while</span> <span class="n">status</span> <span class="o">==</span> <span class="n">loop_status</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> - reading </span><span class="si">%d</span><span class="s1"> bytes (last status </span><span class="si">%r</span><span class="s1">)&#39;</span><span class="p">,</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">_resource_name</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+                    <span class="n">chunk</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visalib</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+                    <span class="n">ret</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">errors</span><span class="o">.</span><span class="n">VisaIOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> - exception while reading: </span><span class="si">%s</span><span class="se">\n</span><span class="s1">Buffer &#39;</span>
+                             <span class="s1">&#39;content: </span><span class="si">%r</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resource_name</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
+                <span class="k">raise</span>
+
+        <span class="k">return</span> <span class="n">ret</span>
+
+<div class="viewcode-block" id="MessageBasedResource.read"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">termination</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read a string from the device.</span>
+
+<span class="sd">        Reading stops when the device stops sending (e.g. by setting</span>
+<span class="sd">        appropriate bus lines), or the termination characters sequence was</span>
+<span class="sd">        detected.  Attention: Only the last character of the termination</span>
+<span class="sd">        characters is really used to stop reading, however, the whole sequence</span>
+<span class="sd">        is compared to the ending of the read string message.  If they don&#39;t</span>
+<span class="sd">        match, a warning is issued.</span>
+
+<span class="sd">        All line-ending characters are stripped from the end of the string.</span>
+
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">enco</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_encoding</span> <span class="k">if</span> <span class="n">encoding</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">encoding</span>
+
+        <span class="k">if</span> <span class="n">termination</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">termination</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_termination</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_raw</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">enco</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_termination_context</span><span class="p">(</span><span class="n">termination</span><span class="p">):</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_raw</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">enco</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">termination</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">message</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">message</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">termination</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;read string doesn&#39;t end with &quot;</span>
+                          <span class="s2">&quot;termination characters&quot;</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">message</span><span class="p">[:</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">termination</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="MessageBasedResource.read_ascii_values"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.read_ascii_values">[docs]</a>    <span class="k">def</span> <span class="nf">read_ascii_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span>
+                          <span class="n">delay</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read values from the device in ascii format returning an iterable of</span>
+<span class="sd">        values.</span>
+
+<span class="sd">        :param delay: delay in seconds between write and read operations.</span>
+<span class="sd">                      if None, defaults to self.query_delay</span>
+<span class="sd">        :param converter: function used to convert each element.</span>
+<span class="sd">                          Defaults to float</span>
+<span class="sd">        :type converter: callable</span>
+<span class="sd">        :param separator: a callable that split the str into individual</span>
+<span class="sd">                          elements. If a str is given, data.split(separator) is</span>
+<span class="sd">                          used.</span>
+<span class="sd">        :type: separator: (str) -&gt; collections.Iterable[int] | str</span>
+<span class="sd">        :param container: container type to use for the output data.</span>
+<span class="sd">        :returns: the answer from the device.</span>
+<span class="sd">        :rtype: list</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Use read rather than _read_raw because we cannot handle a bytearray</span>
+        <span class="n">block</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">from_ascii_block</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">converter</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">container</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MessageBasedResource.read_binary_values"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.read_binary_values">[docs]</a>    <span class="k">def</span> <span class="nf">read_binary_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">is_big_endian</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                           <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">header_fmt</span><span class="o">=</span><span class="s1">&#39;ieee&#39;</span><span class="p">,</span>
+                           <span class="n">expect_termination</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">data_points</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                           <span class="n">chunk_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read values from the device in binary format returning an iterable</span>
+<span class="sd">        of values.</span>
+
+<span class="sd">        :param datatype: the format string for a single element. See struct</span>
+<span class="sd">                         module.</span>
+<span class="sd">        :param is_big_endian: boolean indicating endianess.</span>
+<span class="sd">                              Defaults to False.</span>
+<span class="sd">        :param container: container type to use for the output data.</span>
+<span class="sd">        :param header_fmt: format of the header prefixing the data. Possible</span>
+<span class="sd">                           values are: &#39;ieee&#39;, &#39;hp&#39;, &#39;empty&#39;</span>
+<span class="sd">        :param expect_termination: when set to False, the expected length of</span>
+<span class="sd">                                   the binary values block does not account</span>
+<span class="sd">                                   for the final termination character (the</span>
+<span class="sd">                                   read termination)</span>
+<span class="sd">        :param data_points: Number of points expected in the block. This is</span>
+<span class="sd">                            used only if the instrument does not report it</span>
+<span class="sd">                            itself. This will be converted in a number of bytes</span>
+<span class="sd">                            based on the datatype.</span>
+<span class="sd">        :param chunk_size: Size of the chunks to read from the device. Using</span>
+<span class="sd">                           larger chunks may be faster for large amount of</span>
+<span class="sd">                           data.</span>
+<span class="sd">        :returns: the answer from the device.</span>
+<span class="sd">        :rtype: type(container)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">block</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_raw</span><span class="p">(</span><span class="n">chunk_size</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">header_fmt</span> <span class="o">==</span> <span class="s1">&#39;ieee&#39;</span><span class="p">:</span>
+            <span class="n">offset</span><span class="p">,</span> <span class="n">data_length</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">parse_ieee_block_header</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+
+            <span class="c1"># Allow to support instrument such as the Keithley 2000 that do not</span>
+            <span class="c1"># report the length of the block</span>
+            <span class="n">data_length</span> <span class="o">=</span> <span class="n">data_length</span> <span class="ow">or</span> <span class="n">data_points</span><span class="o">*</span><span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="n">datatype</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">header_fmt</span> <span class="o">==</span> <span class="s1">&#39;hp&#39;</span><span class="p">:</span>
+            <span class="n">offset</span><span class="p">,</span> <span class="n">data_length</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">parse_hp_block_header</span><span class="p">(</span><span class="n">block</span><span class="p">,</span>
+                                                             <span class="n">is_big_endian</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">header</span> <span class="o">==</span> <span class="s1">&#39;empty&#39;</span><span class="p">:</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid header format. Valid options are &#39;ieee&#39;,&quot;</span>
+                             <span class="s2">&quot; &#39;empty&#39;, &#39;hp&#39;&quot;</span><span class="p">)</span>
+
+        <span class="n">expected_length</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">data_length</span>
+
+        <span class="k">if</span> <span class="n">expect_termination</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_termination</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">expected_length</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_read_termination</span><span class="p">)</span>
+
+        <span class="c1"># Read all the data if we know what to expect.</span>
+        <span class="k">if</span> <span class="n">data_length</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">(</span><span class="n">expected_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">block</span><span class="p">),</span>
+                                         <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Backward compatibility. This is dangerous and should probably be</span>
+            <span class="c1"># removed</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Reading binary data without a known length is error prone,&#39;</span>
+                   <span class="s1">&#39; and should be avoided. This capability will will be&#39;</span>
+                   <span class="s1">&#39; removed in future versions.</span><span class="se">\n</span><span class="s1">&#39;</span>
+                   <span class="s1">&#39;If the instrument does not report the length of the block &#39;</span>
+                   <span class="s1">&#39;as part of the transfer, it may be because the size is &#39;</span>
+                   <span class="s1">&#39;fixed or can be accessed from the instrumentin using a &#39;</span>
+                   <span class="s1">&#39;specific command. You should find the expected number of &#39;</span>
+                   <span class="s1">&#39;bytes and pass it using the `data_length` keyword.&#39;</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">)</span>
+            <span class="c1"># Do not keep reading since we may have already read everything</span>
+
+            <span class="c1"># Set the datalength to None to infer it from the block length</span>
+            <span class="n">data_length</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Do not reparse the headers since it was already done and since</span>
+            <span class="c1"># this allows for custom data length</span>
+            <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">from_binary_block</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">data_length</span><span class="p">,</span>
+                                          <span class="n">datatype</span><span class="p">,</span> <span class="n">is_big_endian</span><span class="p">,</span>
+                                          <span class="n">container</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">InvalidBinaryFormat</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MessageBasedResource.read_values"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.read_values">[docs]</a>    <span class="k">def</span> <span class="nf">read_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read a list of floating point values from the device.</span>
+
+<span class="sd">        :param fmt: the format of the values.  If given, it overrides</span>
+<span class="sd">            the class attribute &quot;values_format&quot;.  Possible values are bitwise</span>
+<span class="sd">            disjunctions of the above constants ascii, single, double, and</span>
+<span class="sd">            big_endian. Default is ascii.</span>
+<span class="sd">        :param container: the output datatype</span>
+
+<span class="sd">        :return: the list of read values</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;read_values is deprecated and will be removed in &#39;</span>
+                      <span class="s1">&#39;1.10, use read_ascii_values or read_binary_values &#39;</span>
+                      <span class="s1">&#39;instead.&#39;</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">fmt</span><span class="p">:</span>
+            <span class="n">vf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values_format</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">vf</span><span class="o">.</span><span class="n">is_binary</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">from_ascii_block</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">container</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_raw</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">parse_binary</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">vf</span><span class="o">.</span><span class="n">is_big_endian</span><span class="p">,</span>
+                                         <span class="n">vf</span><span class="o">.</span><span class="n">datatype</span> <span class="o">==</span> <span class="s1">&#39;f&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">InvalidBinaryFormat</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">fmt</span> <span class="o">&amp;</span> <span class="mh">0x01</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># ascii</span>
+            <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">from_ascii_block</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_raw</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">fmt</span> <span class="o">&amp;</span> <span class="mh">0x03</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># single</span>
+                <span class="n">is_single</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">fmt</span> <span class="o">&amp;</span> <span class="mh">0x03</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  <span class="c1"># double:</span>
+                <span class="n">is_single</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;unknown data values fmt requested&quot;</span><span class="p">)</span>
+
+            <span class="n">is_big_endian</span> <span class="o">=</span> <span class="n">fmt</span> <span class="o">&amp;</span> <span class="mh">0x04</span>  <span class="c1"># big endian</span>
+            <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">parse_binary</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">is_big_endian</span><span class="p">,</span> <span class="n">is_single</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">InvalidBinaryFormat</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MessageBasedResource.query"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.query">[docs]</a>    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A combination of write(message) and read()</span>
+
+<span class="sd">        :param message: the message to send.</span>
+<span class="sd">        :type message: str</span>
+<span class="sd">        :param delay: delay in seconds between write and read operations.</span>
+<span class="sd">                      if None, defaults to self.query_delay</span>
+<span class="sd">        :returns: the answer from the device.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+        <span class="n">delay</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_delay</span> <span class="k">if</span> <span class="n">delay</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">delay</span>
+
+        <span class="k">if</span> <span class="n">delay</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">ask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;ask is deprecated and will be removed in &#39;</span>
+                      <span class="s1">&#39;1.10, use query instead.&#39;</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">delay</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MessageBasedResource.query_values"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.query_values">[docs]</a>    <span class="k">def</span> <span class="nf">query_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Query the device for values returning an iterable of values.</span>
+
+<span class="sd">        The datatype expected is obtained from `values_format`</span>
+
+<span class="sd">        :param message: the message to send.</span>
+<span class="sd">        :type message: str</span>
+<span class="sd">        :param delay: delay in seconds between write and read operations.</span>
+<span class="sd">                      if None, defaults to self.query_delay</span>
+<span class="sd">        :returns: the answer from the device.</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;query_values is deprecated and will be removed in &#39;</span>
+                      <span class="s1">&#39;1.10, use query_ascii_values or quey_binary_values &#39;</span>
+                      <span class="s1">&#39;instead.&#39;</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">)</span>
+        <span class="n">vf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values_format</span>
+
+        <span class="k">if</span> <span class="n">vf</span><span class="o">.</span><span class="n">is_binary</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_binary_values</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">vf</span><span class="o">.</span><span class="n">datatype</span><span class="p">,</span>
+                                            <span class="n">vf</span><span class="o">.</span><span class="n">is_big_endian</span><span class="p">,</span> <span class="n">vf</span><span class="o">.</span><span class="n">container</span><span class="p">,</span>
+                                            <span class="n">delay</span><span class="p">,</span> <span class="n">vf</span><span class="o">.</span><span class="n">header_fmt</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_ascii_values</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">vf</span><span class="o">.</span><span class="n">converter</span><span class="p">,</span> <span class="n">vf</span><span class="o">.</span><span class="n">separator</span><span class="p">,</span>
+                                       <span class="n">vf</span><span class="o">.</span><span class="n">container</span><span class="p">,</span> <span class="n">delay</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MessageBasedResource.query_ascii_values"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.query_ascii_values">[docs]</a>    <span class="k">def</span> <span class="nf">query_ascii_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span>
+                           <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Query the device for values in ascii format returning an iterable of</span>
+<span class="sd">        values.</span>
+
+<span class="sd">        :param message: the message to send.</span>
+<span class="sd">        :type message: str</span>
+<span class="sd">        :param delay: delay in seconds between write and read operations.</span>
+<span class="sd">                      if None, defaults to self.query_delay</span>
+<span class="sd">        :param converter: function used to convert each element.</span>
+<span class="sd">                          Defaults to float</span>
+<span class="sd">        :type converter: callable</span>
+<span class="sd">        :param separator: a callable that split the str into individual</span>
+<span class="sd">                          elements. If a str is given, data.split(separator) is</span>
+<span class="sd">                          used.</span>
+<span class="sd">        :type: separator: (str) -&gt; collections.Iterable[int] | str</span>
+<span class="sd">        :param container: container type to use for the output data.</span>
+<span class="sd">        :returns: the answer from the device.</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">delay</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">delay</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_delay</span>
+        <span class="k">if</span> <span class="n">delay</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_ascii_values</span><span class="p">(</span><span class="n">converter</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">container</span><span class="p">,</span>
+                                      <span class="n">delay</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MessageBasedResource.query_binary_values"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.query_binary_values">[docs]</a>    <span class="k">def</span> <span class="nf">query_binary_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">is_big_endian</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="n">container</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">header_fmt</span><span class="o">=</span><span class="s1">&#39;ieee&#39;</span><span class="p">,</span>
+                            <span class="n">expect_termination</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">data_points</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                            <span class="n">chunk_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Query the device for values in binary format returning an iterable</span>
+<span class="sd">        of values.</span>
+
+<span class="sd">        :param message: the message to send to the instrument.</span>
+<span class="sd">        :param datatype: the format string for a single element. See struct</span>
+<span class="sd">                         module.</span>
+<span class="sd">        :param is_big_endian: boolean indicating endianess.</span>
+<span class="sd">                              Defaults to False.</span>
+<span class="sd">        :param container: container type to use for the output data.</span>
+<span class="sd">        :param delay: delay in seconds between write and read operations.</span>
+<span class="sd">                      if None, defaults to self.query_delay</span>
+<span class="sd">        :param expect_termination: when set to False, the expected length of</span>
+<span class="sd">                                   the binary values block does not account</span>
+<span class="sd">                                   for the final termination character (the</span>
+<span class="sd">                                   read termination)</span>
+<span class="sd">        :param data_points: Number of points expected in the block. This is</span>
+<span class="sd">                            used only if the instrument does not report it</span>
+<span class="sd">                            itself. This will be converted in a number of bytes</span>
+<span class="sd">                            based on the datatype.</span>
+<span class="sd">        :param chunk_size: Size of the chunks to read from the device. Using</span>
+<span class="sd">                           larger chunks may be faster for large amount of</span>
+<span class="sd">                           data.</span>
+<span class="sd">        :returns: the answer from the device.</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">header_fmt</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;ieee&#39;</span><span class="p">,</span> <span class="s1">&#39;empty&#39;</span><span class="p">,</span> <span class="s1">&#39;hp&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid header format. Valid options are &#39;ieee&#39;,&quot;</span>
+                             <span class="s2">&quot; &#39;empty&#39;, &#39;hp&#39;&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">delay</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">delay</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_delay</span>
+        <span class="k">if</span> <span class="n">delay</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_binary_values</span><span class="p">(</span><span class="n">datatype</span><span class="p">,</span> <span class="n">is_big_endian</span><span class="p">,</span> <span class="n">container</span><span class="p">,</span>
+                                       <span class="n">header_fmt</span><span class="p">,</span> <span class="n">expect_termination</span><span class="p">,</span>
+                                       <span class="n">data_points</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">ask_for_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A combination of write(message) and read_values()</span>
+
+<span class="sd">        :param message: the message to send.</span>
+<span class="sd">        :type message: str</span>
+<span class="sd">        :param delay: delay in seconds between write and read operations.</span>
+<span class="sd">                      if None, defaults to self.query_delay</span>
+<span class="sd">        :returns: the answer from the device.</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;ask_values is deprecated and will be removed in &#39;</span>
+                      <span class="s1">&#39;1.10, use query_ascii_values or quey_binary_values &#39;</span>
+                      <span class="s1">&#39;instead.&#39;</span><span class="p">,</span> <span class="ne">FutureWarning</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">delay</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">delay</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_delay</span>
+        <span class="k">if</span> <span class="n">delay</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_values</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MessageBasedResource.assert_trigger"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.assert_trigger">[docs]</a>    <span class="k">def</span> <span class="nf">assert_trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sends a software trigger to the device.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">visalib</span><span class="o">.</span><span class="n">assert_trigger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span>
+                                    <span class="n">constants</span><span class="o">.</span><span class="n">VI_TRIG_PROT_DEFAULT</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">stb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Service request status register.&quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_stb</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MessageBasedResource.read_stb"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.read_stb">[docs]</a>    <span class="k">def</span> <span class="nf">read_stb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Service request status register.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span><span class="p">,</span> <span class="n">retcode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visalib</span><span class="o">.</span><span class="n">read_stb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="MessageBasedResource.read_termination_context"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.read_termination_context">[docs]</a>    <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+    <span class="k">def</span> <span class="nf">read_termination_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_termination</span><span class="p">):</span>
+        <span class="n">term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_visa_attribute</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">VI_ATTR_TERMCHAR</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_visa_attribute</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">VI_ATTR_TERMCHAR</span><span class="p">,</span>
+                                <span class="nb">ord</span><span class="p">(</span><span class="n">new_termination</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">yield</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_visa_attribute</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">VI_ATTR_TERMCHAR</span><span class="p">,</span> <span class="n">term</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MessageBasedResource.flush"><a class="viewcode-back" href="../../../api/resources.html#pyvisa.resources.MessageBasedResource.flush">[docs]</a>    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Manually clears the specified buffers.</span>
+
+<span class="sd">        Depending on the value of the mask this can cause the buffer data</span>
+<span class="sd">        to be written to the device.</span>
+
+<span class="sd">        :param mask: Specifies the action to be taken with flushing the buffer.</span>
+<span class="sd">            See highlevel.VisaLibraryBase.flush for a detailed description.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visalib</span><span class="o">.</span><span class="n">flush</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span></div></div>
+
+
+<span class="c1"># Rohde and Schwarz Device via Passport. Not sure which Resource should be.</span>
+<span class="n">MessageBasedResource</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">InterfaceType</span><span class="o">.</span><span class="n">rsnrp</span><span class="p">,</span>
+                              <span class="s1">&#39;INSTR&#39;</span><span class="p">)(</span><span class="n">MessageBasedResource</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PyVISA Authors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

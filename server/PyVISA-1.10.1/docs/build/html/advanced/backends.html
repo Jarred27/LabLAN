@@ -1,0 +1,411 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>A frontend for multiple backends &mdash; PyVISA 1.11.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Frequently asked questions" href="../faq/index.html" />
+    <link rel="prev" title="Architecture" href="architecture.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PyVISA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Advanced topics</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">A frontend for multiple backends</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#developing-a-new-backend">Developing a new Backend</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PyVISA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Advanced topics</a> &raquo;</li>
+        
+      <li>A frontend for multiple backends</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/advanced/backends.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="a-frontend-for-multiple-backends">
+<span id="advanced-backends"></span><h1>A frontend for multiple backends<a class="headerlink" href="#a-frontend-for-multiple-backends" title="Permalink to this headline">¶</a></h1>
+<p>A small historical note might help to make this section clearer. So bear with
+with me for a couple of lines. Originally PyVISA was a Python wrapper to the
+VISA library. More specifically, it was <a class="reference external" href="https://docs.python.org/3/library/ctypes.html#module-ctypes" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code></a> wrapper around the
+NI-VISA. This approach worked fine but made it difficult to develop other ways
+to communicate with instruments in platforms where NI-VISA was not available.
+Users had to change their programs to use other packages with different API.</p>
+<p>Since 1.6, PyVISA is a frontend to VISA. It provides a nice, Pythonic API and
+can connect to multiple backends. Each backend exposes a class derived from
+VisaLibraryBase that implements the low-level communication. The ctypes wrapper
+around NI-VISA is the default backend (called <strong>ni</strong>) and is bundled with
+PyVISA for simplicity.</p>
+<p>You can specify the backend to use when you instantiate the resource manager
+using the <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> symbol. Remembering that <strong>ni</strong> is the default, this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyvisa</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>is the same as this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyvisa</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">(</span><span class="s1">&#39;@ni&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can still provide the path to the library if needed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyvisa</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">(</span><span class="s1">&#39;/path/to/lib@ni&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Under the hood, the <a class="reference internal" href="../api/resourcemanager.html#pyvisa.highlevel.ResourceManager" title="pyvisa.highlevel.ResourceManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceManager</span></code></a> looks for the requested backend and
+instantiate the VISA library that it provides.</p>
+<p>PyVISA locates backends by name. If you do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyvisa</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">(</span><span class="s1">&#39;@somename&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>PyVISA will try to import a package/module named <code class="docutils literal notranslate"><span class="pre">pyvisa-somename</span></code> which
+should be installed in your system. This is a loosely coupled configuration
+free method. PyVISA does not need to know about any backend out there until you
+actually try to use it.</p>
+<p>You can list the installed backends by running the following code in the
+command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pyvisa</span><span class="o">-</span><span class="n">info</span>
+</pre></div>
+</div>
+<div class="section" id="developing-a-new-backend">
+<h2>Developing a new Backend<a class="headerlink" href="#developing-a-new-backend" title="Permalink to this headline">¶</a></h2>
+<p>What does a minimum backend looks like? Quite simple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyvisa.highlevel</span> <span class="k">import</span> <span class="n">VisaLibraryBase</span>
+
+<span class="k">class</span> <span class="nc">MyLibrary</span><span class="p">(</span><span class="n">VisaLibraryBase</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="n">WRAPPER_CLASS</span> <span class="o">=</span> <span class="n">MyLibrary</span>
+</pre></div>
+</div>
+<p>Additionally you can provide a staticmethod named <cite>get_debug_info</cite> that should
+return a dictionary of debug information which is printed when you call
+<code class="docutils literal notranslate"><span class="pre">pyvisa-info</span></code></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Your backend name should not end by <code class="docutils literal notranslate"><span class="pre">-script</span></code> or it will be discarded.
+This is because any script generated by setuptools containing the name
+pyvisa will be named <code class="docutils literal notranslate"><span class="pre">pyvisa-*-script</span></code> and they are obviously not
+backends. Examples are the <code class="docutils literal notranslate"><span class="pre">pyvisa-shell</span></code> and <code class="docutils literal notranslate"><span class="pre">pyvisa-info</span></code> scripts.</p>
+</div>
+<p>An important aspect of developing a backend is knowing which VisaLibraryBase
+method to implement and what API to expose.</p>
+<p>A <strong>complete</strong> implementation of a VISA Library requires a lot of functions
+(basically almost all level 2 functions as described in
+<a class="reference internal" href="architecture.html#advanced-architecture"><span class="std std-ref">Architecture</span></a> (there is also a complete list at the bottom of
+this page). But a working implementation does not require all of them.</p>
+<p>As a <strong>very minimum</strong> set you need:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>open_default_resource_manager</strong>: returns a session to the Default
+Resource Manager resource.</li>
+<li><strong>open</strong>: Opens a session to the specified resource.</li>
+<li><strong>close</strong>: Closes the specified session, event, or find list.</li>
+<li><strong>list_resources</strong>: Returns a tuple of all connected devices matching
+query.</li>
+</ul>
+</div></blockquote>
+<p>(you can get the signature below or here <a class="reference internal" href="../api/visalibrarybase.html#api-visalibrarybase"><span class="std std-ref">Visa Library</span></a>)</p>
+<p>But of course you cannot do anything interesting with just this. In general you
+will also need:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>get_attribute</strong>: Retrieves the state of an attribute.</li>
+<li><strong>set_atribute</strong>: Sets the state of an attribute.</li>
+</ul>
+</div></blockquote>
+<p>If you need to start sending bytes to MessageBased instruments you will
+require:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>read</strong>: Reads data from device or interface synchronously.</li>
+<li><strong>write</strong>: Writes data to device or interface synchronously.</li>
+</ul>
+</div></blockquote>
+<p>For other usages or devices, you might need to implement other functions. Is
+really up to you and your needs.</p>
+<p>These functions should raise a <code class="xref py py-class docutils literal notranslate"><span class="pre">pyvisa.errors.VisaIOError</span></code> or emit a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">pyvisa.errors.VisaIOWarning</span></code> if necessary.</p>
+<p>Complete list of level 2 functions to implement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_memory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">write_memory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">move_in</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">move_out</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">peek</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">poke</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">assert_interrupt_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">status_id</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">assert_trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">protocol</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">assert_utility_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">buffer_read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">buffer_write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">disable_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">event_type</span><span class="p">,</span> <span class="n">mechanism</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">discard_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">event_type</span><span class="p">,</span> <span class="n">mechanism</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">enable_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">event_type</span><span class="p">,</span> <span class="n">mechanism</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">get_attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">attribute</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">gpib_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">gpib_control_atn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">gpib_control_ren</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">gpib_pass_control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">primary_address</span><span class="p">,</span> <span class="n">secondary_address</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">gpib_send_ifc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">in_8</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">in_16</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">in_32</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">in_64</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">install_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">event_type</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">user_handle</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">list_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;?*::INSTR&#39;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">lock_type</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">requested_key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">map_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">map_space</span><span class="p">,</span> <span class="n">map_base</span><span class="p">,</span> <span class="n">map_size</span><span class="p">,</span>
+<span class="k">def</span> <span class="nf">map_trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">trigger_source</span><span class="p">,</span> <span class="n">trigger_destination</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">memory_allocation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">memory_free</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">source_space</span><span class="p">,</span> <span class="n">source_offset</span><span class="p">,</span> <span class="n">source_width</span><span class="p">,</span> <span class="n">destination_space</span><span class="p">,</span>
+<span class="k">def</span> <span class="nf">move_asynchronously</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">source_space</span><span class="p">,</span> <span class="n">source_offset</span><span class="p">,</span> <span class="n">source_width</span><span class="p">,</span>
+<span class="k">def</span> <span class="nf">move_in_8</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">move_in_16</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">move_in_32</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">move_in_64</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">move_out_8</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">move_out_16</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">move_out_32</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">move_out_64</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">resource_name</span><span class="p">,</span>
+<span class="k">def</span> <span class="nf">open_default_resource_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">out_8</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">out_16</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">out_32</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">out_64</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">space</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">extended</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">parse_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">resource_name</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">parse_resource_extended</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">resource_name</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">peek_8</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">peek_16</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">peek_32</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">peek_64</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">poke_8</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">poke_16</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">poke_32</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">poke_64</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">read_asynchronously</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">read_stb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">read_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">set_attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">attribute_state</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">set_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">status_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">terminate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">degree</span><span class="p">,</span> <span class="n">job_id</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">uninstall_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">event_type</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">user_handle</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">unlock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">unmap_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">unmap_trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">trigger_source</span><span class="p">,</span> <span class="n">trigger_destination</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">usb_control_in</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">request_type_bitmap_field</span><span class="p">,</span> <span class="n">request_id</span><span class="p">,</span> <span class="n">request_value</span><span class="p">,</span>
+<span class="k">def</span> <span class="nf">usb_control_out</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">request_type_bitmap_field</span><span class="p">,</span> <span class="n">request_id</span><span class="p">,</span> <span class="n">request_value</span><span class="p">,</span>
+<span class="k">def</span> <span class="nf">vxi_command_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">wait_on_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">in_event_type</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">write_asynchronously</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">write_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../faq/index.html" class="btn btn-neutral float-right" title="Frequently asked questions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="architecture.html" class="btn btn-neutral" title="Architecture" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PyVISA Authors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

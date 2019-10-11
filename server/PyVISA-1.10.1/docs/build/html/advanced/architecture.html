@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Architecture &mdash; PyVISA 1.11.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="A frontend for multiple backends" href="backends.html" />
+    <link rel="prev" title="Advanced topics" href="index.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PyVISA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/index.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Advanced topics</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Architecture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#calling-middle-and-low-level-functions">Calling middle- and low-level functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#low-level">Low-level</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#middle-level">Middle-level</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="backends.html">A frontend for multiple backends</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PyVISA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Advanced topics</a> &raquo;</li>
+        
+      <li>Architecture</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/advanced/architecture.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="architecture">
+<span id="advanced-architecture"></span><h1>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h1>
+<p>PyVISA implements convenient and Pythonic programming in three layers:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Low-level: A wrapper around the shared visa library.</p>
+<p>The wrapper defines the argument types and response types of each function,
+as well as the conversions between Python objects and foreign types.</p>
+<p>You will normally not need to access these functions directly. If you do,
+it probably means that we need to improve layer 2.</p>
+<p>All level 1 functions are <strong>static methods</strong> of <a class="reference internal" href="../api/visalibrarybase.html#pyvisa.highlevel.VisaLibraryBase" title="pyvisa.highlevel.VisaLibraryBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">VisaLibraryBase</span></code></a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Notice however that low-level functions might not be present in all
+backends. For broader compatibility, do no use this layer. All the
+functionality should is available via the next layer.</p>
+</div>
+</li>
+<li><p class="first">Middle-level: A wrapping Python function for each function of the shared
+visa library.</p>
+<p>These functions call the low-level functions, adding some code to deal with
+type conversions for functions that return values by reference.
+These functions also have comprehensive and Python friendly documentation.</p>
+<p>You only need to access this layer if you want to control certain specific
+aspects of the VISA library which are not implemented by the corresponding
+resource class.</p>
+<p>All level 2 functions are <strong>bound methods</strong> of <a class="reference internal" href="../api/visalibrarybase.html#pyvisa.highlevel.VisaLibraryBase" title="pyvisa.highlevel.VisaLibraryBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">VisaLibraryBase</span></code></a>.</p>
+</li>
+<li><p class="first">High-level: An object-oriented layer for <a class="reference internal" href="../api/resourcemanager.html#pyvisa.highlevel.ResourceManager" title="pyvisa.highlevel.ResourceManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceManager</span></code></a> and
+<a class="reference internal" href="../api/resources.html#pyvisa.resources.Resource" title="pyvisa.resources.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">Resource</span></code></a>.</p>
+<p>The <a class="reference internal" href="../api/resourcemanager.html#pyvisa.highlevel.ResourceManager" title="pyvisa.highlevel.ResourceManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceManager</span></code></a> implements methods to inspect connected resources.
+You also use this object to open other resources instantiating the
+appropriate <a class="reference internal" href="../api/resources.html#pyvisa.resources.Resource" title="pyvisa.resources.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">Resource</span></code></a> derived classes.</p>
+<p><a class="reference internal" href="../api/resources.html#pyvisa.resources.Resource" title="pyvisa.resources.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">Resource</span></code></a> and the derived classes implement functions and attributes
+access to the underlying resources in a Pythonic way.</p>
+</li>
+</ol>
+</div></blockquote>
+<p>Most of the time you will only need to instantiate a <a class="reference internal" href="../api/resourcemanager.html#pyvisa.highlevel.ResourceManager" title="pyvisa.highlevel.ResourceManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceManager</span></code></a>. For a
+given resource, you will use the <a class="reference internal" href="../api/resourcemanager.html#pyvisa.highlevel.ResourceManager.open_resource" title="pyvisa.highlevel.ResourceManager.open_resource"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_resource()</span></code></a> method to obtain the
+appropriate object. If needed, you will be able to access the <code class="docutils literal notranslate"><span class="pre">VisaLibrary</span></code>
+object directly using the <code class="xref py py-attr docutils literal notranslate"><span class="pre">visalib</span></code> attribute.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">VisaLibrary</span></code> does the low-level calls. In the default NI Backend,
+levels 1 and 2 are implemented in the same package called
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">pyvisa.ctwrapper</span></code> (which stands for ctypes wrapper). This package is
+included in PyVISA.</p>
+<p>Other backends can be used just by passing the name of the backend to
+<code class="docutils literal notranslate"><span class="pre">ResourceManager</span></code> after the <cite>&#64;</cite> symbol. See more information in
+<a class="reference internal" href="backends.html#advanced-backends"><span class="std std-ref">A frontend for multiple backends</span></a>.</p>
+<div class="section" id="calling-middle-and-low-level-functions">
+<h2>Calling middle- and low-level functions<a class="headerlink" href="#calling-middle-and-low-level-functions" title="Permalink to this headline">¶</a></h2>
+<p>After you have instantiated the <a class="reference internal" href="../api/resourcemanager.html#pyvisa.highlevel.ResourceManager" title="pyvisa.highlevel.ResourceManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceManager</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyvisa</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span> <span class="o">=</span> <span class="n">pyvisa</span><span class="o">.</span><span class="n">ResourceManager</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>you can access the corresponding <code class="docutils literal notranslate"><span class="pre">VisaLibrary</span></code> instance under the <code class="xref py py-attr docutils literal notranslate"><span class="pre">visalib</span></code>
+attribute.</p>
+<p>As an example, consider the VISA function <code class="docutils literal notranslate"><span class="pre">viMapAddress</span></code>. It appears in the
+low-level layer as the static method <code class="docutils literal notranslate"><span class="pre">viMapAddress</span></code> of <code class="xref py py-attr docutils literal notranslate"><span class="pre">visalib</span></code> attributed
+and also appears in the middle-level layer as <code class="docutils literal notranslate"><span class="pre">map_address</span></code>.</p>
+<p>You can recognize low and middle-level functions by their names. Low-level
+functions carry the same name as in the shared library, and they are prefixed
+by <strong>vi</strong>. Middle-level functions have a friendlier, more pythonic but still
+recognizable name. Typically, camelCase names where stripped from the leading
+<strong>vi</strong> and changed to underscore separated lower case names. The docs about
+these methods is located here <a class="reference internal" href="../api/index.html#api"><span class="std std-ref">API</span></a>.</p>
+<div class="section" id="low-level">
+<h3>Low-level<a class="headerlink" href="#low-level" title="Permalink to this headline">¶</a></h3>
+<p>You can access the low-level functions directly exposed as static methods,
+for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span><span class="o">.</span><span class="n">visalib</span><span class="o">.</span><span class="n">viMapAddress</span><span class="p">(</span><span class="o">&lt;</span><span class="n">here</span> <span class="n">goes</span> <span class="n">the</span> <span class="n">arguments</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To call this functions you need to know the function declaration and how to
+interface it to python. To help you out, the <code class="docutils literal notranslate"><span class="pre">VisaLibrary</span></code> object also
+contains middle-level functions.</p>
+<p>It is very likely that you will need to access the VISA constants using these
+methods. You can find the information about these constants here
+<a class="reference internal" href="../api/constants.html#api-constants"><span class="std std-ref">Constants module</span></a></p>
+</div>
+<div class="section" id="middle-level">
+<h3>Middle-level<a class="headerlink" href="#middle-level" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">VisaLibrary</span></code> object exposes the middle-level functions which are
+one-to-one mapped from the foreign library as bound methods.</p>
+<p>Each middle-level function wraps one low-level function.
+In this case:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rm</span><span class="o">.</span><span class="n">visalib</span><span class="o">.</span><span class="n">map_address</span><span class="p">(</span><span class="o">&lt;</span><span class="n">here</span> <span class="n">goes</span> <span class="n">the</span> <span class="n">arguments</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The calling convention and types are handled by the wrapper.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="backends.html" class="btn btn-neutral float-right" title="A frontend for multiple backends" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Advanced topics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PyVISA Authors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

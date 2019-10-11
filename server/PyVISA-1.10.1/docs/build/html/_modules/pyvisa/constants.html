@@ -1,0 +1,1273 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyvisa.constants &mdash; PyVISA 1.11.0.dev0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> PyVISA
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.11.0.dev0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction/index.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced/index.html">Advanced topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq/index.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">PyVISA</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyvisa.constants</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyvisa.constants</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    pyvisa.constants</span>
+<span class="sd">    ~~~~~~~~~~~~~~~~</span>
+
+<span class="sd">    VISA VPP-4.3 constants (VPP-4.3.2 spec, section 3).</span>
+
+<span class="sd">    Makes all &quot;completion and error codes&quot;, &quot;attribute values&quot;, &quot;event type</span>
+<span class="sd">    values&quot;, and &quot;values and ranges&quot; defined in the VISA specification VPP-4.3.2,</span>
+<span class="sd">    section 3, available as variable values.</span>
+
+<span class="sd">    The module exports the values under the original, all-uppercase names.</span>
+
+<span class="sd">    This file is part of PyVISA.</span>
+
+<span class="sd">    :copyright: 2014 by PyVISA Authors, see AUTHORS for more details.</span>
+<span class="sd">    :license: MIT, see LICENSE for more details.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">unicode_literals</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+
+<span class="kn">import</span> <span class="nn">enum</span>
+
+<span class="kn">from</span> <span class="nn">.compat</span> <span class="k">import</span> <span class="n">PYTHON3</span>
+
+<span class="k">if</span> <span class="n">PYTHON3</span><span class="p">:</span>
+    <span class="n">LongEnum</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">IntEnum</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">class</span> <span class="nc">LongEnum</span><span class="p">(</span><span class="n">long</span><span class="p">,</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="c1"># _to_int() is necessary because the VISA specification is flawed: It defines</span>
+<span class="c1"># the VISA codes, which have a value less than zero, in their internal 32-bit</span>
+<span class="c1"># signed integer representation.  However, this is positive.  ctypes doesn&#39;t</span>
+<span class="c1"># care about that and (correctly) returns the negative value, which is left as</span>
+<span class="c1"># such by Python.</span>
+<span class="c1">#</span>
+
+
+<span class="k">def</span> <span class="nf">_to_int</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a completion and error code as it is listed in 32-bit notation</span>
+<span class="sd">    in the VPP-4.3.2 specification to the actual integer value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mh">0x7FFFFFFF</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mh">0x100000000</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">VI_SUCCESS</span>                   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x00000000</span><span class="p">)</span>
+<span class="n">VI_SUCCESS_EVENT_EN</span>          <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0002</span><span class="p">)</span>
+<span class="n">VI_SUCCESS_EVENT_DIS</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0003</span><span class="p">)</span>
+<span class="n">VI_SUCCESS_QUEUE_EMPTY</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0004</span><span class="p">)</span>
+<span class="n">VI_SUCCESS_TERM_CHAR</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0005</span><span class="p">)</span>
+<span class="n">VI_SUCCESS_MAX_CNT</span>           <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0006</span><span class="p">)</span>
+<span class="n">VI_SUCCESS_DEV_NPRESENT</span>      <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF007D</span><span class="p">)</span>
+<span class="n">VI_SUCCESS_TRIG_MAPPED</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF007E</span><span class="p">)</span>
+<span class="n">VI_SUCCESS_QUEUE_NEMPTY</span>      <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0080</span><span class="p">)</span>
+<span class="n">VI_SUCCESS_NCHAIN</span>            <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0098</span><span class="p">)</span>
+<span class="n">VI_SUCCESS_NESTED_SHARED</span>     <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0099</span><span class="p">)</span>
+<span class="n">VI_SUCCESS_NESTED_EXCLUSIVE</span>  <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF009A</span><span class="p">)</span>
+<span class="n">VI_SUCCESS_SYNC</span>              <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF009B</span><span class="p">)</span>
+
+<span class="n">VI_WARN_QUEUE_OVERFLOW</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF000C</span><span class="p">)</span>
+<span class="n">VI_WARN_CONFIG_NLOADED</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0077</span><span class="p">)</span>
+<span class="n">VI_WARN_NULL_OBJECT</span>          <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0082</span><span class="p">)</span>
+<span class="n">VI_WARN_NSUP_ATTR_STATE</span>      <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0084</span><span class="p">)</span>
+<span class="n">VI_WARN_UNKNOWN_STATUS</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0085</span><span class="p">)</span>
+<span class="n">VI_WARN_NSUP_BUF</span>             <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0088</span><span class="p">)</span>
+
+<span class="c1"># The following one is a non-standard NI extension</span>
+<span class="n">VI_WARN_EXT_FUNC_NIMPL</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF00A9</span><span class="p">)</span>
+
+<span class="n">VI_ERROR_SYSTEM_ERROR</span>        <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0000</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_OBJECT</span>          <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF000E</span><span class="p">)</span>
+<span class="n">VI_ERROR_RSRC_LOCKED</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF000F</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_EXPR</span>            <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0010</span><span class="p">)</span>
+<span class="n">VI_ERROR_RSRC_NFOUND</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0011</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_RSRC_NAME</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0012</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_ACC_MODE</span>        <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0013</span><span class="p">)</span>
+<span class="n">VI_ERROR_TMO</span>                 <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0015</span><span class="p">)</span>
+<span class="n">VI_ERROR_CLOSING_FAILED</span>      <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0016</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_DEGREE</span>          <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF001B</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_JOB_ID</span>          <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF001C</span><span class="p">)</span>
+<span class="n">VI_ERROR_NSUP_ATTR</span>           <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF001D</span><span class="p">)</span>
+<span class="n">VI_ERROR_NSUP_ATTR_STATE</span>     <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF001E</span><span class="p">)</span>
+<span class="n">VI_ERROR_ATTR_READONLY</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF001F</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_LOCK_TYPE</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0020</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_ACCESS_KEY</span>      <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0021</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_EVENT</span>           <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0026</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_MECH</span>            <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0027</span><span class="p">)</span>
+<span class="n">VI_ERROR_HNDLR_NINSTALLED</span>    <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0028</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_HNDLR_REF</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0029</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_CONTEXT</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF002A</span><span class="p">)</span>
+<span class="n">VI_ERROR_QUEUE_OVERFLOW</span>      <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF002D</span><span class="p">)</span>
+<span class="n">VI_ERROR_NENABLED</span>            <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF002F</span><span class="p">)</span>
+<span class="n">VI_ERROR_ABORT</span>               <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0030</span><span class="p">)</span>
+<span class="n">VI_ERROR_RAW_WR_PROT_VIOL</span>    <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0034</span><span class="p">)</span>
+<span class="n">VI_ERROR_RAW_RD_PROT_VIOL</span>    <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0035</span><span class="p">)</span>
+<span class="n">VI_ERROR_OUTP_PROT_VIOL</span>      <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0036</span><span class="p">)</span>
+<span class="n">VI_ERROR_INP_PROT_VIOL</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0037</span><span class="p">)</span>
+<span class="n">VI_ERROR_BERR</span>                <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0038</span><span class="p">)</span>
+<span class="n">VI_ERROR_IN_PROGRESS</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0039</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_SETUP</span>           <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF003A</span><span class="p">)</span>
+<span class="n">VI_ERROR_QUEUE_ERROR</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF003B</span><span class="p">)</span>
+<span class="n">VI_ERROR_ALLOC</span>               <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF003C</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_MASK</span>            <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF003D</span><span class="p">)</span>
+<span class="n">VI_ERROR_IO</span>                  <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF003E</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_FMT</span>             <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF003F</span><span class="p">)</span>
+<span class="n">VI_ERROR_NSUP_FMT</span>            <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0041</span><span class="p">)</span>
+<span class="n">VI_ERROR_LINE_IN_USE</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0042</span><span class="p">)</span>
+<span class="n">VI_ERROR_NSUP_MODE</span>           <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0046</span><span class="p">)</span>
+<span class="n">VI_ERROR_SRQ_NOCCURRED</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF004A</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_SPACE</span>           <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF004E</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_OFFSET</span>          <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0051</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_WIDTH</span>           <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0052</span><span class="p">)</span>
+<span class="n">VI_ERROR_NSUP_OFFSET</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0054</span><span class="p">)</span>
+<span class="n">VI_ERROR_NSUP_VAR_WIDTH</span>      <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0055</span><span class="p">)</span>
+<span class="n">VI_ERROR_WINDOW_NMAPPED</span>      <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0057</span><span class="p">)</span>
+<span class="n">VI_ERROR_RESP_PENDING</span>        <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0059</span><span class="p">)</span>
+<span class="n">VI_ERROR_NLISTENERS</span>          <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF005F</span><span class="p">)</span>
+<span class="n">VI_ERROR_NCIC</span>                <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0060</span><span class="p">)</span>
+<span class="n">VI_ERROR_NSYS_CNTLR</span>          <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0061</span><span class="p">)</span>
+<span class="n">VI_ERROR_NSUP_OPER</span>           <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0067</span><span class="p">)</span>
+<span class="n">VI_ERROR_INTR_PENDING</span>        <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0068</span><span class="p">)</span>
+<span class="n">VI_ERROR_ASRL_PARITY</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF006A</span><span class="p">)</span>
+<span class="n">VI_ERROR_ASRL_FRAMING</span>        <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF006B</span><span class="p">)</span>
+<span class="n">VI_ERROR_ASRL_OVERRUN</span>        <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF006C</span><span class="p">)</span>
+<span class="n">VI_ERROR_TRIG_NMAPPED</span>        <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF006E</span><span class="p">)</span>
+<span class="n">VI_ERROR_NSUP_ALIGN_OFFSET</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0070</span><span class="p">)</span>
+<span class="n">VI_ERROR_USER_BUF</span>            <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0071</span><span class="p">)</span>
+<span class="n">VI_ERROR_RSRC_BUSY</span>           <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0072</span><span class="p">)</span>
+<span class="n">VI_ERROR_NSUP_WIDTH</span>          <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0076</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_PARAMETER</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0078</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_PROT</span>            <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0079</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_SIZE</span>            <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF007B</span><span class="p">)</span>
+<span class="n">VI_ERROR_WINDOW_MAPPED</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0080</span><span class="p">)</span>
+<span class="n">VI_ERROR_NIMPL_OPER</span>          <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0081</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_LENGTH</span>          <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0083</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_MODE</span>            <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0091</span><span class="p">)</span>
+<span class="n">VI_ERROR_SESN_NLOCKED</span>        <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF009C</span><span class="p">)</span>
+<span class="n">VI_ERROR_MEM_NSHARED</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF009D</span><span class="p">)</span>
+<span class="n">VI_ERROR_LIBRARY_NFOUND</span>      <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF009E</span><span class="p">)</span>
+<span class="n">VI_ERROR_NSUP_INTR</span>           <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF009F</span><span class="p">)</span>
+<span class="n">VI_ERROR_INV_LINE</span>            <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF00A0</span><span class="p">)</span>
+<span class="n">VI_ERROR_FILE_ACCESS</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF00A1</span><span class="p">)</span>
+<span class="n">VI_ERROR_FILE_IO</span>             <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF00A2</span><span class="p">)</span>
+<span class="n">VI_ERROR_NSUP_LINE</span>           <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF00A3</span><span class="p">)</span>
+<span class="n">VI_ERROR_NSUP_MECH</span>           <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF00A4</span><span class="p">)</span>
+<span class="n">VI_ERROR_INTF_NUM_NCONFIG</span>    <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF00A5</span><span class="p">)</span>
+<span class="n">VI_ERROR_CONN_LOST</span>           <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF00A6</span><span class="p">)</span>
+
+<span class="c1"># The following two are a non-standard NI extensions</span>
+<span class="n">VI_ERROR_MACHINE_NAVAIL</span>      <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF00A7</span><span class="p">)</span>
+<span class="n">VI_ERROR_NPERMISSION</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF00A8</span><span class="p">)</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Attribute constants</span>
+<span class="c1">#</span>
+<span class="c1"># All attribute codes are unsigned long, so no _to_int() is necessary.</span>
+<span class="c1">#</span>
+
+<span class="n">VI_ATTR_RSRC_CLASS</span>           <span class="o">=</span> <span class="mh">0xBFFF0001</span>
+<span class="n">VI_ATTR_RSRC_NAME</span>            <span class="o">=</span> <span class="mh">0xBFFF0002</span>
+<span class="n">VI_ATTR_RSRC_IMPL_VERSION</span>    <span class="o">=</span> <span class="mh">0x3FFF0003</span>
+<span class="n">VI_ATTR_RSRC_LOCK_STATE</span>      <span class="o">=</span> <span class="mh">0x3FFF0004</span>
+<span class="n">VI_ATTR_MAX_QUEUE_LENGTH</span>     <span class="o">=</span> <span class="mh">0x3FFF0005</span>
+<span class="n">VI_ATTR_USER_DATA</span>            <span class="o">=</span> <span class="mh">0x3FFF0007</span>
+<span class="n">VI_ATTR_FDC_CHNL</span>             <span class="o">=</span> <span class="mh">0x3FFF000D</span>
+<span class="n">VI_ATTR_FDC_MODE</span>             <span class="o">=</span> <span class="mh">0x3FFF000F</span>
+<span class="n">VI_ATTR_FDC_GEN_SIGNAL_EN</span>    <span class="o">=</span> <span class="mh">0x3FFF0011</span>
+<span class="n">VI_ATTR_FDC_USE_PAIR</span>         <span class="o">=</span> <span class="mh">0x3FFF0013</span>
+<span class="n">VI_ATTR_SEND_END_EN</span>          <span class="o">=</span> <span class="mh">0x3FFF0016</span>
+<span class="n">VI_ATTR_TERMCHAR</span>             <span class="o">=</span> <span class="mh">0x3FFF0018</span>
+<span class="n">VI_ATTR_TMO_VALUE</span>            <span class="o">=</span> <span class="mh">0x3FFF001A</span>
+<span class="n">VI_ATTR_GPIB_READDR_EN</span>       <span class="o">=</span> <span class="mh">0x3FFF001B</span>
+<span class="n">VI_ATTR_IO_PROT</span>              <span class="o">=</span> <span class="mh">0x3FFF001C</span>
+<span class="n">VI_ATTR_DMA_ALLOW_EN</span>         <span class="o">=</span> <span class="mh">0x3FFF001E</span>
+<span class="n">VI_ATTR_ASRL_BAUD</span>            <span class="o">=</span> <span class="mh">0x3FFF0021</span>
+<span class="n">VI_ATTR_ASRL_DATA_BITS</span>       <span class="o">=</span> <span class="mh">0x3FFF0022</span>
+<span class="n">VI_ATTR_ASRL_PARITY</span>          <span class="o">=</span> <span class="mh">0x3FFF0023</span>
+<span class="n">VI_ATTR_ASRL_STOP_BITS</span>       <span class="o">=</span> <span class="mh">0x3FFF0024</span>
+<span class="n">VI_ATTR_ASRL_FLOW_CNTRL</span>      <span class="o">=</span> <span class="mh">0x3FFF0025</span>
+
+<span class="n">VI_ATTR_ASRL_DISCARD_NULL</span>    <span class="o">=</span> <span class="mh">0x3FFF00B0</span>
+<span class="n">VI_ATTR_ASRL_CONNECTED</span>       <span class="o">=</span> <span class="mh">0x3FFF01BB</span>
+<span class="n">VI_ATTR_ASRL_BREAK_STATE</span>     <span class="o">=</span> <span class="mh">0x3FFF01BC</span>
+<span class="n">VI_ATTR_ASRL_BREAK_LEN</span>       <span class="o">=</span> <span class="mh">0x3FFF01BD</span>
+<span class="n">VI_ATTR_ASRL_ALLOW_TRANSMIT</span>  <span class="o">=</span> <span class="mh">0x3FFF01BE</span>
+<span class="n">VI_ATTR_ASRL_WIRE_MODE</span>       <span class="o">=</span> <span class="mh">0x3FFF01BF</span>
+
+<span class="n">VI_ATTR_RD_BUF_OPER_MODE</span>     <span class="o">=</span> <span class="mh">0x3FFF002A</span>
+<span class="n">VI_ATTR_RD_BUF_SIZE</span>          <span class="o">=</span> <span class="mh">0x3FFF002B</span>
+<span class="n">VI_ATTR_WR_BUF_OPER_MODE</span>     <span class="o">=</span> <span class="mh">0x3FFF002D</span>
+<span class="n">VI_ATTR_WR_BUF_SIZE</span>          <span class="o">=</span> <span class="mh">0x3FFF002E</span>
+<span class="n">VI_ATTR_SUPPRESS_END_EN</span>      <span class="o">=</span> <span class="mh">0x3FFF0036</span>
+<span class="n">VI_ATTR_TERMCHAR_EN</span>          <span class="o">=</span> <span class="mh">0x3FFF0038</span>
+<span class="n">VI_ATTR_DEST_ACCESS_PRIV</span>     <span class="o">=</span> <span class="mh">0x3FFF0039</span>
+<span class="n">VI_ATTR_DEST_BYTE_ORDER</span>      <span class="o">=</span> <span class="mh">0x3FFF003A</span>
+<span class="n">VI_ATTR_SRC_ACCESS_PRIV</span>      <span class="o">=</span> <span class="mh">0x3FFF003C</span>
+<span class="n">VI_ATTR_SRC_BYTE_ORDER</span>       <span class="o">=</span> <span class="mh">0x3FFF003D</span>
+<span class="n">VI_ATTR_SRC_INCREMENT</span>        <span class="o">=</span> <span class="mh">0x3FFF0040</span>
+<span class="n">VI_ATTR_DEST_INCREMENT</span>       <span class="o">=</span> <span class="mh">0x3FFF0041</span>
+<span class="n">VI_ATTR_WIN_ACCESS_PRIV</span>      <span class="o">=</span> <span class="mh">0x3FFF0045</span>
+<span class="n">VI_ATTR_WIN_BYTE_ORDER</span>       <span class="o">=</span> <span class="mh">0x3FFF0047</span>
+<span class="n">VI_ATTR_GPIB_ATN_STATE</span>       <span class="o">=</span> <span class="mh">0x3FFF0057</span>
+<span class="n">VI_ATTR_GPIB_ADDR_STATE</span>      <span class="o">=</span> <span class="mh">0x3FFF005C</span>
+<span class="n">VI_ATTR_GPIB_CIC_STATE</span>       <span class="o">=</span> <span class="mh">0x3FFF005E</span>
+<span class="n">VI_ATTR_GPIB_NDAC_STATE</span>      <span class="o">=</span> <span class="mh">0x3FFF0062</span>
+<span class="n">VI_ATTR_GPIB_SRQ_STATE</span>       <span class="o">=</span> <span class="mh">0x3FFF0067</span>
+<span class="n">VI_ATTR_GPIB_SYS_CNTRL_STATE</span> <span class="o">=</span> <span class="mh">0x3FFF0068</span>
+<span class="n">VI_ATTR_GPIB_HS488_CBL_LEN</span>   <span class="o">=</span> <span class="mh">0x3FFF0069</span>
+<span class="n">VI_ATTR_CMDR_LA</span>              <span class="o">=</span> <span class="mh">0x3FFF006B</span>
+<span class="n">VI_ATTR_VXI_DEV_CLASS</span>        <span class="o">=</span> <span class="mh">0x3FFF006C</span>
+<span class="n">VI_ATTR_MAINFRAME_LA</span>         <span class="o">=</span> <span class="mh">0x3FFF0070</span>
+<span class="n">VI_ATTR_MANF_NAME</span>            <span class="o">=</span> <span class="mh">0xBFFF0072</span>
+<span class="n">VI_ATTR_MODEL_NAME</span>           <span class="o">=</span> <span class="mh">0xBFFF0077</span>
+<span class="n">VI_ATTR_VXI_VME_INTR_STATUS</span>  <span class="o">=</span> <span class="mh">0x3FFF008B</span>
+<span class="n">VI_ATTR_VXI_TRIG_STATUS</span>      <span class="o">=</span> <span class="mh">0x3FFF008D</span>
+<span class="n">VI_ATTR_VXI_VME_SYSFAIL_STATE</span> <span class="o">=</span> <span class="mh">0x3FFF0094</span>
+
+<span class="n">VI_ATTR_WIN_BASE_ADDR</span>        <span class="o">=</span> <span class="mh">0x3FFF0098</span>
+<span class="n">VI_ATTR_WIN_SIZE</span>             <span class="o">=</span> <span class="mh">0x3FFF009A</span>
+<span class="n">VI_ATTR_ASRL_AVAIL_NUM</span>       <span class="o">=</span> <span class="mh">0x3FFF00AC</span>
+<span class="n">VI_ATTR_MEM_BASE</span>             <span class="o">=</span> <span class="mh">0x3FFF00AD</span>
+<span class="n">VI_ATTR_ASRL_CTS_STATE</span>       <span class="o">=</span> <span class="mh">0x3FFF00AE</span>
+<span class="n">VI_ATTR_ASRL_DCD_STATE</span>       <span class="o">=</span> <span class="mh">0x3FFF00AF</span>
+<span class="n">VI_ATTR_ASRL_DSR_STATE</span>       <span class="o">=</span> <span class="mh">0x3FFF00B1</span>
+<span class="n">VI_ATTR_ASRL_DTR_STATE</span>       <span class="o">=</span> <span class="mh">0x3FFF00B2</span>
+<span class="n">VI_ATTR_ASRL_END_IN</span>          <span class="o">=</span> <span class="mh">0x3FFF00B3</span>
+<span class="n">VI_ATTR_ASRL_END_OUT</span>         <span class="o">=</span> <span class="mh">0x3FFF00B4</span>
+<span class="n">VI_ATTR_ASRL_REPLACE_CHAR</span>    <span class="o">=</span> <span class="mh">0x3FFF00BE</span>
+<span class="n">VI_ATTR_ASRL_RI_STATE</span>        <span class="o">=</span> <span class="mh">0x3FFF00BF</span>
+<span class="n">VI_ATTR_ASRL_RTS_STATE</span>       <span class="o">=</span> <span class="mh">0x3FFF00C0</span>
+<span class="n">VI_ATTR_ASRL_XON_CHAR</span>        <span class="o">=</span> <span class="mh">0x3FFF00C1</span>
+<span class="n">VI_ATTR_ASRL_XOFF_CHAR</span>       <span class="o">=</span> <span class="mh">0x3FFF00C2</span>
+<span class="n">VI_ATTR_WIN_ACCESS</span>           <span class="o">=</span> <span class="mh">0x3FFF00C3</span>
+<span class="n">VI_ATTR_RM_SESSION</span>           <span class="o">=</span> <span class="mh">0x3FFF00C4</span>
+<span class="n">VI_ATTR_VXI_LA</span>               <span class="o">=</span> <span class="mh">0x3FFF00D5</span>
+<span class="n">VI_ATTR_MANF_ID</span>              <span class="o">=</span> <span class="mh">0x3FFF00D9</span>
+<span class="n">VI_ATTR_MEM_SIZE</span>             <span class="o">=</span> <span class="mh">0x3FFF00DD</span>
+<span class="n">VI_ATTR_MEM_SPACE</span>            <span class="o">=</span> <span class="mh">0x3FFF00DE</span>
+<span class="n">VI_ATTR_MODEL_CODE</span>           <span class="o">=</span> <span class="mh">0x3FFF00DF</span>
+<span class="n">VI_ATTR_SLOT</span>                 <span class="o">=</span> <span class="mh">0x3FFF00E8</span>
+<span class="n">VI_ATTR_INTF_INST_NAME</span>       <span class="o">=</span> <span class="mh">0xBFFF00E9</span>
+<span class="n">VI_ATTR_IMMEDIATE_SERV</span>       <span class="o">=</span> <span class="mh">0x3FFF0100</span>
+<span class="n">VI_ATTR_INTF_PARENT_NUM</span>      <span class="o">=</span> <span class="mh">0x3FFF0101</span>
+<span class="n">VI_ATTR_RSRC_SPEC_VERSION</span>    <span class="o">=</span> <span class="mh">0x3FFF0170</span>
+<span class="n">VI_ATTR_INTF_TYPE</span>            <span class="o">=</span> <span class="mh">0x3FFF0171</span>
+<span class="n">VI_ATTR_GPIB_PRIMARY_ADDR</span>    <span class="o">=</span> <span class="mh">0x3FFF0172</span>
+<span class="n">VI_ATTR_GPIB_SECONDARY_ADDR</span>  <span class="o">=</span> <span class="mh">0x3FFF0173</span>
+<span class="n">VI_ATTR_RSRC_MANF_NAME</span>       <span class="o">=</span> <span class="mh">0xBFFF0174</span>
+<span class="n">VI_ATTR_RSRC_MANF_ID</span>         <span class="o">=</span> <span class="mh">0x3FFF0175</span>
+<span class="n">VI_ATTR_INTF_NUM</span>             <span class="o">=</span> <span class="mh">0x3FFF0176</span>
+<span class="n">VI_ATTR_TRIG_ID</span>              <span class="o">=</span> <span class="mh">0x3FFF0177</span>
+<span class="n">VI_ATTR_GPIB_REN_STATE</span>       <span class="o">=</span> <span class="mh">0x3FFF0181</span>
+<span class="n">VI_ATTR_GPIB_UNADDR_EN</span>       <span class="o">=</span> <span class="mh">0x3FFF0184</span>
+<span class="n">VI_ATTR_DEV_STATUS_BYTE</span>      <span class="o">=</span> <span class="mh">0x3FFF0189</span>
+<span class="n">VI_ATTR_FILE_APPEND_EN</span>       <span class="o">=</span> <span class="mh">0x3FFF0192</span>
+<span class="n">VI_ATTR_VXI_TRIG_SUPPORT</span>     <span class="o">=</span> <span class="mh">0x3FFF0194</span>
+<span class="n">VI_ATTR_TCPIP_ADDR</span>           <span class="o">=</span> <span class="mh">0xBFFF0195</span>
+<span class="n">VI_ATTR_TCPIP_HOSTNAME</span>       <span class="o">=</span> <span class="mh">0xBFFF0196</span>
+<span class="n">VI_ATTR_TCPIP_PORT</span>           <span class="o">=</span> <span class="mh">0x3FFF0197</span>
+<span class="n">VI_ATTR_TCPIP_DEVICE_NAME</span>    <span class="o">=</span> <span class="mh">0xBFFF0199</span>
+<span class="n">VI_ATTR_TCPIP_NODELAY</span>        <span class="o">=</span> <span class="mh">0x3FFF019A</span>
+<span class="n">VI_ATTR_TCPIP_KEEPALIVE</span>      <span class="o">=</span> <span class="mh">0x3FFF019B</span>
+<span class="n">VI_ATTR_4882_COMPLIANT</span>       <span class="o">=</span> <span class="mh">0x3FFF019F</span>
+<span class="n">VI_ATTR_USB_SERIAL_NUM</span>       <span class="o">=</span> <span class="mh">0xBFFF01A0</span>
+<span class="n">VI_ATTR_USB_INTFC_NUM</span>        <span class="o">=</span> <span class="mh">0x3FFF01A1</span>
+<span class="n">VI_ATTR_USB_PROTOCOL</span>         <span class="o">=</span> <span class="mh">0x3FFF01A7</span>
+<span class="n">VI_ATTR_USB_MAX_INTR_SIZE</span>    <span class="o">=</span> <span class="mh">0x3FFF01AF</span>
+
+<span class="n">VI_ATTR_JOB_ID</span>               <span class="o">=</span> <span class="mh">0x3FFF4006</span>
+<span class="n">VI_ATTR_EVENT_TYPE</span>           <span class="o">=</span> <span class="mh">0x3FFF4010</span>
+<span class="n">VI_ATTR_SIGP_STATUS_ID</span>       <span class="o">=</span> <span class="mh">0x3FFF4011</span>
+<span class="n">VI_ATTR_RECV_TRIG_ID</span>         <span class="o">=</span> <span class="mh">0x3FFF4012</span>
+<span class="n">VI_ATTR_INTR_STATUS_ID</span>       <span class="o">=</span> <span class="mh">0x3FFF4023</span>
+<span class="n">VI_ATTR_STATUS</span>               <span class="o">=</span> <span class="mh">0x3FFF4025</span>
+<span class="n">VI_ATTR_RET_COUNT</span>            <span class="o">=</span> <span class="mh">0x3FFF4026</span>
+<span class="n">VI_ATTR_BUFFER</span>               <span class="o">=</span> <span class="mh">0x3FFF4027</span>
+<span class="n">VI_ATTR_RECV_INTR_LEVEL</span>      <span class="o">=</span> <span class="mh">0x3FFF4041</span>
+<span class="n">VI_ATTR_OPER_NAME</span>            <span class="o">=</span> <span class="mh">0xBFFF4042</span>
+<span class="n">VI_ATTR_GPIB_RECV_CIC_STATE</span>  <span class="o">=</span> <span class="mh">0x3FFF4193</span>
+<span class="n">VI_ATTR_RECV_TCPIP_ADDR</span>      <span class="o">=</span> <span class="mh">0xBFFF4198</span>
+<span class="n">VI_ATTR_USB_RECV_INTR_SIZE</span>   <span class="o">=</span> <span class="mh">0x3FFF41B0</span>
+<span class="n">VI_ATTR_USB_RECV_INTR_DATA</span>   <span class="o">=</span> <span class="mh">0xBFFF41B1</span>
+
+
+<span class="n">VI_ATTR_VXI_TRIG_DIR</span>        <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF4044</span><span class="p">)</span>
+<span class="n">VI_ATTR_VXI_TRIG_LINES_EN</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF4043</span><span class="p">)</span>
+
+<span class="c1">#</span>
+<span class="c1"># Event Types</span>
+<span class="c1">#</span>
+<span class="c1"># All event codes are unsigned long, so no _to_int() is necessary.</span>
+<span class="c1">#</span>
+
+<span class="n">VI_EVENT_IO_COMPLETION</span>       <span class="o">=</span> <span class="mh">0x3FFF2009</span>
+<span class="n">VI_EVENT_TRIG</span>                <span class="o">=</span> <span class="mh">0xBFFF200A</span>
+<span class="n">VI_EVENT_SERVICE_REQ</span>         <span class="o">=</span> <span class="mh">0x3FFF200B</span>
+<span class="n">VI_EVENT_CLEAR</span>               <span class="o">=</span> <span class="mh">0x3FFF200D</span>
+<span class="n">VI_EVENT_EXCEPTION</span>           <span class="o">=</span> <span class="mh">0xBFFF200E</span>
+<span class="n">VI_EVENT_GPIB_CIC</span>            <span class="o">=</span> <span class="mh">0x3FFF2012</span>
+<span class="n">VI_EVENT_GPIB_TALK</span>           <span class="o">=</span> <span class="mh">0x3FFF2013</span>
+<span class="n">VI_EVENT_GPIB_LISTEN</span>         <span class="o">=</span> <span class="mh">0x3FFF2014</span>
+<span class="n">VI_EVENT_VXI_VME_SYSFAIL</span>     <span class="o">=</span> <span class="mh">0x3FFF201D</span>
+<span class="n">VI_EVENT_VXI_VME_SYSRESET</span>    <span class="o">=</span> <span class="mh">0x3FFF201E</span>
+<span class="n">VI_EVENT_VXI_SIGP</span>            <span class="o">=</span> <span class="mh">0x3FFF2020</span>
+<span class="n">VI_EVENT_VXI_VME_INTR</span>        <span class="o">=</span> <span class="mh">0xBFFF2021</span>
+<span class="n">VI_EVENT_PXI_INTR</span>            <span class="o">=</span> <span class="mh">0x3FFF2022</span>
+<span class="n">VI_EVENT_TCPIP_CONNECT</span>       <span class="o">=</span> <span class="mh">0x3FFF2036</span>
+<span class="n">VI_EVENT_USB_INTR</span>            <span class="o">=</span> <span class="mh">0x3FFF2037</span>
+
+<span class="n">VI_ALL_ENABLED_EVENTS</span>        <span class="o">=</span> <span class="mh">0x3FFF7FFF</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Values and Ranges</span>
+<span class="c1">#</span>
+
+<span class="n">VI_FIND_BUFLEN</span>               <span class="o">=</span> <span class="mi">256</span>
+<span class="n">VI_NULL</span>                      <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">VI_TRUE</span>                      <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_FALSE</span>                     <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">VI_INTF_GPIB</span>                 <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_INTF_VXI</span>                  <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_INTF_GPIB_VXI</span>             <span class="o">=</span> <span class="mi">3</span>
+<span class="n">VI_INTF_ASRL</span>                 <span class="o">=</span> <span class="mi">4</span>
+<span class="n">VI_INTF_PXI</span>                  <span class="o">=</span> <span class="mi">5</span>
+<span class="n">VI_INTF_TCPIP</span>                <span class="o">=</span> <span class="mi">6</span>
+<span class="n">VI_INTF_USB</span>                  <span class="o">=</span> <span class="mi">7</span>
+<span class="n">VI_INTF_RIO</span>                  <span class="o">=</span> <span class="mi">8</span>
+<span class="n">VI_INTF_FIREWIRE</span>             <span class="o">=</span> <span class="mi">9</span>
+
+<span class="n">VI_PROT_NORMAL</span>               <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_PROT_FDC</span>                  <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_PROT_HS488</span>                <span class="o">=</span> <span class="mi">3</span>
+<span class="n">VI_PROT_4882_STRS</span>            <span class="o">=</span> <span class="mi">4</span>
+<span class="n">VI_PROT_USBTMC_VENDOR</span>        <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">VI_FDC_NORMAL</span>                <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_FDC_STREAM</span>                <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">VI_LOCAL_SPACE</span>               <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_A16_SPACE</span>                 <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_A24_SPACE</span>                 <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_A32_SPACE</span>                 <span class="o">=</span> <span class="mi">3</span>
+<span class="n">VI_OPAQUE_SPACE</span>              <span class="o">=</span> <span class="mh">0xFFFF</span>
+
+<span class="n">VI_UNKNOWN_LA</span>                <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">VI_UNKNOWN_SLOT</span>              <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">VI_UNKNOWN_LEVEL</span>             <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="n">VI_QUEUE</span>                     <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_HNDLR</span>                     <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_SUSPEND_HNDLR</span>             <span class="o">=</span> <span class="mi">4</span>
+<span class="n">VI_ALL_MECH</span>                  <span class="o">=</span> <span class="mh">0xFFFF</span>
+
+<span class="n">VI_ANY_HNDLR</span>                 <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">VI_TRIG_ALL</span>                  <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+<span class="n">VI_TRIG_SW</span>                   <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">VI_TRIG_TTL0</span>                 <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_TRIG_TTL1</span>                 <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_TRIG_TTL2</span>                 <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_TRIG_TTL3</span>                 <span class="o">=</span> <span class="mi">3</span>
+<span class="n">VI_TRIG_TTL4</span>                 <span class="o">=</span> <span class="mi">4</span>
+<span class="n">VI_TRIG_TTL5</span>                 <span class="o">=</span> <span class="mi">5</span>
+<span class="n">VI_TRIG_TTL6</span>                 <span class="o">=</span> <span class="mi">6</span>
+<span class="n">VI_TRIG_TTL7</span>                 <span class="o">=</span> <span class="mi">7</span>
+<span class="n">VI_TRIG_ECL0</span>                 <span class="o">=</span> <span class="mi">8</span>
+<span class="n">VI_TRIG_ECL1</span>                 <span class="o">=</span> <span class="mi">9</span>
+<span class="n">VI_TRIG_PANEL_IN</span>             <span class="o">=</span> <span class="mi">27</span>
+<span class="n">VI_TRIG_PANEL_OUT</span>            <span class="o">=</span> <span class="mi">28</span>
+
+<span class="n">VI_TRIG_PROT_DEFAULT</span>         <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_TRIG_PROT_ON</span>              <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_TRIG_PROT_OFF</span>             <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_TRIG_PROT_SYNC</span>            <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">VI_READ_BUF</span>                  <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_WRITE_BUF</span>                 <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_READ_BUF_DISCARD</span>          <span class="o">=</span> <span class="mi">4</span>
+<span class="n">VI_WRITE_BUF_DISCARD</span>         <span class="o">=</span> <span class="mi">8</span>
+<span class="n">VI_IO_IN_BUF</span>                 <span class="o">=</span> <span class="mi">16</span>
+<span class="n">VI_IO_OUT_BUF</span>                <span class="o">=</span> <span class="mi">32</span>
+<span class="n">VI_IO_IN_BUF_DISCARD</span>         <span class="o">=</span> <span class="mi">64</span>
+<span class="n">VI_IO_OUT_BUF_DISCARD</span>        <span class="o">=</span> <span class="mi">128</span>
+
+<span class="n">VI_FLUSH_ON_ACCESS</span>           <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_FLUSH_WHEN_FULL</span>           <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_FLUSH_DISABLE</span>             <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">VI_NMAPPED</span>                   <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_USE_OPERS</span>                 <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_DEREF_ADDR</span>                <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">VI_TMO_IMMEDIATE</span>             <span class="o">=</span> <span class="mi">0</span>
+<span class="c1"># Attention! The following is *really* positive!  (unsigned long)</span>
+<span class="n">VI_TMO_INFINITE</span>              <span class="o">=</span> <span class="mh">0xFFFFFFFF</span>
+
+<span class="n">VI_NO_LOCK</span>                   <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_EXCLUSIVE_LOCK</span>            <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_SHARED_LOCK</span>               <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_LOAD_CONFIG</span>               <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">VI_NO_SEC_ADDR</span>               <span class="o">=</span> <span class="mh">0xFFFF</span>
+
+<span class="n">VI_ASRL_PAR_NONE</span>             <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_ASRL_PAR_ODD</span>              <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_ASRL_PAR_EVEN</span>             <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_ASRL_PAR_MARK</span>             <span class="o">=</span> <span class="mi">3</span>
+<span class="n">VI_ASRL_PAR_SPACE</span>            <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">VI_ASRL_STOP_ONE</span>             <span class="o">=</span> <span class="mi">10</span>
+<span class="n">VI_ASRL_STOP_ONE5</span>            <span class="o">=</span> <span class="mi">15</span>
+<span class="n">VI_ASRL_STOP_TWO</span>             <span class="o">=</span> <span class="mi">20</span>
+
+<span class="n">VI_ASRL_FLOW_NONE</span>            <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_ASRL_FLOW_XON_XOFF</span>        <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_ASRL_FLOW_RTS_CTS</span>         <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_ASRL_FLOW_DTR_DSR</span>         <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">VI_ASRL_END_NONE</span>             <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_ASRL_END_LAST_BIT</span>         <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_ASRL_END_TERMCHAR</span>         <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_ASRL_END_BREAK</span>            <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">VI_STATE_ASSERTED</span>            <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_STATE_UNASSERTED</span>          <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_STATE_UNKNOWN</span>             <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="n">VI_BIG_ENDIAN</span>                <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_LITTLE_ENDIAN</span>             <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">VI_DATA_PRIV</span>                 <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_DATA_NPRIV</span>                <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_PROG_PRIV</span>                 <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_PROG_NPRIV</span>                <span class="o">=</span> <span class="mi">3</span>
+<span class="n">VI_BLCK_PRIV</span>                 <span class="o">=</span> <span class="mi">4</span>
+<span class="n">VI_BLCK_NPRIV</span>                <span class="o">=</span> <span class="mi">5</span>
+<span class="n">VI_D64_PRIV</span>                  <span class="o">=</span> <span class="mi">6</span>
+<span class="n">VI_D64_NPRIV</span>                 <span class="o">=</span> <span class="mi">7</span>
+
+<span class="n">VI_WIDTH_8</span>                   <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_WIDTH_16</span>                  <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_WIDTH_32</span>                  <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">VI_GPIB_REN_DEASSERT</span>         <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_GPIB_REN_ASSERT</span>           <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_GPIB_REN_DEASSERT_GTL</span>     <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_GPIB_REN_ASSERT_ADDRESS</span>   <span class="o">=</span> <span class="mi">3</span>
+<span class="n">VI_GPIB_REN_ASSERT_LLO</span>       <span class="o">=</span> <span class="mi">4</span>
+<span class="n">VI_GPIB_REN_ASSERT_ADDRESS_LLO</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">VI_GPIB_REN_ADDRESS_GTL</span>      <span class="o">=</span> <span class="mi">6</span>
+
+<span class="n">VI_GPIB_ATN_DEASSERT</span>         <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_GPIB_ATN_ASSERT</span>           <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_GPIB_ATN_DEASSERT_HANDSHAKE</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_GPIB_ATN_ASSERT_IMMEDIATE</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">VI_GPIB_HS488_DISABLED</span>       <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_GPIB_HS488_NIMPL</span>          <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="n">VI_GPIB_UNADDRESSED</span>          <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_GPIB_TALKER</span>               <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_GPIB_LISTENER</span>             <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">VI_VXI_CMD16</span>                 <span class="o">=</span> <span class="mh">0x0200</span>
+<span class="n">VI_VXI_CMD16_RESP16</span>          <span class="o">=</span> <span class="mh">0x0202</span>
+<span class="n">VI_VXI_RESP16</span>                <span class="o">=</span> <span class="mh">0x0002</span>
+<span class="n">VI_VXI_CMD32</span>                 <span class="o">=</span> <span class="mh">0x0400</span>
+<span class="n">VI_VXI_CMD32_RESP16</span>          <span class="o">=</span> <span class="mh">0x0402</span>
+<span class="n">VI_VXI_CMD32_RESP32</span>          <span class="o">=</span> <span class="mh">0x0404</span>
+<span class="n">VI_VXI_RESP32</span>                <span class="o">=</span> <span class="mh">0x0004</span>
+
+<span class="n">VI_ASSERT_SIGNAL</span>             <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">VI_ASSERT_USE_ASSIGNED</span>       <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_ASSERT_IRQ1</span>               <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_ASSERT_IRQ2</span>               <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_ASSERT_IRQ3</span>               <span class="o">=</span> <span class="mi">3</span>
+<span class="n">VI_ASSERT_IRQ4</span>               <span class="o">=</span> <span class="mi">4</span>
+<span class="n">VI_ASSERT_IRQ5</span>               <span class="o">=</span> <span class="mi">5</span>
+<span class="n">VI_ASSERT_IRQ6</span>               <span class="o">=</span> <span class="mi">6</span>
+<span class="n">VI_ASSERT_IRQ7</span>               <span class="o">=</span> <span class="mi">7</span>
+
+<span class="n">VI_UTIL_ASSERT_SYSRESET</span>      <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_UTIL_ASSERT_SYSFAIL</span>       <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_UTIL_DEASSERT_SYSFAIL</span>     <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">VI_VXI_CLASS_MEMORY</span>          <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_VXI_CLASS_EXTENDED</span>        <span class="o">=</span> <span class="mi">1</span>
+<span class="n">VI_VXI_CLASS_MESSAGE</span>         <span class="o">=</span> <span class="mi">2</span>
+<span class="n">VI_VXI_CLASS_REGISTER</span>        <span class="o">=</span> <span class="mi">3</span>
+<span class="n">VI_VXI_CLASS_OTHER</span>           <span class="o">=</span> <span class="mi">4</span>
+
+<span class="n">VI_PXI_LBUS_UNKNOWN</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">VI_PXI_LBUS_NONE</span>    <span class="o">=</span>  <span class="mi">0</span>
+<span class="n">VI_PXI_LBUS_STAR_TRIG_BUS_0</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">VI_PXI_LBUS_STAR_TRIG_BUS_1</span> <span class="o">=</span> <span class="mi">1001</span>
+<span class="n">VI_PXI_LBUS_STAR_TRIG_BUS_2</span> <span class="o">=</span> <span class="mi">1002</span>
+<span class="n">VI_PXI_LBUS_STAR_TRIG_BUS_3</span> <span class="o">=</span> <span class="mi">1003</span>
+<span class="n">VI_PXI_LBUS_STAR_TRIG_BUS_4</span> <span class="o">=</span> <span class="mi">1004</span>
+<span class="n">VI_PXI_LBUS_STAR_TRIG_BUS_5</span> <span class="o">=</span> <span class="mi">1005</span>
+<span class="n">VI_PXI_LBUS_STAR_TRIG_BUS_6</span> <span class="o">=</span> <span class="mi">1006</span>
+<span class="n">VI_PXI_LBUS_STAR_TRIG_BUS_7</span> <span class="o">=</span> <span class="mi">1007</span>
+<span class="n">VI_PXI_LBUS_STAR_TRIG_BUS_8</span> <span class="o">=</span> <span class="mi">1008</span>
+<span class="n">VI_PXI_LBUS_STAR_TRIG_BUS_9</span> <span class="o">=</span> <span class="mi">1009</span>
+<span class="n">VI_PXI_STAR_TRIG_CONTROLLER</span> <span class="o">=</span> <span class="mi">1413</span>
+<span class="n">VI_PXI_LBUS_SCXI</span> <span class="o">=</span> <span class="mi">2000</span>
+
+<span class="n">VI_ATTR_PXI_DEV_NUM</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0201</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_FUNC_NUM</span>        <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0202</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_BUS_NUM</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0205</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_CHASSIS</span>         <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0206</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_SLOTPATH</span>        <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0xBFFF0207</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_SLOT_LBUS_LEFT</span>  <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0208</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_SLOT_LBUS_RIGHT</span> <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0209</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_TRIG_BUS</span>        <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF020A</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_STAR_TRIG_BUS</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF020B</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_STAR_TRIG_LINE</span>  <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF020C</span><span class="p">)</span>
+
+<span class="n">VI_ATTR_PXI_MEM_TYPE_BAR0</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0211</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_TYPE_BAR1</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0212</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_TYPE_BAR2</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0213</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_TYPE_BAR3</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0214</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_TYPE_BAR4</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0215</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_TYPE_BAR5</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0216</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_BASE_BAR0</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0221</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_BASE_BAR1</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0222</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_BASE_BAR2</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0223</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_BASE_BAR3</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0224</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_BASE_BAR4</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0225</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_BASE_BAR5</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0226</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_SIZE_BAR0</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0231</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_SIZE_BAR1</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0232</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_SIZE_BAR2</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0233</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_SIZE_BAR3</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0234</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_SIZE_BAR4</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0235</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MEM_SIZE_BAR5</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0236</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_IS_EXPRESS</span>      <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0240</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_SLOT_LWIDTH</span>     <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0241</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_MAX_LWIDTH</span>      <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0242</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_ACTUAL_LWIDTH</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0243</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_DSTAR_BUS</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0244</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_DSTAR_SET</span>       <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF0245</span><span class="p">)</span>
+
+<span class="n">VI_ATTR_PXI_SRC_TRIG_BUS</span>    <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF020D</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_DEST_TRIG_BUS</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF020E</span><span class="p">)</span>
+
+<span class="n">VI_ATTR_PXI_RECV_INTR_SEQ</span>   <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF4240</span><span class="p">)</span>
+<span class="n">VI_ATTR_PXI_RECV_INTR_DATA</span>  <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF4241</span><span class="p">)</span>
+
+<span class="c1"># TODO: What is the value</span>
+<span class="n">VI_ATTR_PXI_MEM_BASE_BARX</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">VI_ATTR_PXI_MEM_SIZE_BARX</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">VI_ATTR_PXI_MEM_TYPE_BARX</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="n">VI_ATTR_USB_BULK_OUT_PIPE</span> <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF01A2</span><span class="p">)</span>
+<span class="n">VI_ATTR_USB_BULK_IN_PIPE</span> <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF01A3</span><span class="p">)</span>
+<span class="n">VI_ATTR_USB_INTR_IN_PIPE</span> <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF01A4</span><span class="p">)</span>
+<span class="n">VI_ATTR_USB_CLASS</span> <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF01A5</span><span class="p">)</span>
+<span class="n">VI_ATTR_USB_SUBCLASS</span> <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF01A6</span><span class="p">)</span>
+<span class="n">VI_ATTR_USB_ALT_SETTING</span> <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF01A8</span><span class="p">)</span>
+<span class="n">VI_ATTR_USB_END_IN</span> <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF01A9</span><span class="p">)</span>
+<span class="n">VI_ATTR_USB_NUM_INTFCS</span> <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF01AA</span><span class="p">)</span>
+<span class="n">VI_ATTR_USB_NUM_PIPES</span> <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF01AB</span><span class="p">)</span>
+<span class="n">VI_ATTR_USB_BULK_OUT_STATUS</span> <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF01AC</span><span class="p">)</span>
+<span class="n">VI_ATTR_USB_BULK_IN_STATUS</span> <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF01AD</span><span class="p">)</span>
+<span class="n">VI_ATTR_USB_INTR_IN_STATUS</span> <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF01AE</span><span class="p">)</span>
+<span class="n">VI_ATTR_USB_CTRL_PIPE</span> <span class="o">=</span> <span class="n">_to_int</span><span class="p">(</span><span class="mh">0x3FFF01B0</span><span class="p">)</span>
+<span class="n">VI_USB_PIPE_STATE_UNKNOWN</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">VI_USB_PIPE_READY</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_USB_PIPE_STALLED</span> <span class="o">=</span> <span class="mi">1</span>
+
+
+<span class="c1"># From VI_ATTR_USB_END_IN</span>
+<span class="n">VI_USB_END_NONE</span>             <span class="o">=</span> <span class="mi">0</span>
+<span class="n">VI_USB_END_SHORT</span>            <span class="o">=</span> <span class="mi">4</span>
+<span class="n">VI_USB_END_SHORT_OR_COUNT</span>   <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># &quot;Backwards compatibility&quot; according to NI</span>
+
+<span class="n">VI_NORMAL</span>                    <span class="o">=</span> <span class="n">VI_PROT_NORMAL</span>
+<span class="n">VI_FDC</span>                       <span class="o">=</span> <span class="n">VI_PROT_FDC</span>
+<span class="n">VI_HS488</span>                     <span class="o">=</span> <span class="n">VI_PROT_HS488</span>
+<span class="n">VI_ASRL488</span>                   <span class="o">=</span> <span class="n">VI_PROT_4882_STRS</span>
+<span class="n">VI_ASRL_IN_BUF</span>               <span class="o">=</span> <span class="n">VI_IO_IN_BUF</span>
+<span class="n">VI_ASRL_OUT_BUF</span>              <span class="o">=</span> <span class="n">VI_IO_OUT_BUF</span>
+<span class="n">VI_ASRL_IN_BUF_DISCARD</span>       <span class="o">=</span> <span class="n">VI_IO_IN_BUF_DISCARD</span>
+<span class="n">VI_ASRL_OUT_BUF_DISCARD</span>      <span class="o">=</span> <span class="n">VI_IO_OUT_BUF_DISCARD</span>
+
+
+<span class="c1"># Enums</span>
+
+<div class="viewcode-block" id="AccessModes"><a class="viewcode-back" href="../../api/constants.html#pyvisa.constants.AccessModes">[docs]</a><span class="nd">@enum</span><span class="o">.</span><span class="n">unique</span>
+<span class="k">class</span> <span class="nc">AccessModes</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">IntEnum</span><span class="p">):</span>
+
+    <span class="c1">#: Does not obtain any lock on the VISA resource.</span>
+    <span class="n">no_lock</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1">#: Obtains a exclusive lock on the VISA resource.</span>
+    <span class="n">exclusive_lock</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c1">#: Obtains a lock on the VISA resouce which may be shared</span>
+    <span class="c1">#: between multiple VISA sessions.</span>
+    <span class="n">shared_lock</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="StopBits"><a class="viewcode-back" href="../../api/constants.html#pyvisa.constants.StopBits">[docs]</a><span class="nd">@enum</span><span class="o">.</span><span class="n">unique</span>
+<span class="k">class</span> <span class="nc">StopBits</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">IntEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The number of stop bits that indicate the end of a frame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">one</span> <span class="o">=</span> <span class="n">VI_ASRL_STOP_ONE</span>
+    <span class="n">one_and_a_half</span> <span class="o">=</span> <span class="n">VI_ASRL_STOP_ONE5</span>
+    <span class="n">two</span> <span class="o">=</span> <span class="n">VI_ASRL_STOP_TWO</span></div>
+
+
+<div class="viewcode-block" id="Parity"><a class="viewcode-back" href="../../api/constants.html#pyvisa.constants.Parity">[docs]</a><span class="nd">@enum</span><span class="o">.</span><span class="n">unique</span>
+<span class="k">class</span> <span class="nc">Parity</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">IntEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The parity types to use with every frame transmitted and received on a serial session.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">none</span> <span class="o">=</span> <span class="n">VI_ASRL_PAR_NONE</span>
+    <span class="n">odd</span> <span class="o">=</span> <span class="n">VI_ASRL_PAR_ODD</span>
+    <span class="n">even</span> <span class="o">=</span> <span class="n">VI_ASRL_PAR_EVEN</span>
+    <span class="n">mark</span> <span class="o">=</span> <span class="n">VI_ASRL_PAR_MARK</span>
+    <span class="n">space</span> <span class="o">=</span> <span class="n">VI_ASRL_PAR_SPACE</span></div>
+
+
+<div class="viewcode-block" id="SerialTermination"><a class="viewcode-back" href="../../api/constants.html#pyvisa.constants.SerialTermination">[docs]</a><span class="nd">@enum</span><span class="o">.</span><span class="n">unique</span>
+<span class="k">class</span> <span class="nc">SerialTermination</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">IntEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The available methods for terminating a serial transfer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The transfer terminates when all requested data is transferred</span>
+    <span class="c1">#: or when an error occurs.</span>
+    <span class="n">none</span> <span class="o">=</span> <span class="n">VI_ASRL_END_NONE</span>
+
+    <span class="c1">#: The transfer occurs with the last bit not set until the last</span>
+    <span class="c1">#: character is sent.</span>
+    <span class="n">last_bit</span> <span class="o">=</span> <span class="n">VI_ASRL_END_LAST_BIT</span>
+
+    <span class="c1">#: The transfer terminate by searching for &quot;/&quot;</span>
+    <span class="c1">#: appending the termination character.</span>
+    <span class="n">termination_char</span> <span class="o">=</span> <span class="n">VI_ASRL_END_TERMCHAR</span>
+
+    <span class="c1">#: The write transmits a break after all the characters for the</span>
+    <span class="c1">#: write are sent.</span>
+    <span class="n">termination_break</span> <span class="o">=</span> <span class="n">VI_ASRL_END_BREAK</span></div>
+
+
+<div class="viewcode-block" id="InterfaceType"><a class="viewcode-back" href="../../api/constants.html#pyvisa.constants.InterfaceType">[docs]</a><span class="nd">@enum</span><span class="o">.</span><span class="n">unique</span>
+<span class="k">class</span> <span class="nc">InterfaceType</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">IntEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The hardware interface</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Used for unknown interface type strings.</span>
+    <span class="n">unknown</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="c1">#: GPIB Interface.</span>
+    <span class="n">gpib</span> <span class="o">=</span> <span class="n">VI_INTF_GPIB</span>
+
+    <span class="c1">#: VXI (VME eXtensions for Instrumentation), VME, MXI (Multisystem eXtension Interface).</span>
+    <span class="n">vxi</span> <span class="o">=</span> <span class="n">VI_INTF_VXI</span>
+
+    <span class="c1">#: GPIB VXI (VME eXtensions for Instrumentation).</span>
+    <span class="n">gpib_vxi</span> <span class="o">=</span> <span class="n">VI_INTF_GPIB_VXI</span>
+
+    <span class="c1">#: Serial devices connected to either an RS-232 or RS-485 controller.</span>
+    <span class="n">asrl</span> <span class="o">=</span> <span class="n">VI_INTF_ASRL</span>
+
+    <span class="c1">#: PXI device.</span>
+    <span class="n">pxi</span> <span class="o">=</span> <span class="n">VI_INTF_PXI</span>
+
+    <span class="c1">#: TCPIP device.</span>
+    <span class="n">tcpip</span> <span class="o">=</span> <span class="n">VI_INTF_TCPIP</span>
+
+    <span class="c1">#: Universal Serial Bus (USB) hardware bus.</span>
+    <span class="n">usb</span> <span class="o">=</span> <span class="n">VI_INTF_USB</span>
+
+    <span class="c1">#: Rio device.</span>
+    <span class="n">rio</span> <span class="o">=</span> <span class="n">VI_INTF_RIO</span>
+
+    <span class="c1">#: Firewire device.</span>
+    <span class="n">firewire</span> <span class="o">=</span> <span class="n">VI_INTF_FIREWIRE</span>
+
+    <span class="c1">#: Rohde and Schwarz Device via Passport</span>
+    <span class="n">rsnrp</span> <span class="o">=</span> <span class="mi">33024</span></div>
+
+
+<div class="viewcode-block" id="AddressState"><a class="viewcode-back" href="../../api/constants.html#pyvisa.constants.AddressState">[docs]</a><span class="nd">@enum</span><span class="o">.</span><span class="n">unique</span>
+<span class="k">class</span> <span class="nc">AddressState</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">IntEnum</span><span class="p">):</span>
+
+    <span class="n">unaddressed</span> <span class="o">=</span> <span class="n">VI_GPIB_UNADDRESSED</span>
+    <span class="n">talker</span> <span class="o">=</span> <span class="n">VI_GPIB_TALKER</span>
+    <span class="n">listenr</span> <span class="o">=</span> <span class="n">VI_GPIB_LISTENER</span></div>
+
+
+<div class="viewcode-block" id="IOProtocol"><a class="viewcode-back" href="../../api/constants.html#pyvisa.constants.IOProtocol">[docs]</a><span class="nd">@enum</span><span class="o">.</span><span class="n">unique</span>
+<span class="k">class</span> <span class="nc">IOProtocol</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">IntEnum</span><span class="p">):</span>
+
+    <span class="n">normal</span> <span class="o">=</span> <span class="n">VI_PROT_NORMAL</span>
+
+    <span class="c1">#: Fast data channel (FDC) protocol for VXI</span>
+    <span class="n">fdc</span> <span class="o">=</span> <span class="n">VI_PROT_FDC</span>
+
+    <span class="c1">#: High speed 488 transfer for GPIB</span>
+    <span class="n">hs488</span> <span class="o">=</span> <span class="n">VI_PROT_HS488</span>
+
+    <span class="c1">#: 488 style transfer for serial</span>
+    <span class="n">protocol4882_strs</span> <span class="o">=</span> <span class="n">VI_PROT_4882_STRS</span>
+
+    <span class="c1">#: Test measurement class vendor specific for USB</span>
+    <span class="n">usbtmc_vendor</span> <span class="o">=</span> <span class="n">VI_PROT_USBTMC_VENDOR</span></div>
+
+
+<div class="viewcode-block" id="LineState"><a class="viewcode-back" href="../../api/constants.html#pyvisa.constants.LineState">[docs]</a><span class="nd">@enum</span><span class="o">.</span><span class="n">unique</span>
+<span class="k">class</span> <span class="nc">LineState</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">IntEnum</span><span class="p">):</span>
+
+    <span class="n">asserted</span> <span class="o">=</span> <span class="n">VI_STATE_ASSERTED</span>
+    <span class="n">unasserted</span> <span class="o">=</span> <span class="n">VI_STATE_UNASSERTED</span>
+    <span class="n">unknown</span> <span class="o">=</span> <span class="n">VI_STATE_UNKNOWN</span></div>
+
+
+<span class="nd">@enum</span><span class="o">.</span><span class="n">unique</span>
+<span class="k">class</span> <span class="nc">EventMechanism</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">IntEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The available event mechanisms for event handling.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">queue</span> <span class="o">=</span> <span class="n">VI_QUEUE</span>
+    <span class="n">handler</span> <span class="o">=</span> <span class="n">VI_HNDLR</span>
+
+    <span class="c1">#: events queued but handler not called</span>
+    <span class="n">suspend_handler</span> <span class="o">=</span> <span class="n">VI_SUSPEND_HNDLR</span>
+
+    <span class="nb">all</span> <span class="o">=</span> <span class="n">VI_ALL_MECH</span>
+
+
+<span class="c1"># Note that enum.IntEnum fails here for python2:</span>
+<span class="c1">#  OverflowError: Python int too large to convert to C long</span>
+<span class="c1"># so use LongEnum instead (some values are too large, and ViEventType is unsigned)</span>
+<span class="nd">@enum</span><span class="o">.</span><span class="n">unique</span>
+<span class="k">class</span> <span class="nc">EventType</span><span class="p">(</span><span class="n">LongEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The available event types for event handling.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">io_completion</span> <span class="o">=</span> <span class="n">VI_EVENT_IO_COMPLETION</span>
+    <span class="n">trig</span> <span class="o">=</span> <span class="n">VI_EVENT_TRIG</span>
+    <span class="n">service_request</span> <span class="o">=</span> <span class="n">VI_EVENT_SERVICE_REQ</span>
+    <span class="n">clear</span> <span class="o">=</span> <span class="n">VI_EVENT_CLEAR</span>
+    <span class="n">exception</span> <span class="o">=</span> <span class="n">VI_EVENT_EXCEPTION</span>
+    <span class="n">gpib_controller_in_charge</span> <span class="o">=</span> <span class="n">VI_EVENT_GPIB_CIC</span>
+    <span class="n">gpib_talk</span> <span class="o">=</span> <span class="n">VI_EVENT_GPIB_TALK</span>
+    <span class="n">gpib_listen</span> <span class="o">=</span> <span class="n">VI_EVENT_GPIB_LISTEN</span>
+    <span class="n">vxi_vme_sysfail</span> <span class="o">=</span> <span class="n">VI_EVENT_VXI_VME_SYSFAIL</span>
+    <span class="n">vxi_vme_sysreset</span> <span class="o">=</span> <span class="n">VI_EVENT_VXI_VME_SYSRESET</span>
+    <span class="n">vxi_signal_interrupt</span> <span class="o">=</span> <span class="n">VI_EVENT_VXI_SIGP</span>
+    <span class="n">vxi_vme_interrupt</span> <span class="o">=</span> <span class="n">VI_EVENT_VXI_VME_INTR</span>
+    <span class="n">pxi_interrupt</span> <span class="o">=</span> <span class="n">VI_EVENT_PXI_INTR</span>
+    <span class="n">tcpip_connect</span> <span class="o">=</span> <span class="n">VI_EVENT_TCPIP_CONNECT</span>
+    <span class="n">usb_interrupt</span> <span class="o">=</span> <span class="n">VI_EVENT_USB_INTR</span>
+    <span class="n">all_enabled</span> <span class="o">=</span> <span class="n">VI_ALL_ENABLED_EVENTS</span>
+
+
+<div class="viewcode-block" id="StatusCode"><a class="viewcode-back" href="../../api/constants.html#pyvisa.constants.StatusCode">[docs]</a><span class="nd">@enum</span><span class="o">.</span><span class="n">unique</span>
+<span class="k">class</span> <span class="nc">StatusCode</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">IntEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Specifies the status codes that NI-VISA driver-level operations can return.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The operation was aborted.</span>
+    <span class="n">error_abort</span> <span class="o">=</span> <span class="n">VI_ERROR_ABORT</span>
+
+    <span class="c1">#: Insufficient system resources to perform necessary memory allocation.</span>
+    <span class="n">error_allocation</span> <span class="o">=</span> <span class="n">VI_ERROR_ALLOC</span>
+
+    <span class="c1">#: The specified attribute is read-only.</span>
+    <span class="n">error_attribute_read_only</span> <span class="o">=</span> <span class="n">VI_ERROR_ATTR_READONLY</span>
+
+    <span class="c1">#: Bus error occurred during transfer.</span>
+    <span class="n">error_bus_error</span> <span class="o">=</span> <span class="n">VI_ERROR_BERR</span>
+
+    <span class="c1">#: Unable to deallocate the previously allocated data structures corresponding to this session or object reference.</span>
+    <span class="n">error_closing_failed</span> <span class="o">=</span> <span class="n">VI_ERROR_CLOSING_FAILED</span>
+
+    <span class="c1">#: The connection for the specified session has been lost.</span>
+    <span class="n">error_connection_lost</span> <span class="o">=</span> <span class="n">VI_ERROR_CONN_LOST</span>
+
+    <span class="c1">#: An error occurred while trying to open the specified file. Possible causes include an invalid path or lack of access rights.</span>
+    <span class="n">error_file_access</span> <span class="o">=</span> <span class="n">VI_ERROR_FILE_ACCESS</span>
+
+    <span class="c1">#: An error occurred while performing I/O on the specified file.</span>
+    <span class="n">error_file_i_o</span> <span class="o">=</span> <span class="n">VI_ERROR_FILE_IO</span>
+
+    <span class="c1">#: A handler is not currently installed for the specified event.</span>
+    <span class="n">error_handler_not_installed</span> <span class="o">=</span> <span class="n">VI_ERROR_HNDLR_NINSTALLED</span>
+
+    <span class="c1">#: Unable to queue the asynchronous operation because there is already an operation in progress.</span>
+    <span class="n">error_in_progress</span> <span class="o">=</span> <span class="n">VI_ERROR_IN_PROGRESS</span>
+
+    <span class="c1">#: Device reported an input protocol error during transfer.</span>
+    <span class="n">error_input_protocol_violation</span> <span class="o">=</span> <span class="n">VI_ERROR_INP_PROT_VIOL</span>
+
+    <span class="c1">#: The interface type is valid but the specified interface number is not configured.</span>
+    <span class="n">error_interface_number_not_configured</span> <span class="o">=</span> <span class="n">VI_ERROR_INTF_NUM_NCONFIG</span>
+
+    <span class="c1">#: An interrupt is still pending from a previous call.</span>
+    <span class="n">error_interrupt_pending</span> <span class="o">=</span> <span class="n">VI_ERROR_INTR_PENDING</span>
+
+    <span class="c1">#: The access key to the resource associated with this session is invalid.</span>
+    <span class="n">error_invalid_access_key</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_ACCESS_KEY</span>
+
+    <span class="c1">#: Invalid access mode.</span>
+    <span class="n">error_invalid_access_mode</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_ACC_MODE</span>
+
+    <span class="c1">#: Invalid address space specified.</span>
+    <span class="n">error_invalid_address_space</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_SPACE</span>
+
+    <span class="c1">#: Specified event context is invalid.</span>
+    <span class="n">error_invalid_context</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_CONTEXT</span>
+
+    <span class="c1">#: Specified degree is invalid.</span>
+    <span class="n">error_invalid_degree</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_DEGREE</span>
+
+    <span class="c1">#: Specified event type is not supported by the resource.</span>
+    <span class="n">error_invalid_event</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_EVENT</span>
+
+    <span class="c1">#: Invalid expression specified for search.</span>
+    <span class="n">error_invalid_expression</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_EXPR</span>
+
+    <span class="c1">#: A format specifier in the format string is invalid.</span>
+    <span class="n">error_invalid_format</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_FMT</span>
+
+    <span class="c1">#: The specified handler reference is invalid.</span>
+    <span class="n">error_invalid_handler_reference</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_HNDLR_REF</span>
+
+    <span class="c1">#: Specified job identifier is invalid.</span>
+    <span class="n">error_invalid_job_i_d</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_JOB_ID</span>
+
+    <span class="c1">#: Invalid length specified.</span>
+    <span class="n">error_invalid_length</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_LENGTH</span>
+
+    <span class="c1">#: The value specified by the line parameter is invalid.</span>
+    <span class="n">error_invalid_line</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_LINE</span>
+
+    <span class="c1">#: The specified type of lock is not supported by this resource.</span>
+    <span class="n">error_invalid_lock_type</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_LOCK_TYPE</span>
+
+    <span class="c1">#: Invalid buffer mask specified.</span>
+    <span class="n">error_invalid_mask</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_MASK</span>
+
+    <span class="c1">#: Invalid mechanism specified.</span>
+    <span class="n">error_invalid_mechanism</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_MECH</span>
+
+    <span class="c1">#: The specified mode is invalid.</span>
+    <span class="n">error_invalid_mode</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_MODE</span>
+
+    <span class="c1">#: The specified session or object reference is invalid.</span>
+    <span class="n">error_invalid_object</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_OBJECT</span>
+
+    <span class="c1">#: Invalid offset specified.</span>
+    <span class="n">error_invalid_offset</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_OFFSET</span>
+
+    <span class="c1">#: The value of an unknown parameter is invalid.</span>
+    <span class="n">error_invalid_parameter</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_PARAMETER</span>
+
+    <span class="c1">#: The protocol specified is invalid.</span>
+    <span class="n">error_invalid_protocol</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_PROT</span>
+
+    <span class="c1">#: Invalid resource reference specified. Parsing error.</span>
+    <span class="n">error_invalid_resource_name</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_RSRC_NAME</span>
+
+    <span class="c1">#: Unable to start operation because setup is invalid due to inconsistent state of properties.</span>
+    <span class="n">error_invalid_setup</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_SETUP</span>
+
+    <span class="c1">#: Invalid size of window specified.</span>
+    <span class="n">error_invalid_size</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_SIZE</span>
+
+    <span class="c1">#: Invalid source or destination width specified.</span>
+    <span class="n">error_invalid_width</span> <span class="o">=</span> <span class="n">VI_ERROR_INV_WIDTH</span>
+
+    <span class="c1">#: Could not perform operation because of I/O error.</span>
+    <span class="n">error_io</span> <span class="o">=</span> <span class="n">VI_ERROR_IO</span>
+
+    <span class="c1">#: A code library required by VISA could not be located or loaded.</span>
+    <span class="n">error_library_not_found</span> <span class="o">=</span> <span class="n">VI_ERROR_LIBRARY_NFOUND</span>
+
+    <span class="c1">#: The specified trigger line is currently in use.</span>
+    <span class="n">error_line_in_use</span> <span class="o">=</span> <span class="n">VI_ERROR_LINE_IN_USE</span>
+
+    <span class="c1">#: The remote machine does not exist or is not accepting any connections.</span>
+    <span class="n">error_machine_not_available</span> <span class="o">=</span> <span class="n">VI_ERROR_MACHINE_NAVAIL</span>
+
+    <span class="c1">#: The device does not export any memory.</span>
+    <span class="n">error_memory_not_shared</span> <span class="o">=</span> <span class="n">VI_ERROR_MEM_NSHARED</span>
+
+    <span class="c1">#: No listeners condition is detected (both NRFD and NDAC are deasserted).</span>
+    <span class="n">error_no_listeners</span> <span class="o">=</span> <span class="n">VI_ERROR_NLISTENERS</span>
+
+    <span class="c1">#: The specified operation is unimplemented.</span>
+    <span class="n">error_nonimplemented_operation</span> <span class="o">=</span> <span class="n">VI_ERROR_NIMPL_OPER</span>
+
+    <span class="c1">#: The specified attribute is not defined or supported by the referenced session, event, or find list.</span>
+    <span class="n">error_nonsupported_attribute</span> <span class="o">=</span> <span class="n">VI_ERROR_NSUP_ATTR</span>
+
+    <span class="c1">#: The specified state of the attribute is not valid or is not supported as defined by the session, event, or find list.</span>
+    <span class="n">error_nonsupported_attribute_state</span> <span class="o">=</span> <span class="n">VI_ERROR_NSUP_ATTR_STATE</span>
+
+    <span class="c1">#: A format specifier in the format string is not supported.</span>
+    <span class="n">error_nonsupported_format</span> <span class="o">=</span> <span class="n">VI_ERROR_NSUP_FMT</span>
+
+    <span class="c1">#: The interface cannot generate an interrupt on the requested level or with the requested statusID value.</span>
+    <span class="n">error_nonsupported_interrupt</span> <span class="o">=</span> <span class="n">VI_ERROR_NSUP_INTR</span>
+
+    <span class="c1">#: The specified trigger source line (trigSrc) or destination line (trigDest) is not supported by this VISA implementation, or the combination of lines is not a valid mapping.</span>
+    <span class="n">error_nonsupported_line</span> <span class="o">=</span> <span class="n">VI_ERROR_NSUP_LINE</span>
+
+    <span class="c1">#: The specified mechanism is not supported for the specified event type.</span>
+    <span class="n">error_nonsupported_mechanism</span> <span class="o">=</span> <span class="n">VI_ERROR_NSUP_MECH</span>
+
+    <span class="c1">#: The specified mode is not supported by this VISA implementation.</span>
+    <span class="n">error_nonsupported_mode</span> <span class="o">=</span> <span class="n">VI_ERROR_NSUP_MODE</span>
+
+    <span class="c1">#: Specified offset is not accessible from this hardware.</span>
+    <span class="n">error_nonsupported_offset</span> <span class="o">=</span> <span class="n">VI_ERROR_NSUP_OFFSET</span>
+
+    <span class="c1">#: The specified offset is not properly aligned for the access width of the operation.</span>
+    <span class="n">error_nonsupported_offset_alignment</span> <span class="o">=</span> <span class="n">VI_ERROR_NSUP_ALIGN_OFFSET</span>
+
+    <span class="c1">#: The session or object reference does not support this operation.</span>
+    <span class="n">error_nonsupported_operation</span> <span class="o">=</span> <span class="n">VI_ERROR_NSUP_OPER</span>
+
+    <span class="c1">#: Cannot support source and destination widths that are different.</span>
+    <span class="n">error_nonsupported_varying_widths</span> <span class="o">=</span> <span class="n">VI_ERROR_NSUP_VAR_WIDTH</span>
+
+    <span class="c1">#: Specified width is not supported by this hardware.</span>
+    <span class="n">error_nonsupported_width</span> <span class="o">=</span> <span class="n">VI_ERROR_NSUP_WIDTH</span>
+
+    <span class="c1">#: Access to the remote machine is denied.</span>
+    <span class="n">error_no_permission</span> <span class="o">=</span> <span class="n">VI_ERROR_NPERMISSION</span>
+
+    <span class="c1">#: The interface associated with this session is not currently the Controller-in-Charge.</span>
+    <span class="n">error_not_cic</span> <span class="o">=</span> <span class="n">VI_ERROR_NCIC</span>
+
+    <span class="c1">#: The session must be enabled for events of the specified type in order to receive them.</span>
+    <span class="n">error_not_enabled</span> <span class="o">=</span> <span class="n">VI_ERROR_NENABLED</span>
+
+    <span class="c1">#: The interface associated with this session is not the system controller.</span>
+    <span class="n">error_not_system_controller</span> <span class="o">=</span> <span class="n">VI_ERROR_NSYS_CNTLR</span>
+
+    <span class="c1">#: Device reported an output protocol error during transfer.</span>
+    <span class="n">error_output_protocol_violation</span> <span class="o">=</span> <span class="n">VI_ERROR_OUTP_PROT_VIOL</span>
+
+    <span class="c1">#: Unable to queue asynchronous operation.</span>
+    <span class="n">error_queue_error</span> <span class="o">=</span> <span class="n">VI_ERROR_QUEUE_ERROR</span>
+
+    <span class="c1">#: The event queue for the specified type has overflowed, usually due to not closing previous events.</span>
+    <span class="n">error_queue_overflow</span> <span class="o">=</span> <span class="n">VI_ERROR_QUEUE_OVERFLOW</span>
+
+    <span class="c1">#: Violation of raw read protocol occurred during transfer.</span>
+    <span class="n">error_raw_read_protocol_violation</span> <span class="o">=</span> <span class="n">VI_ERROR_RAW_RD_PROT_VIOL</span>
+
+    <span class="c1">#: Violation of raw write protocol occurred during transfer.</span>
+    <span class="n">error_raw_write_protocol_violation</span> <span class="o">=</span> <span class="n">VI_ERROR_RAW_WR_PROT_VIOL</span>
+
+    <span class="c1">#: The resource is valid, but VISA cannot currently access it.</span>
+    <span class="n">error_resource_busy</span> <span class="o">=</span> <span class="n">VI_ERROR_RSRC_BUSY</span>
+
+    <span class="c1">#: Specified type of lock cannot be obtained or specified operation cannot be performed because the resource is locked.</span>
+    <span class="n">error_resource_locked</span> <span class="o">=</span> <span class="n">VI_ERROR_RSRC_LOCKED</span>
+
+    <span class="c1">#: Insufficient location information, or the device or resource is not present in the system.</span>
+    <span class="n">error_resource_not_found</span> <span class="o">=</span> <span class="n">VI_ERROR_RSRC_NFOUND</span>
+
+    <span class="c1">#: A previous response is still pending, causing a multiple query error.</span>
+    <span class="n">error_response_pending</span> <span class="o">=</span> <span class="n">VI_ERROR_RESP_PENDING</span>
+
+    <span class="c1">#: A framing error occurred during transfer.</span>
+    <span class="n">error_serial_framing</span> <span class="o">=</span> <span class="n">VI_ERROR_ASRL_FRAMING</span>
+
+    <span class="c1">#: An overrun error occurred during transfer. A character was not read from the hardware before the next character arrived.</span>
+    <span class="n">error_serial_overrun</span> <span class="o">=</span> <span class="n">VI_ERROR_ASRL_OVERRUN</span>
+
+    <span class="c1">#: A parity error occurred during transfer.</span>
+    <span class="n">error_serial_parity</span> <span class="o">=</span> <span class="n">VI_ERROR_ASRL_PARITY</span>
+
+    <span class="c1">#: The current session did not have any lock on the resource.</span>
+    <span class="n">error_session_not_locked</span> <span class="o">=</span> <span class="n">VI_ERROR_SESN_NLOCKED</span>
+
+    <span class="c1">#: Service request has not been received for the session.</span>
+    <span class="n">error_srq_not_occurred</span> <span class="o">=</span> <span class="n">VI_ERROR_SRQ_NOCCURRED</span>
+
+    <span class="c1">#: Unknown system error.</span>
+    <span class="n">error_system_error</span> <span class="o">=</span> <span class="n">VI_ERROR_SYSTEM_ERROR</span>
+
+    <span class="c1">#: Timeout expired before operation completed.</span>
+    <span class="n">error_timeout</span> <span class="o">=</span> <span class="n">VI_ERROR_TMO</span>
+
+    <span class="c1">#: The path from the trigger source line (trigSrc) to the destination line (trigDest) is not currently mapped.</span>
+    <span class="n">error_trigger_not_mapped</span> <span class="o">=</span> <span class="n">VI_ERROR_TRIG_NMAPPED</span>
+
+    <span class="c1">#: A specified user buffer is not valid or cannot be accessed for the required size.</span>
+    <span class="n">error_user_buffer</span> <span class="o">=</span> <span class="n">VI_ERROR_USER_BUF</span>
+
+    <span class="c1">#: The specified session currently contains a mapped window.</span>
+    <span class="n">error_window_already_mapped</span> <span class="o">=</span> <span class="n">VI_ERROR_WINDOW_MAPPED</span>
+
+    <span class="c1">#: The specified session is currently unmapped.</span>
+    <span class="n">error_window_not_mapped</span> <span class="o">=</span> <span class="n">VI_ERROR_WINDOW_NMAPPED</span>
+
+    <span class="c1">#: Operation completed successfully.</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="n">VI_SUCCESS</span>
+
+    <span class="c1">#: Session opened successfully, but the device at the specified address is not responding.</span>
+    <span class="n">success_device_not_present</span> <span class="o">=</span> <span class="n">VI_SUCCESS_DEV_NPRESENT</span>
+
+    <span class="c1">#: Specified event is already disabled for at least one of the specified mechanisms.</span>
+    <span class="n">success_event_already_disabled</span> <span class="o">=</span> <span class="n">VI_SUCCESS_EVENT_DIS</span>
+
+    <span class="c1">#: Specified event is already enabled for at least one of the specified mechanisms.</span>
+    <span class="n">success_event_already_enabled</span> <span class="o">=</span> <span class="n">VI_SUCCESS_EVENT_EN</span>
+
+    <span class="c1">#: The number of bytes read is equal to the input count.</span>
+    <span class="n">success_max_count_read</span> <span class="o">=</span> <span class="n">VI_SUCCESS_MAX_CNT</span>
+
+    <span class="c1">#: Operation completed successfully, and this session has nested exclusive locks.</span>
+    <span class="n">success_nested_exclusive</span> <span class="o">=</span> <span class="n">VI_SUCCESS_NESTED_EXCLUSIVE</span>
+
+    <span class="c1">#: Operation completed successfully, and this session has nested shared locks.</span>
+    <span class="n">success_nested_shared</span> <span class="o">=</span> <span class="n">VI_SUCCESS_NESTED_SHARED</span>
+
+    <span class="c1">#: Event handled successfully. Do not invoke any other handlers on this session for this event.</span>
+    <span class="n">success_no_more_handler_calls_in_chain</span> <span class="o">=</span> <span class="n">VI_SUCCESS_NCHAIN</span>
+
+    <span class="c1">#: Operation completed successfully, but the queue was already empty.</span>
+    <span class="n">success_queue_already_empty</span> <span class="o">=</span> <span class="n">VI_SUCCESS_QUEUE_EMPTY</span>
+
+    <span class="c1">#: Wait terminated successfully on receipt of an event notification. There is still at least one more event occurrence of the requested type(s) available for this session.</span>
+    <span class="n">success_queue_not_empty</span> <span class="o">=</span> <span class="n">VI_SUCCESS_QUEUE_NEMPTY</span>
+
+    <span class="c1">#: Asynchronous operation request was performed synchronously.</span>
+    <span class="n">success_syncronous</span> <span class="o">=</span> <span class="n">VI_SUCCESS_SYNC</span>
+
+    <span class="c1">#: The specified termination character was read.</span>
+    <span class="n">success_termination_character_read</span> <span class="o">=</span> <span class="n">VI_SUCCESS_TERM_CHAR</span>
+
+    <span class="c1">#: The path from the trigger source line (trigSrc) to the destination line (trigDest) is already mapped.</span>
+    <span class="n">success_trigger_already_mapped</span> <span class="o">=</span> <span class="n">VI_SUCCESS_TRIG_MAPPED</span>
+
+    <span class="c1">#: The specified configuration either does not exist or could not be loaded. The VISA-specified defaults are used.</span>
+    <span class="n">warning_configuration_not_loaded</span> <span class="o">=</span> <span class="n">VI_WARN_CONFIG_NLOADED</span>
+
+    <span class="c1">#: The operation succeeded, but a lower level driver did not implement the extended functionality.</span>
+    <span class="n">warning_ext_function_not_implemented</span> <span class="o">=</span> <span class="n">VI_WARN_EXT_FUNC_NIMPL</span>
+
+    <span class="c1">#: Although the specified state of the attribute is valid, it is not supported by this resource implementation.</span>
+    <span class="n">warning_nonsupported_attribute_state</span> <span class="o">=</span> <span class="n">VI_WARN_NSUP_ATTR_STATE</span>
+
+    <span class="c1">#: The specified buffer is not supported.</span>
+    <span class="n">warning_nonsupported_buffer</span> <span class="o">=</span> <span class="n">VI_WARN_NSUP_BUF</span>
+
+    <span class="c1">#: The specified object reference is uninitialized.</span>
+    <span class="n">warning_null_object</span> <span class="o">=</span> <span class="n">VI_WARN_NULL_OBJECT</span>
+
+    <span class="c1">#: VISA received more event information of the specified type than the configured queue size could hold.</span>
+    <span class="n">warning_queue_overflow</span> <span class="o">=</span> <span class="n">VI_WARN_QUEUE_OVERFLOW</span>
+
+    <span class="c1">#: The status code passed to the operation could not be interpreted.</span>
+    <span class="n">warning_unknown_status</span> <span class="o">=</span> <span class="n">VI_WARN_UNKNOWN_STATUS</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, PyVISA Authors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
