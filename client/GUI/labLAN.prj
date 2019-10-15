@@ -1,6 +1,6 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="1531944342" file="C:\Users\jarre\OneDrive\Documents\2019\FYP\Remotomation\client\AWGapp.prj" location="C:\Users\jarre\OneDrive\Documents\2019\FYP\Remotomation\client" name="AWGapp" target="target.mlapps" target-name="Package App">
-    <param.appname>AWGapp</param.appname>
+  <configuration build-checksum="3809133817" file="C:\Users\anton\Documents\FYPrepository\Remotomation\client\GUI\labLAN.prj" location="C:\Users\anton\Documents\FYPrepository\Remotomation\client\GUI" name="labLAN" target="target.mlapps" target-name="Package App">
+    <param.appname>labLAN</param.appname>
     <param.authnamewatermark>Anthony Baudinette &amp; Jarred Paola</param.authnamewatermark>
     <param.email>ajbau1@student.monash.edu.au</param.email>
     <param.company>Monash University</param.company>
@@ -8,19 +8,18 @@
     <param.icons />
     <param.summary>Matlab app for remote control of Keysight M8195A Arbitrary Waveform Generator</param.summary>
     <param.description />
-    <param.screenshot />
-    <param.version>1.1</param.version>
+    <param.screenshot>C:\Users\anton\AppData\Local\Temp\tp4ec35eb9_1654_42c1_b207_1ff21851e6a4.png</param.screenshot>
+    <param.version>1.2</param.version>
     <param.products.name />
     <param.products.id />
     <param.products.version />
     <param.platforms />
-    <param.output>C:\Users\jarre\OneDrive\Documents\2019\FYP\Remotomation\client</param.output>
+    <param.output>${PROJECT_ROOT}</param.output>
     <param.guid>27a12800-0efb-4b78-8fb3-cdb272dea721</param.guid>
     <unset>
       <param.icon />
       <param.icons />
       <param.description />
-      <param.screenshot />
       <param.products.name />
       <param.products.id />
       <param.products.version />
@@ -44,31 +43,12 @@
     </fileset.resources>
     <fileset.package />
     <build-deliverables>
-      <file location="C:\Users\jarre\OneDrive\Documents\2019\FYP\Remotomation" name="client" optional="false">C:\Users\jarre\OneDrive\Documents\2019\FYP\Remotomation\client</file>
+      <file location="C:\Users\anton\Documents\FYPrepository\Remotomation\client" name="GUI" optional="false">C:\Users\anton\Documents\FYPrepository\Remotomation\client\GUI</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2017b</root>
-      <toolboxes>
-        <toolbox name="fixedpoint" />
-        <toolbox name="matlabcoder" />
-        <toolbox name="embeddedcoder" />
-      </toolboxes>
-      <toolbox>
-        <fixedpoint>
-          <enabled>true</enabled>
-        </fixedpoint>
-      </toolbox>
-      <toolbox>
-        <matlabcoder>
-          <enabled>true</enabled>
-        </matlabcoder>
-      </toolbox>
-      <toolbox>
-        <embeddedcoder>
-          <enabled>true</enabled>
-        </embeddedcoder>
-      </toolbox>
+      <root>C:\Program Files\MATLAB\R2019a</root>
+      <toolboxes />
     </matlab>
     <platform>
       <unix>false</unix>
