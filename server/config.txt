@@ -1,5 +1,5 @@
 TCP_IP: 192.168.0.8
 TCP_PORT: 5005
 BUFFER_SIZE: 1024
-File_Path: C:\\Users\\Administrator\\Desktop\\AB_JP_data\\txt_files\\
+File_Path: C:\\tmp
 Connection_Timout(s): 2

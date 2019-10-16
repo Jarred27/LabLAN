@@ -35,7 +35,7 @@ if status
 	return
 end
 
-AWGadd = "TCPIP0::localhost::inst1::INSTR";
+AWGadd = "AWG";
 Command = "*IDN?";
 cmdStr = "python query.py " + AWGadd + " " + Command;
 [status,cmdOut] = system(cmdStr);
